@@ -15,6 +15,9 @@ IDEXConnector & \\\hline
 
 \section{Constant Definitions}
 
+\begin{itemize}
+\item Minor issue: see Better Units for Big Numbers (\ref{readability:numbers})
+\end{itemize}
 
 \ifsoldraft
 \noindent\begin{tabular}{|p{12cm}|}\hline
@@ -45,35 +48,12 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 \section{Static Variable Definitions}
 
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint256 & soUINT &  \\\hline
-address & dexclient &  \\\hline
- & & used in @2.DEXConnector.transfer\\\hline
- & & used in @2.DEXConnector.transfer\\\hline
- & & used in @2.DEXConnector.setTransferCallback\\\hline
- & & used in @2.DEXConnector.setTransferCallback\\\hline
- & & used in @2.DEXConnector.setBouncedCallback\\\hline
- & & used in @2.DEXConnector.setBouncedCallback\\\hline
- & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
- & & used in @2.DEXConnector.burn\\\hline
- & & used in @2.DEXConnector.burn\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor issue: see Typography of Static Variables (\ref{readability:static})
+\item Minor issue: why is {\tt drivenRoot} not a static variable ? it
+  looks like there is only one possible {\tt DEXConnector} for a given
+  pair of {\tt DEXClient} and {\tt RootTokenContract}.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=15]
   uint256 static public soUINT;
@@ -85,41 +65,9 @@ address & dexclient &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & drivenRoot &  \\\hline
- & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & assigned in @2.DEXConnector.deployEmptyWallet\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
-address & driven &  \\\hline
- & & used in @2.DEXConnector.transfer\\\hline
- & & used in @2.DEXConnector.transfer\\\hline
- & & used in @2.DEXConnector.setTransferCallback\\\hline
- & & used in @2.DEXConnector.setTransferCallback\\\hline
- & & used in @2.DEXConnector.setBouncedCallback\\\hline
- & & used in @2.DEXConnector.setBouncedCallback\\\hline
- & & assigned in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.burn\\\hline
- & & used in @2.DEXConnector.burn\\\hline
-bool & statusConnected &  \\\hline
- & & assigned in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
- & & used in @2.DEXConnector.deployEmptyWallet\\\hline
- & & assigned in @2.DEXConnector.:constructor\\\hline
- & & used in @2.DEXConnector.:constructor\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor issue: see Typography of Global Variables (\ref{readability:global})
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=22]
   address public drivenRoot;
@@ -135,17 +83,12 @@ bool & statusConnected &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier alwaysAccept}
 
+\begin{itemize}
+\item Critical issue: see Accept Methods withtout Checks (\ref{accept:all}).
+  This modifier should be removed.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=27]
 	modifier alwaysAccept {
@@ -156,6 +99,11 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkOwnerAndAccept}
 
+\begin{itemize}
+\item Minor issue: see Naming of Errors
+  (\ref{readability:errors}). Constants should be used instead of
+  direct numbers.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=32]
   modifier checkOwnerAndAccept {
@@ -171,27 +119,6 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
 \begin{lstlisting}[firstnumber=39]
   constructor() public checkOwnerAndAccept {
       statusConnected = false;
@@ -203,26 +130,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Receive function}
 
-\vspace{2cm}
-
 \begin{lstlisting}[firstnumber=129]
   receive() external {
   }
 \end{lstlisting}
 
 \subsection{Function burn}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt address & \tt callback\_{}address &\\\hline
-\tt TvmCell & \tt callback\_{}payload &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
 
 \begin{lstlisting}[firstnumber=116]
   function burn(uint128 tokens, address callback_address, TvmCell callback_payload) public override {
@@ -243,7 +156,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=60]
   function deployEmptyWallet(address root) public override {
@@ -275,7 +188,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=77]
   function expectedWalletAddressCallback(address wallet, uint256 wallet_public_key, address owner_address) public override {
@@ -300,7 +213,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=124]
   function getBalance() public pure checkOwnerAndAccept returns (uint128 balance){
@@ -310,7 +223,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setBouncedCallback}
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=95]
   function setBouncedCallback() public override {
@@ -323,7 +236,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setTransferCallback}
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=87]
   function setTransferCallback() public override {
@@ -346,7 +259,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=108]
   function transfer(address to, uint128 tokens, TvmCell payload) public override {
@@ -374,7 +287,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=48]
   function getQuotient(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -397,7 +310,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
 
 \begin{lstlisting}[firstnumber=54]
   function getRemainder(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {

@@ -5,7 +5,8 @@ found in the project in several locations.
 
 \section{Readability}
 
-\subsection{Typography}
+\subsection{Typography of Static Variables}
+\label{readability:static}
 
 \issueMinor{Typography of static variables}{A good coding convention
   is to use typography to visually discriminate static variables from
@@ -14,12 +15,18 @@ found in the project in several locations.
 This issue was found everywhere in the code of DEX and token
 contracts.\\
 
+\subsection{Typography of Global Variables}
+\label{readability:global}
+
 \issueMinor{Typography of global variables}{A good coding convention
   is to use typography to visually discriminate global variables from
   local variables, for example using a prefix such as {\tt m\_} or
   {\tt g\_}. }
 
 This issue was found everywhere in the code of DEX and token contracts.\\
+
+\subsection{Typography of Internal Functions}
+\label{readability:internal}
 
 \issueMinor{Typography of internal function}{A good coding convention
   is to use typography to visually discriminate public functions and
@@ -28,6 +35,7 @@ This issue was found everywhere in the code of DEX and token contracts.\\
 This issue was found everywhere in the code of DEX and token contracts.\\
 
 \subsection{Naming of Errors}
+\label{readability:errors}
 
 \issueMinor{Naming of Errors}{A good coding convention is to define
   constants instead of using direct numbers for errors in {\tt
@@ -36,7 +44,21 @@ This issue was found everywhere in the code of DEX and token contracts.\\
 This issue was found everywhere in the code of DEX contracts, but not
 for token contracts.
 
+\subsection{Better Units for Big Numbers}
+\label{readability:numbers}
+
+\issueMinor{Use Better Units}{Use decimals of {\tt ton} instead of
+  default nanotons to decrease the size of integer constants.}
+
+This issue was found in all constant definitions for gas cost.
+Numbers like {\tt 500000000} are difficult to read, whereas the
+equivalent {\tt 0.5 ton} is much easier.
+
+
 \section{Security}
+
+\subsection{Accept Methods without Checks}
+\label{accept:all}
 
 \issueCritical{No Accept All Methods}{Public methods using
   {\tt tvm.accept()} without any prior check should not exist. Indeed,
@@ -48,6 +70,9 @@ This issue was found in the code the DEX contracts, especially with
 the {\tt alwaysAccept()} modifier. Methods using this modifier should
 check the origin of the message and limit {\tt tvm.accept()} to either
 the user or known contracts.
+
+\subsection{{\tt require} after {\tt tvm.accept}}
+\label{accept:require}
 
 \issueCritical{No Require after Accept}{Methods using {\tt
     tvm.accept()} should never use {\tt require()} after the accept.

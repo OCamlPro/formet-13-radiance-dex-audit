@@ -370,7 +370,7 @@ Check that every argument is protected by a require().
 If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
 \\\hline\end{tabular}
 \fi
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=85]
   constructor() public {
@@ -385,7 +385,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Receive function}
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=413]
   receive() external {
@@ -404,7 +404,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=181]
   function connectCallback(address wallet) public override alwaysAccept {
@@ -438,7 +438,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=92]
   function connectPair(address pairAddr) public checkOwnerAndAccept  returns (bool statusConnection) {
@@ -472,7 +472,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=158]
   function connectRoot(address root, uint256 souint, uint128 gramsToConnector, uint128 gramsToRoot) public checkOwnerAndAccept returns (bool statusConnected){
@@ -523,7 +523,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=356]
   function createNewPair(
@@ -562,7 +562,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=215]
   function getAllDataPreparation() public view alwaysAccept returns(address[] pairKeysR, address[] rootKeysR){
@@ -581,7 +581,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=351]
   function getBalance() public pure responsible returns (uint128) {
@@ -613,7 +613,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=318]
   function getCallback(uint id) public view checkOwnerAndAccept returns (
@@ -656,7 +656,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=153]
   function getConnectorAddress(uint256 connectorSoArg) public view responsible returns (address) {
@@ -684,7 +684,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=379]
   function getPairData(address pairAddr) public view alwaysAccept returns (
@@ -723,7 +723,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=251]
   function processLiquidity(address pairAddr, uint128 qtyA, uint128 qtyB) public view checkOwnerAndAccept returns (bool processLiquidityStatus) {
@@ -762,7 +762,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=221]
   function processSwapA(address pairAddr, uint128 qtyA) public view checkOwnerAndAccept returns (bool processSwapStatus) {
@@ -795,7 +795,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=236]
   function processSwapB(address pairAddr, uint128 qtyB) public view checkOwnerAndAccept returns (bool processSwapStatus) {
@@ -828,7 +828,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=272]
   function returnLiquidity(address pairAddr, uint128 tokens) public view checkOwnerAndAccept returns (bool returnLiquidityStatus) {
@@ -862,7 +862,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=399]
   function sendTokens(address tokenRoot, address to, uint128 tokens, uint128 grams) public checkOwnerAndAccept view returns (bool sendTokenStatus){
@@ -895,7 +895,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=127]
   function setPair(address arg0, address arg1, address arg2, address arg3, address arg4) public alwaysAccept override {
@@ -933,7 +933,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=286]
   function tokensReceivedCallback(
@@ -982,7 +982,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=142]
   function computeConnectorAddress(uint256 souint) private inline view returns (address) {
@@ -1006,7 +1006,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=121]
   function getFirstCallback() private view returns (uint) {
@@ -1029,7 +1029,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=109]
   function getQuotient(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -1052,7 +1052,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=115]
   function getRemainder(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -1073,7 +1073,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=198]
   function isReady(address pair) private inline view returns (bool) {
@@ -1096,7 +1096,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=206]
   function isReadyToProvide(address pair) private inline view returns (bool) {
@@ -1117,7 +1117,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \end{tabular}
 \fi
 
-\vspace{2cm}
+
 
 \begin{lstlisting}[firstnumber=346]
   function thisBalance() private inline  pure returns (uint128) {
