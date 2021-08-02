@@ -1,0 +1,1461 @@
+
+\chapter{Contract DEXPair}
+
+
+In file {\tt DEXPair.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+IDEXPair & \\\hline
+IDEXConnect & \\\hline
+ITokensReceivedCallback & \\\hline
+IBurnTokensCallback & \\\hline
+\end{tabular}
+
+
+\section{Type Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
+\\\hline\end{tabular}
+\fi
+
+\subsection{Struct Connector}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+root\_{}address & address & \\\hline
+souint & uint256 & \\\hline
+status & bool & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=37]
+  struct Connector {
+    address root_address;
+    uint256 souint;
+    bool status;
+  }
+\end{lstlisting}
+
+\subsection{Struct Callback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+token\_{}wallet & address & \\\hline
+token\_{}root & address & \\\hline
+amount & uint128 & \\\hline
+sender\_{}public\_{}key & uint256 & \\\hline
+sender\_{}address & address & \\\hline
+sender\_{}wallet & address & \\\hline
+original\_{}gas\_{}to & address & \\\hline
+updated\_{}balance & uint128 & \\\hline
+payload\_{}arg0 & uint8 & \\\hline
+payload\_{}arg1 & address & \\\hline
+payload\_{}arg2 & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=48]
+  struct Callback {
+    address token_wallet;
+    address token_root;
+    uint128 amount;
+    uint256 sender_public_key;
+    address sender_address;
+    address sender_wallet;
+    address original_gas_to;
+    uint128 updated_balance;
+    uint8 payload_arg0;
+    address payload_arg1;
+    address payload_arg2;
+  }
+\end{lstlisting}
+
+\section{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint128 & GRAMS\_{}SET\_{}CALLBACK\_{}ADDR & Initialized to 500000000  \\\hline
+uint128 & GRAMS\_{}SEND\_{}UNUSED\_{}RETURN & Initialized to 100000000  \\\hline
+uint128 & GRAMS\_{}MINT & Initialized to 50000000  \\\hline
+uint128 & GRAMS\_{}RETURN & Initialized to 200000000  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=65]
+  uint128 constant GRAMS_SET_CALLBACK_ADDR = 500000000;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=66]
+  uint128 constant GRAMS_SEND_UNUSED_RETURN = 100000000;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=67]
+  uint128 constant GRAMS_MINT = 50000000;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=68]
+  uint128 constant GRAMS_RETURN = 200000000;
+\end{lstlisting}
+
+\section{Static Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & rootDEX &  \\\hline
+uint256 & soUINT &  \\\hline
+address & creator &  \\\hline
+TvmCell & codeDEXConnector &  \\\hline
+ & & used in @3.DEXPair.connectRoot\\\hline
+ & & used in @3.DEXPair.computeConnectorAddress\\\hline
+address & rootA &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.:constructor\\\hline
+address & rootB &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.:constructor\\\hline
+address & rootAB &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=19]
+  address static public rootDEX;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=20]
+  uint256 static public soUINT;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=21]
+  address static public creator;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=22]
+  TvmCell static public codeDEXConnector;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=23]
+  address static public rootA;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=24]
+  address static public rootB;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=25]
+  address static public rootAB;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+mapping (address =$>$ address) & walletReserve &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+ & & used in @3.DEXPair.connect\\\hline
+mapping (address =$>$ bool) & syncStatus &  \\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+mapping (address =$>$ uint128) & balanceReserve &  \\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyBforA\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.qtyAforB\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & used in @3.DEXPair.getAmountOut\\\hline
+ & & used in @3.DEXPair.getAmountOut\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+ & & used in @3.DEXPair.acceptForProvide\\\hline
+uint128 & totalSupply &  \\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.liquidityB\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & used in @3.DEXPair.liquidityA\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+mapping (address =$>$ mapping (address =$>$ bool)) & processingStatus &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+mapping (address =$>$ mapping (address =$>$ uint128)) & processingData &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+mapping (address =$>$ mapping (address =$>$ address)) & processingDest &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+ & & assigned in @3.DEXPair.cleanProcessing\\\hline
+ & & used in @3.DEXPair.cleanProcessing\\\hline
+mapping (address =$>$ address) & rootConnector &  \\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+mapping (address =$>$ Connector) & connectors &  \\\hline
+ & & assigned in @3.DEXPair.connectRoot\\\hline
+ & & used in @3.DEXPair.connectRoot\\\hline
+ & & used in @3.DEXPair.connectRoot\\\hline
+ & & assigned in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+ & & used in @3.DEXPair.connectCallback\\\hline
+uint256 & counterCallback &  \\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.:constructor\\\hline
+ & & used in @3.DEXPair.:constructor\\\hline
+mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & assigned in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.tokensReceivedCallback\\\hline
+ & & used in @3.DEXPair.getFirstCallback\\\hline
+ & & used in @3.DEXPair.getCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & assigned in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+ & & used in @3.DEXPair.burnCallback\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=27]
+  mapping(address => address) public walletReserve;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=28]
+  mapping(address => bool) public syncStatus;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=29]
+  mapping(address => uint128) public balanceReserve;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=31]
+  uint128 public totalSupply;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=33]
+  mapping(address => mapping(address => bool)) public processingStatus;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=34]
+  mapping(address => mapping(address => uint128)) public processingData;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=35]
+  mapping(address => mapping(address => address)) public processingDest;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=43]
+  mapping (address => address) public rootConnector;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=44]
+  mapping (address => Connector) public connectors;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=46]
+  uint public counterCallback;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=62]
+  mapping (uint => Callback) callbacks;
+\end{lstlisting}
+
+\section{Modifier Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Calling tvm.accept() without checking pubkey should not be allowed
+\\\hline\end{tabular}
+\fi
+
+\subsection{Modifier alwaysAccept}
+
+
+\begin{lstlisting}[firstnumber=71]
+  modifier alwaysAccept {
+    tvm.accept();
+    _;
+  }
+\end{lstlisting}
+
+\subsection{Modifier checkOwnerAndAccept}
+
+
+\begin{lstlisting}[firstnumber=76]
+  modifier checkOwnerAndAccept {
+    require(msg.sender == rootDEX, 102);
+    tvm.accept();
+    _;
+  }
+\end{lstlisting}
+
+\subsection{Modifier checkPubKeyAndAccept}
+
+
+\begin{lstlisting}[firstnumber=82]
+  modifier checkPubKeyAndAccept {
+    require(msg.pubkey() == tvm.pubkey(), 103);
+    tvm.accept();
+    _;
+  }
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for DEXPair}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
+\\\hline
+Check that every argument is protected by a require().
+\\\hline
+If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt souintA &\\\hline
+\tt uint256 & \tt souintB &\\\hline
+\tt uint128 & \tt gramsDeployConnector &\\\hline
+\tt uint128 & \tt gramsDeployWallet &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=88]
+  constructor(uint256 souintA, uint256 souintB, uint128 gramsDeployConnector, uint128 gramsDeployWallet) public checkOwnerAndAccept {
+    counterCallback = 0;
+    connectRoot(rootA, souintA, gramsDeployConnector, gramsDeployWallet);
+    connectRoot(rootB, souintB, gramsDeployConnector, gramsDeployWallet);
+  }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function burnCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
+\tt address & \tt sender\_{}address &\\\hline
+\tt address & \tt wallet\_{}address &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=522]
+function burnCallback(
+  uint128 tokens,
+  TvmCell payload,
+  uint256 sender_public_key,
+  address sender_address,
+  address wallet_address,
+  address send_gas_to
+) public override alwaysAccept {
+  if (msg.sender == rootAB) {
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmSlice slice = payload.toSlice();
+    (uint8 arg0, address arg1, address arg2) = slice.decode(uint8, address, address);
+    counterCallback++;
+    Callback cc = callbacks[counterCallback];
+    cc.token_wallet = wallet_address;
+    cc.token_root = msg.sender;
+    cc.amount = tokens;
+    cc.sender_public_key = sender_public_key;
+    cc.sender_address = sender_address;
+    cc.sender_wallet = wallet_address;
+    cc.original_gas_to = address(0);
+    cc.updated_balance = 0;
+    cc.payload_arg0 = arg0;
+    cc.payload_arg1 = arg1;
+    cc.payload_arg2 = arg2;
+    callbacks[counterCallback] = cc;
+    if (arg0 == 3 && arg1 != address(0) && arg2 != address(0)) {
+      uint128 returnA = math.muldiv(balanceReserve[rootA],tokens,totalSupply);
+      uint128 returnB = math.muldiv(balanceReserve[rootB],tokens,totalSupply);
+      if (!(returnA > balanceReserve[rootA]) && !(returnB > balanceReserve[rootB])) {
+        totalSupply -= tokens;
+        balanceReserve[rootA] -= returnA;
+        balanceReserve[rootB] -= returnB;
+        TvmBuilder builder;
+        builder.store(uint8(6), address(0), address(0));
+        TvmCell new_payload = builder.toCell();
+        TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, arg1, returnA, new_payload);
+        TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, arg2, returnB, new_payload);
+        rootConnector[rootA].transfer({value: GRAMS_RETURN, bounce:true, body:bodyA});
+        rootConnector[rootB].transfer({value: GRAMS_RETURN, bounce:true, body:bodyB});
+        if (counterCallback > 10){delete callbacks[getFirstCallback()];}
+        send_gas_to.transfer({value: 0, bounce:true, flag: 128});
+      }
+      if (counterCallback > 10){delete callbacks[getFirstCallback()];}
+    }
+    if (counterCallback > 10){delete callbacks[getFirstCallback()];}
+  }
+}
+\end{lstlisting}
+
+\subsection{Function connect}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=149]
+  function connect() public override {
+    address dexclient = msg.sender;
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmCell body = tvm.encodeBody(IDEXClient(dexclient).setPair, rootA, walletReserve[rootA], rootB, walletReserve[rootB], rootAB);
+    dexclient.transfer({ value: 0, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\subsection{Function connectCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt wallet &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=132]
+  function connectCallback(address wallet) public override alwaysAccept {
+    address connector = msg.sender;
+    if (connectors.exists(connector)) {
+      Connector cr = connectors[connector];
+      walletReserve[cr.root_address] = wallet;
+      syncStatus[cr.root_address] = true;
+      rootConnector[cr.root_address] = connector;
+      TvmCell bodySTC = tvm.encodeBody(IDEXConnector(connector).setTransferCallback);
+      connector.transfer({value: GRAMS_SET_CALLBACK_ADDR, bounce:true, flag: 0, body:bodySTC});
+      TvmCell bodySBC = tvm.encodeBody(IDEXConnector(connector).setBouncedCallback);
+      connector.transfer({value: GRAMS_SET_CALLBACK_ADDR, bounce:true, flag: 0, body:bodySBC});
+      cr.status = true;
+      connectors[connector] = cr;
+    }
+  }
+\end{lstlisting}
+
+\subsection{Function getBalance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=604]
+function getBalance() public pure responsible returns (uint128) {
+  return { value: 0, bounce: false, flag: 64 } thisBalance();
+}
+\end{lstlisting}
+
+\subsection{Function getCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt id &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & \tt token\_{}wallet &\\\hline
+\tt address & \tt token\_{}root &\\\hline
+\tt uint128 & \tt amount &\\\hline
+\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
+\tt address & \tt sender\_{}address &\\\hline
+\tt address & \tt sender\_{}wallet &\\\hline
+\tt address & \tt original\_{}gas\_{}to &\\\hline
+\tt uint128 & \tt updated\_{}balance &\\\hline
+\tt uint8 & \tt payload\_{}arg0 &\\\hline
+\tt address & \tt payload\_{}arg1 &\\\hline
+\tt address & \tt payload\_{}arg2 &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkPubKeyAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=571]
+function getCallback(uint id) public view checkPubKeyAndAccept returns (
+  address token_wallet,
+  address token_root,
+  uint128 amount,
+  uint256 sender_public_key,
+  address sender_address,
+  address sender_wallet,
+  address original_gas_to,
+  uint128 updated_balance,
+  uint8 payload_arg0,
+  address payload_arg1,
+  address payload_arg2
+){
+  Callback cc = callbacks[id];
+  token_wallet = cc.token_wallet;
+  token_root = cc.token_root;
+  amount = cc.amount;
+  sender_public_key = cc.sender_public_key;
+  sender_address = cc.sender_address;
+  sender_wallet = cc.sender_wallet;
+  original_gas_to = cc.original_gas_to;
+  updated_balance = cc.updated_balance;
+  payload_arg0 = cc.payload_arg0;
+  payload_arg1 = cc.payload_arg1;
+  payload_arg2 = cc.payload_arg2;
+}
+\end{lstlisting}
+
+\subsection{Function getConnectorAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt connectorSoArg &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=108]
+  function getConnectorAddress(uint256 connectorSoArg) public view responsible returns (address) {
+    return { value: 0, bounce: false, flag: 64 } computeConnectorAddress( connectorSoArg);
+  }
+\end{lstlisting}
+
+\subsection{Function tokensReceivedCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt token\_{}wallet &\\\hline
+\tt address & \tt token\_{}root &\\\hline
+\tt uint128 & \tt amount &\\\hline
+\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
+\tt address & \tt sender\_{}address &\\\hline
+\tt address & \tt sender\_{}wallet &\\\hline
+\tt address & \tt original\_{}gas\_{}to &\\\hline
+\tt uint128 & \tt updated\_{}balance &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=248]
+  function tokensReceivedCallback(
+    address token_wallet,
+    address token_root,
+    uint128 amount,
+    uint256 sender_public_key,
+    address sender_address,
+    address sender_wallet,
+    address original_gas_to,
+    uint128 updated_balance,
+    TvmCell payload
+  ) public override alwaysAccept {
+    if (msg.sender == walletReserve[rootA] || msg.sender == walletReserve[rootB]) {
+      if (counterCallback > 10) {
+        Callback cc = callbacks[counterCallback];
+        cc.token_wallet = token_wallet;
+        cc.token_root = token_root;
+        cc.amount = amount;
+        cc.sender_public_key = sender_public_key;
+        cc.sender_address = sender_address;
+        cc.sender_wallet = sender_wallet;
+        cc.original_gas_to = original_gas_to;
+        cc.updated_balance = updated_balance;
+        TvmSlice slice = payload.toSlice();
+        (uint8 arg0, address arg1, address arg2) = slice.decode(uint8, address, address);
+        cc.payload_arg0 = arg0;
+        cc.payload_arg1 = arg1;
+        cc.payload_arg2 = arg2;
+        callbacks[counterCallback] = cc;
+        counterCallback++;
+        delete callbacks[getFirstCallback()];
+        if (arg0 == 1) {
+          tvm.rawReserve(address(this).balance - msg.value, 2);
+          uint128 amountOut = getAmountOut(amount, token_root, arg1);
+          if (!(amountOut > balanceReserve[arg1])){
+            balanceReserve[token_root] += amount;
+            balanceReserve[arg1] -= amountOut;
+            syncStatus[token_root] = balanceReserve[token_root] == updated_balance ? true : false;
+            TvmBuilder builder;
+            builder.store(uint8(0), address(0), address(0));
+            TvmCell new_payload = builder.toCell();
+            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[arg1]).transfer, arg2, amountOut, new_payload);
+            rootConnector[arg1].transfer({value: 0, bounce:true, flag: 128, body:body});
+          } else {
+            TvmBuilder builder;
+            builder.store(uint8(8), address(0), address(0));
+            TvmCell new_payload = builder.toCell();
+            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[token_root]).transfer, token_wallet, amount, new_payload);
+            rootConnector[token_root].transfer({value: 0, bounce:true, flag: 128, body:body});
+          }
+        }
+        if (arg0 == 2) {
+          tvm.rawReserve(address(this).balance - msg.value, 2);
+          processingStatus[token_root][arg1] = true;
+          processingData[token_root][arg1] += amount;
+          processingDest[token_root][arg1] = sender_wallet;
+          if (processingStatus[rootA][arg1] == true && processingStatus[rootB][arg1] == true) {
+            uint128 amountA = processingData[rootA][arg1];
+            uint128 amountB = processingData[rootB][arg1];
+            if (totalSupply == 0 && balanceReserve[rootA] == 0 && balanceReserve[rootB] == 0) {
+              uint128 liquidity = math.min(amountA,amountB);
+              balanceReserve[rootA] += amountA;
+              balanceReserve[rootB] += amountB;
+              totalSupply += liquidity;
+              TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
+              rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
+              cleanProcessing(arg1);
+              arg1.transfer({ value: 0, flag: 128});
+            } else {
+              (uint128 provideA, uint128 provideB) = acceptForProvide(amountA, amountB);
+              if (provideA > 0 && provideB > 0) {
+                uint128 liquidity = math.min(liquidityA(provideA),liquidityB(provideB));
+                uint128 unusedReturnA = amountA - provideA;
+                uint128 unusedReturnB = amountB - provideB;
+                balanceReserve[rootA] += provideA;
+                balanceReserve[rootB] += provideB;
+                totalSupply += liquidity;
+                TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
+                rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
+                if (unusedReturnA > 0 && unusedReturnB > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
+                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
+                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else if (unusedReturnA > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
+                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else if (unusedReturnB > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
+                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else {
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                }
+              } else {
+                TvmBuilder builder;
+                builder.store(uint8(9), address(0), address(0));
+                TvmCell new_payload = builder.toCell();
+                TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], amountA, new_payload);
+                TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], amountB, new_payload);
+                rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                cleanProcessing(arg1);
+                arg1.transfer({ value: 0, flag: 128});
+              }
+            }
+          } else {
+            arg1.transfer({ value: 0, flag: 128});
+          }
+        }
+      } else {
+        Callback cc = callbacks[counterCallback];
+        cc.token_wallet = token_wallet;
+        cc.token_root = token_root;
+        cc.amount = amount;
+        cc.sender_public_key = sender_public_key;
+        cc.sender_address = sender_address;
+        cc.sender_wallet = sender_wallet;
+        cc.original_gas_to = original_gas_to;
+        cc.updated_balance = updated_balance;
+        TvmSlice slice = payload.toSlice();
+        (uint8 arg0, address arg1, address arg2) = slice.decode(uint8, address, address);
+        cc.payload_arg0 = arg0;
+        cc.payload_arg1 = arg1;
+        cc.payload_arg2 = arg2;
+        callbacks[counterCallback] = cc;
+        counterCallback++;
+        if (arg0 == 1) {
+          tvm.rawReserve(address(this).balance - msg.value, 2);
+          uint128 amountOut = getAmountOut(amount, token_root, arg1);
+          if (!(amountOut > balanceReserve[arg1])){
+            balanceReserve[token_root] += amount;
+            balanceReserve[arg1] -= amountOut;
+            syncStatus[token_root] = balanceReserve[token_root] == updated_balance ? true : false;
+            TvmBuilder builder;
+            builder.store(uint8(0), address(0), address(0));
+            TvmCell new_payload = builder.toCell();
+            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[arg1]).transfer, arg2, amountOut, new_payload);
+            rootConnector[arg1].transfer({value: 0, bounce:true, flag: 128, body:body});
+          } else {
+            TvmBuilder builder;
+            builder.store(uint8(8), address(0), address(0));
+            TvmCell new_payload = builder.toCell();
+            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[token_root]).transfer, token_wallet, amount, new_payload);
+            rootConnector[token_root].transfer({value: 0, bounce:true, flag: 128, body:body});
+          }
+        }
+        if (arg0 == 2) {
+          tvm.rawReserve(address(this).balance - msg.value, 2);
+          processingStatus[token_root][arg1] = true;
+          processingData[token_root][arg1] += amount;
+          processingDest[token_root][arg1] = sender_wallet;
+          if (processingStatus[rootA][arg1] == true && processingStatus[rootB][arg1] == true) {
+            uint128 amountA = processingData[rootA][arg1];
+            uint128 amountB = processingData[rootB][arg1];
+            if (totalSupply == 0 && balanceReserve[rootA] == 0 && balanceReserve[rootB] == 0) {
+              uint128 liquidity = math.min(amountA,amountB);
+              balanceReserve[rootA] += amountA;
+              balanceReserve[rootB] += amountB;
+              totalSupply += liquidity;
+              TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
+              rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
+              cleanProcessing(arg1);
+              arg1.transfer({ value: 0, flag: 128});
+            } else {
+              (uint128 provideA, uint128 provideB) = acceptForProvide(amountA, amountB);
+              if (provideA > 0 && provideB > 0) {
+                uint128 liquidity = math.min(liquidityA(provideA),liquidityB(provideB));
+                uint128 unusedReturnA = amountA - provideA;
+                uint128 unusedReturnB = amountB - provideB;
+                balanceReserve[rootA] += provideA;
+                balanceReserve[rootB] += provideB;
+                totalSupply += liquidity;
+                TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
+                rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
+                if (unusedReturnA > 0 && unusedReturnB > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
+                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
+                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else if (unusedReturnA > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
+                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else if (unusedReturnB > 0) {
+                  TvmBuilder builder;
+                  builder.store(uint8(7), address(0), address(0));
+                  TvmCell new_payload = builder.toCell();
+                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
+                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                } else {
+                  cleanProcessing(arg1);
+                  arg1.transfer({ value: 0, flag: 128});
+                }
+              } else {
+                TvmBuilder builder;
+                builder.store(uint8(9), address(0), address(0));
+                TvmCell new_payload = builder.toCell();
+                TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], amountA, new_payload);
+                TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], amountB, new_payload);
+                rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
+                rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
+                cleanProcessing(arg1);
+                arg1.transfer({ value: 0, flag: 128});
+              }
+            }
+          } else {
+            arg1.transfer({ value: 0, flag: 128});
+          }
+        }
+
+      }
+    }
+  }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Receive function}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=609]
+receive() external {
+}
+\end{lstlisting}
+
+\subsection{Function acceptForProvide}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg0 &\\\hline
+\tt uint128 & \tt arg1 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=214]
+  function acceptForProvide(uint128 arg0, uint128 arg1) private inline view returns (uint128, uint128) {
+    require(balanceReserve[rootA] > 0 && balanceReserve[rootB] > 0, 106);
+    uint128 qtyB = qtyBforA(arg0);
+    uint128 qtyA = qtyAforB(arg1);
+    uint128 minAmountA = math.min(arg0, qtyA);
+    uint128 minAmountB = math.min(arg1, qtyB);
+    uint128 crmin = math.min(balanceReserve[rootA], balanceReserve[rootB]);
+    uint128 crmax = math.max(balanceReserve[rootA], balanceReserve[rootB]);
+    uint128 crquotient = getQuotient(crmin, crmax);
+    uint128 crremainder = getRemainder(crmin, crmax);
+    uint128 amountMin = math.min(minAmountA,minAmountB);
+    uint128 amountOther = amountMin * crquotient + math.muldiv(amountMin,crremainder,crmin);
+    uint128 acceptForProvideA = minAmountA < minAmountB ? amountMin : amountOther;
+    uint128 acceptForProvideB = minAmountB < minAmountA ? amountMin : amountOther;
+    return (acceptForProvideA,acceptForProvideB);
+  }
+\end{lstlisting}
+
+\subsection{Function cleanProcessing}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt dexclient &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=232]
+  function cleanProcessing(address dexclient) private inline {
+    delete processingStatus[rootA][dexclient];
+    delete processingStatus[rootB][dexclient];
+    delete processingData[rootA][dexclient];
+    delete processingData[rootB][dexclient];
+    delete processingDest[rootA][dexclient];
+    delete processingDest[rootB][dexclient];
+  }
+\end{lstlisting}
+
+\subsection{Function computeConnectorAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt souint &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=95]
+  function computeConnectorAddress(uint256 souint) private inline view returns (address) {
+    TvmCell stateInit = tvm.buildStateInit({
+      contr: DEXConnector,
+      varInit: { soUINT: souint, dexclient: address(this) },
+      code: codeDEXConnector,
+      pubkey: tvm.pubkey()
+    });
+    return address(tvm.hash(stateInit));
+  }
+\end{lstlisting}
+
+\subsection{Function connectRoot}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt root &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\tt uint128 & \tt gramsToConnector &\\\hline
+\tt uint128 & \tt gramsToRoot &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=113]
+  function connectRoot(address root, uint256 souint, uint128 gramsToConnector, uint128 gramsToRoot) private inline {
+    TvmCell stateInit = tvm.buildStateInit({
+      contr: DEXConnector,
+      varInit: { soUINT: souint, dexclient: address(this) },
+      code: codeDEXConnector,
+      pubkey: tvm.pubkey()
+    });
+    TvmCell init = tvm.encodeBody(DEXConnector);
+    address connector = tvm.deploy(stateInit, init, gramsToConnector, address(this).wid);
+    Connector cr = connectors[connector];
+    cr.root_address = root;
+    cr.souint = souint;
+    cr.status = false;
+    connectors[connector] = cr;
+    TvmCell body = tvm.encodeBody(IDEXConnector(connector).deployEmptyWallet, root);
+    connector.transfer({value:gramsToRoot, bounce:true, body:body});
+  }
+\end{lstlisting}
+
+\subsection{Function getAmountOut}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt amountIn &\\\hline
+\tt address & \tt rootIn &\\\hline
+\tt address & \tt rootOut &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=157]
+  function getAmountOut(uint128 amountIn, address rootIn, address rootOut) private inline view returns (uint128){
+    uint128 amountInWithFee = math.muldiv(amountIn,997,1);
+    uint128 numerator = math.muldiv(amountInWithFee,balanceReserve[rootOut],1);
+    uint128 denominator = amountInWithFee + math.muldiv(balanceReserve[rootIn],1000,1);
+    return math.muldiv(1,numerator,denominator);
+  }
+\end{lstlisting}
+
+\subsection{Function getFirstCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint256 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=242]
+  function getFirstCallback() private view returns (uint) {
+		optional(uint, Callback) rc = callbacks.min();
+		if (rc.hasValue()) {(uint number, ) = rc.get();return number;} else {return 0;}
+	}
+\end{lstlisting}
+
+\subsection{Function getQuotient}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt min &\\\hline
+\tt uint128 & \tt max &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=165]
+  function getQuotient(uint128 min, uint128 max) private inline pure returns (uint128) {
+    (uint128 quotient, ) = math.muldivmod(1, max, min);
+    return quotient;
+  }
+\end{lstlisting}
+
+\subsection{Function getRemainder}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt min &\\\hline
+\tt uint128 & \tt max &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=171]
+  function getRemainder(uint128 min, uint128 max) private inline pure returns (uint128) {
+    (, uint128 remainder) = math.muldivmod(1, max, min);
+    return remainder;
+  }
+\end{lstlisting}
+
+\subsection{Function liquidityA}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg0 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=191]
+  function liquidityA(uint128 arg0) private inline view returns (uint128) {
+    require(arg0 > 0, 105);
+    require(totalSupply > 0, 110);
+    require(balanceReserve[rootA] > 0, 108);
+    return math.muldiv(arg0, totalSupply, balanceReserve[rootA]);
+  }
+\end{lstlisting}
+
+\subsection{Function liquidityB}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg1 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=199]
+  function liquidityB(uint128 arg1) private inline view returns (uint128) {
+    require(arg1 > 0, 105);
+    require(totalSupply > 0, 110);
+    require(balanceReserve[rootB] > 0, 109);
+    return math.muldiv(arg1, totalSupply, balanceReserve[rootB]);
+  }
+\end{lstlisting}
+
+\subsection{Function qtyAforB}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg1 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=184]
+  function qtyAforB(uint128 arg1) private inline view returns (uint128) {
+    require(arg1 > 0, 107);
+    require(balanceReserve[rootA] > 0 && balanceReserve[rootB] > 0, 106);
+    return math.muldiv(arg1, balanceReserve[rootA], balanceReserve[rootB]);
+  }
+\end{lstlisting}
+
+\subsection{Function qtyBforA}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg0 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=177]
+  function qtyBforA(uint128 arg0) private inline view returns (uint128) {
+    require(arg0 > 0, 105);
+    require(balanceReserve[rootA] > 0 && balanceReserve[rootB] > 0, 106);
+    return math.muldiv(arg0, balanceReserve[rootB], balanceReserve[rootA]);
+  }
+\end{lstlisting}
+
+\subsection{Function thisBalance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=599]
+function thisBalance() private inline  pure returns (uint128) {
+  return address(this).balance;
+}
+\end{lstlisting}

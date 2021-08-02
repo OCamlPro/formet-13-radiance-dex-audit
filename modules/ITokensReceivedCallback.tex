@@ -1,0 +1,35 @@
+
+\section{Module "ITokensReceivedCallback.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Interface ITokensReceivedCallback}
+
+
+In file {\tt ITokensReceivedCallback.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=5]
+    function tokensReceivedCallback(
+        address token_wallet,
+        address token_root,
+        uint128 amount,
+        uint256 sender_public_key,
+        address sender_address,
+        address sender_wallet,
+        address original_gas_to,
+        uint128 updated_balance,
+        TvmCell payload
+    ) external;
+\end{lstlisting}

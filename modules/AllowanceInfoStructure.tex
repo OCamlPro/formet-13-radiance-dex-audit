@@ -1,0 +1,46 @@
+
+\section{Module "AllowanceInfoStructure.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Interface AllowanceInfoStructure}
+
+
+In file {\tt AllowanceInfoStructure.sol}
+
+\subsubsection{Type Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Struct AllowanceInfo}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+remaining\_{}tokens & uint128 & \\\hline
+spender & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=6]
+    struct AllowanceInfo {
+        uint128 remaining_tokens;
+        address spender;
+    }
+\end{lstlisting}

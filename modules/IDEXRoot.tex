@@ -1,0 +1,41 @@
+
+\section{Module "IDEXRoot.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  pubkey &\\\hline
+AbiHeader &  time &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IDEXRoot}
+
+
+In file {\tt IDEXRoot.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=7]
+	function createDEXpair(
+		address root0,
+		address root1,
+		uint256 pairSoArg,
+		uint256 connectorSoArg0,
+		uint256 connectorSoArg1,
+		uint256 rootSoArg,
+		bytes rootName,
+		bytes rootSymbol,
+		uint8 rootDecimals,
+		uint128 grammsForPair,
+		uint128 grammsForRoot,
+		uint128 grammsForConnector,
+		uint128 grammsForWallet
+	) external;
+\end{lstlisting}

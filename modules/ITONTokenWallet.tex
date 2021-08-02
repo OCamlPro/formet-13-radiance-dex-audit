@@ -1,0 +1,183 @@
+
+\section{Module "ITONTokenWallet.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./AllowanceInfoStructure.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Interface ITONTokenWallet}
+
+
+In file {\tt ITONTokenWallet.sol}
+
+\subsubsection{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+AllowanceInfoStructure & \\\hline
+\end{tabular}
+
+
+\subsubsection{Type Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Struct ITONTokenWalletDetails}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+root\_{}address & address & \\\hline
+wallet\_{}public\_{}key & uint256 & \\\hline
+owner\_{}address & address & \\\hline
+balance & uint128 & \\\hline
+receive\_{}callback & address & \\\hline
+bounced\_{}callback & address & \\\hline
+allow\_{}non\_{}notifiable & bool & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=8]
+    struct ITONTokenWalletDetails {
+        address root_address;
+        uint256 wallet_public_key;
+        address owner_address;
+        uint128 balance;
+
+        address receive_callback;
+        address bounced_callback;
+        bool allow_non_notifiable;
+    }
+\end{lstlisting}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=23]
+    function accept(uint128 tokens) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=26]
+    function allowance() external view responsible returns (AllowanceInfo);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=27]
+    function approve(address spender, uint128 remaining_tokens, uint128 tokens) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=25]
+    function balance() external view responsible returns (uint128);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=28]
+    function disapprove() external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=19]
+    function getDetails() external view responsible returns (ITONTokenWalletDetails);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=21]
+    function getWalletCode() external view responsible returns (TvmCell);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=63]
+    function internalTransfer(
+        uint128 tokens,
+        uint256 sender_public_key,
+        address sender_address,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=72]
+    function internalTransferFrom(
+        address to,
+        uint128 tokens,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=31]
+    function setBouncedCallback(address bounced_callback) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=30]
+    function setReceiveCallback(address receive_callback, bool allow_non_notifiable) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=33]
+    function transfer(
+        address to,
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=42]
+    function transferFrom(
+        address from,
+        address to,
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=52]
+    function transferToRecipient(
+        uint256 recipient_public_key,
+        address recipient_address,
+        uint128 tokens,
+        uint128 deploy_grams,
+        uint128 transfer_grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) external;
+\end{lstlisting}

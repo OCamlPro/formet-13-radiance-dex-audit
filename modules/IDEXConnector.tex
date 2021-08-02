@@ -1,0 +1,47 @@
+
+\section{Module "IDEXConnector.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  pubkey &\\\hline
+AbiHeader &  time &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IDEXConnector}
+
+
+In file {\tt IDEXConnector.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=11]
+  function burn(uint128 tokens, address callback_address, TvmCell callback_payload) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=7]
+  function deployEmptyWallet(address root) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=9]
+  function setBouncedCallback() external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=8]
+  function setTransferCallback() external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=10]
+  function transfer(address to, uint128 tokens, TvmCell payload) external;
+\end{lstlisting}

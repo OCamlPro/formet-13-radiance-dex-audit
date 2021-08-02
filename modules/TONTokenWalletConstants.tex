@@ -1,0 +1,40 @@
+
+\section{Module "TONTokenWalletConstants.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Library TONTokenWalletConstants}
+
+
+In file {\tt TONTokenWalletConstants.sol}
+
+\subsubsection{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint128 & target\_{}gas\_{}balance & Initialized to 0.5 ton \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=4]
+    uint128 constant target_gas_balance = 0.05 ton;
+\end{lstlisting}

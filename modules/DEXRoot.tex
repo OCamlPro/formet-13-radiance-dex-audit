@@ -1,0 +1,991 @@
+
+\section{Module "DEXRoot.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  time &\\\hline
+AbiHeader &  pubkey &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./DEXClient.sol &\\\hline
+./DEXPair.sol &\\\hline
+./RootTokenContract.sol &\\\hline
+./interfaces/IDEXRoot.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Contract DEXroot}
+
+
+In file {\tt DEXRoot.sol}
+
+\subsubsection{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+IDEXRoot & \\\hline
+\end{tabular}
+
+
+\subsubsection{Type Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Struct Pair}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+root0 & address & \\\hline
+root1 & address & \\\hline
+rootLP & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=24]
+	struct Pair {
+		address root0;
+		address root1;
+		address rootLP;
+	}
+\end{lstlisting}
+
+\subsubsection{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint128 & GRAMS\_{}CREATE\_{}DEX\_{}CLIENT & Initialized to 1 ton \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=42]
+	uint128 constant public GRAMS_CREATE_DEX_CLIENT = 1 ton;
+\end{lstlisting}
+
+\subsubsection{Static Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint256 & soUINT &  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=13]
+	uint256 static public soUINT;
+\end{lstlisting}
+
+\subsubsection{Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+TvmCell & codeDEXclient &  \\\hline
+ & & assigned in @4.DEXroot.setDEXclientCode\\\hline
+ & & used in @4.DEXroot.setDEXclientCode\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.computeClientAddress\\\hline
+TvmCell & codeDEXpair &  \\\hline
+ & & assigned in @4.DEXroot.setDEXpairCode\\\hline
+ & & used in @4.DEXroot.setDEXpairCode\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.computePairAddress\\\hline
+TvmCell & codeDEXconnector &  \\\hline
+ & & assigned in @4.DEXroot.setDEXconnectorCode\\\hline
+ & & used in @4.DEXroot.setDEXconnectorCode\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.computePairAddress\\\hline
+ & & used in @4.DEXroot.computeConnectorAddress\\\hline
+ & & used in @4.DEXroot.computeClientAddress\\\hline
+TvmCell & codeRootToken &  \\\hline
+ & & assigned in @4.DEXroot.setRootTokenCode\\\hline
+ & & used in @4.DEXroot.setRootTokenCode\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.computeRootTokenAddress\\\hline
+TvmCell & codeTONTokenWallet &  \\\hline
+ & & assigned in @4.DEXroot.setTONTokenWalletCode\\\hline
+ & & used in @4.DEXroot.setTONTokenWalletCode\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.computeRootTokenAddress\\\hline
+mapping (address =$>$ mapping (address =$>$ address)) & roots &  \\\hline
+ & & used in @4.DEXroot.getPairByRoots10\\\hline
+ & & used in @4.DEXroot.getPairByRoots01\\\hline
+ & & assigned in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & assigned in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+mapping (address =$>$ Pair) & pairs &  \\\hline
+ & & used in @4.DEXroot.getRootsByPair\\\hline
+ & & assigned in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+address [] & pairKeys &  \\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+mapping (uint256 =$>$ address) & pubkeys &  \\\hline
+ & & assigned in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.checkPubKey\\\hline
+ & & used in @4.DEXroot.checkPubKey\\\hline
+mapping (address =$>$ uint256) & clients &  \\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & used in @4.DEXroot.createDEXpair\\\hline
+ & & assigned in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+address [] & clientKeys &  \\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+mapping (address =$>$ uint128) & balanceOf &  \\\hline
+ & & assigned in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & assigned in @4.DEXroot.:receive\\\hline
+ & & used in @4.DEXroot.:receive\\\hline
+mapping (uint256 =$>$ address) & creators &  \\\hline
+ & & assigned in @4.DEXroot.setCreator\\\hline
+ & & used in @4.DEXroot.setCreator\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+ & & used in @4.DEXroot.createDEXclient\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=15]
+	TvmCell public codeDEXclient;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=16]
+	TvmCell public codeDEXpair;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=17]
+	TvmCell public codeDEXconnector;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=18]
+	TvmCell public codeRootToken;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=19]
+	TvmCell public codeTONTokenWallet;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=21]
+	mapping(address => mapping(address => address)) roots;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=30]
+	mapping(address => Pair) public pairs;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=31]
+	address[] public pairKeys;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=33]
+	mapping(uint256 => address) public pubkeys;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=34]
+	mapping(address => uint256) public clients;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=35]
+	address[] public clientKeys;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=37]
+	mapping(address => uint128) public balanceOf;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=38]
+	mapping(uint256 => address) public creators;
+\end{lstlisting}
+
+\subsubsection{Modifier Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Calling tvm.accept() without checking pubkey should not be allowed
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Modifier alwaysAccept}
+
+
+\begin{lstlisting}[firstnumber=45]
+	modifier alwaysAccept {
+		tvm.accept();
+		_;
+	}
+\end{lstlisting}
+
+\paragraph{Modifier checkOwnerAndAccept}
+
+
+\begin{lstlisting}[firstnumber=51]
+	modifier checkOwnerAndAccept {
+		require(msg.pubkey() == tvm.pubkey(), 101);
+		tvm.accept();
+		_;
+	}
+\end{lstlisting}
+
+\paragraph{Modifier checkCreatorAndAccept}
+
+
+\begin{lstlisting}[firstnumber=58]
+	modifier checkCreatorAndAccept {
+		require(msg.pubkey() != 0, 103);
+		tvm.accept();
+		_;
+	}
+\end{lstlisting}
+
+\subsubsection{Constructor Definitions}
+
+
+\paragraph{Constructor}
+
+\issueCritical{Constructor for DEXroot}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
+\\\hline
+Check that every argument is protected by a require().
+\\\hline
+If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
+\\\hline\end{tabular}
+\fi
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=65]
+	constructor() public {
+		require(tvm.pubkey() == msg.pubkey(), 102);
+		tvm.accept();
+	}
+\end{lstlisting}
+
+\subsubsection{Public Method Definitions}
+
+
+\paragraph{Function checkPubKey}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt bool & \tt status &\\\hline
+\tt address & \tt dexclient &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=328]
+	function checkPubKey(uint256 pubkey) public view alwaysAccept returns (bool status, address dexclient) {
+		status = pubkeys.exists(pubkey);
+		dexclient = pubkeys[pubkey];
+	}
+\end{lstlisting}
+
+\paragraph{Function createDEXclient}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & \tt deployedAddress &\\\hline
+\tt bool & \tt statusCreate &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=122]
+	function createDEXclient(uint256 pubkey, uint256 souint) public alwaysAccept returns (address deployedAddress, bool statusCreate){
+		statusCreate = false;
+		deployedAddress = address(0);
+		uint128 prepay = balanceOf[creators[pubkey]];
+		require (!pubkeys.exists(pubkey) && !(prepay < GRAMS_CREATE_DEX_CLIENT), 106);
+		delete balanceOf[creators[pubkey]];
+		TvmCell stateInit = tvm.buildStateInit({
+			contr: DEXClient,
+			varInit: {rootDEX:address(this),soUINT:souint,codeDEXConnector:codeDEXconnector},
+			code: codeDEXclient,
+			pubkey: pubkey
+		});
+		deployedAddress = new DEXClient{
+			stateInit: stateInit,
+			flag: 0,
+			bounce : false,
+			value : (prepay - 3100000)
+		}();
+		pubkeys[pubkey] = deployedAddress;
+		clients[deployedAddress] = pubkey;
+		clientKeys.push(deployedAddress);
+		statusCreate = true;
+	}
+\end{lstlisting}
+
+\paragraph{Function createDEXpair}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt root0 &\\\hline
+\tt address & \tt root1 &\\\hline
+\tt uint256 & \tt pairSoArg &\\\hline
+\tt uint256 & \tt connectorSoArg0 &\\\hline
+\tt uint256 & \tt connectorSoArg1 &\\\hline
+\tt uint256 & \tt rootSoArg &\\\hline
+\tt bytes & \tt rootName &\\\hline
+\tt bytes & \tt rootSymbol &\\\hline
+\tt uint8 & \tt rootDecimals &\\\hline
+\tt uint128 & \tt grammsForPair &\\\hline
+\tt uint128 & \tt grammsForRoot &\\\hline
+\tt uint128 & \tt grammsForConnector &\\\hline
+\tt uint128 & \tt grammsForWallet &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=237]
+	function createDEXpair(
+		address root0,
+		address root1,
+		uint256 pairSoArg,
+		uint256 connectorSoArg0,
+		uint256 connectorSoArg1,
+		uint256 rootSoArg,
+		bytes rootName,
+		bytes rootSymbol,
+		uint8 rootDecimals,
+		uint128 grammsForPair,
+		uint128 grammsForRoot,
+		uint128 grammsForConnector,
+		uint128 grammsForWallet
+	) public override {
+		require(root0 != address(0) && root1 != address(0) ,104);
+		require(!(grammsForPair < 500000000) && !(grammsForRoot < 500000000) && !(grammsForConnector < 500000000) && !(grammsForWallet < 500000000),105);
+		tvm.rawReserve(address(this).balance - msg.value, 2);
+		uint128 grammsNeeded = grammsForPair + (2 * grammsForConnector) + (2 * grammsForWallet) + grammsForRoot;
+		if (clients.exists(msg.sender) && !(msg.value < grammsNeeded) && !(root0 == root1) && !roots[root0].exists(root1) && !roots[root1].exists(root0)) {
+			TvmCell stateInitR = tvm.buildStateInit({
+				contr: RootTokenContract,
+				varInit: {
+					_randomNonce:rootSoArg,
+					name:rootName,
+					symbol:rootSymbol,
+					decimals:rootDecimals,
+					wallet_code:codeTONTokenWallet
+				},
+				code: codeRootToken,
+				pubkey : clients[msg.sender]
+			});
+			address root01 = address(tvm.hash(stateInitR));
+			TvmCell stateInitP = tvm.buildStateInit({
+				contr: DEXPair,
+				varInit: {
+					rootDEX:address(this),
+					soUINT:pairSoArg,
+					creator:msg.sender,
+					codeDEXConnector:codeDEXconnector,
+					rootA:root0,
+					rootB:root1,
+					rootAB:root01
+				},
+				code: codeDEXpair,
+				pubkey : clients[msg.sender]
+			});
+			address pairAddress = new DEXPair{
+				stateInit: stateInitP,
+				flag: 0,
+				bounce : false,
+				value : grammsForPair + (2 * grammsForConnector) + (2 * grammsForWallet)
+			}(connectorSoArg0, connectorSoArg1, grammsForConnector, grammsForWallet);
+			address rootAddress = new RootTokenContract{
+				stateInit: stateInitR,
+				flag: 0,
+				bounce : false,
+				value : grammsForRoot
+			}(0, pairAddress);
+			roots[root0][root1] = pairAddress;
+			roots[root1][root0] = pairAddress;
+			Pair cp = pairs[pairAddress];
+			cp.root0 = root0;
+			cp.root1 = root1;
+			cp.rootLP = rootAddress;
+			pairs[pairAddress] = cp;
+			pairKeys.push(pairAddress);
+			msg.sender.transfer({ value: 0, flag: 128});
+		} else {
+			msg.sender.transfer({ value: 0, flag: 128});
+		}
+	}
+\end{lstlisting}
+
+\paragraph{Function getBalanceTONgrams}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & \tt balanceTONgrams &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=334]
+	function getBalanceTONgrams() public pure alwaysAccept returns (uint128 balanceTONgrams){
+		return address(this).balance;
+	}
+\end{lstlisting}
+
+\paragraph{Function getClientAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt clientPubKey &\\\hline
+\tt uint256 & \tt clientSoArg &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=118]
+	function getClientAddress(uint256 clientPubKey, uint256 clientSoArg) public view responsible returns (address) {
+		return { value: 0, bounce: false, flag: 64 } computeClientAddress(clientPubKey,clientSoArg);
+	}
+\end{lstlisting}
+
+\paragraph{Function getConnectorAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt connectorPubKey &\\\hline
+\tt uint256 & \tt connectorSoArg &\\\hline
+\tt address & \tt connectorCommander &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=233]
+	function getConnectorAddress(uint256 connectorPubKey, uint256 connectorSoArg, address connectorCommander) public view responsible returns (address) {
+		return { value: 0, bounce: false, flag: 64 } computeConnectorAddress(connectorPubKey, connectorSoArg, connectorCommander);
+	}
+\end{lstlisting}
+
+\paragraph{Function getPairAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pairPubKey &\\\hline
+\tt uint256 & \tt pairSoArg &\\\hline
+\tt address & \tt pairCreator &\\\hline
+\tt address & \tt pairRootA &\\\hline
+\tt address & \tt pairRootB &\\\hline
+\tt address & \tt pairRootAB &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=171]
+	function getPairAddress(
+		uint256 pairPubKey,
+		uint256 pairSoArg,
+		address pairCreator,
+		address pairRootA,
+		address pairRootB,
+		address pairRootAB
+	) public view responsible returns (address) {
+		return { value: 0, bounce: false, flag: 64 } computePairAddress(pairPubKey,pairSoArg,pairCreator,pairRootA,pairRootB,pairRootAB);
+	}
+\end{lstlisting}
+
+\paragraph{Function getPairByRoots01}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt root0 &\\\hline
+\tt address & \tt root1 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & \tt pairAddr &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=314]
+	function getPairByRoots01(address root0, address root1) public view alwaysAccept returns (address pairAddr) {
+		pairAddr = roots[root0][root1];
+	}
+\end{lstlisting}
+
+\paragraph{Function getPairByRoots10}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt root1 &\\\hline
+\tt address & \tt root0 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & \tt pairAddr &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=318]
+	function getPairByRoots10(address root1, address root0) public view alwaysAccept returns (address pairAddr) {
+		pairAddr = roots[root1][root0];
+	}
+\end{lstlisting}
+
+\paragraph{Function getRootTokenAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt rootPubKey &\\\hline
+\tt uint256 & \tt rootSoArg &\\\hline
+\tt bytes & \tt rootName &\\\hline
+\tt bytes & \tt rootSymbol &\\\hline
+\tt uint8 & \tt rootDecimals &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=213]
+	function getRootTokenAddress(
+		uint256 rootPubKey,
+		uint256 rootSoArg,
+		bytes rootName,
+		bytes rootSymbol,
+		uint8 rootDecimals
+	) public view responsible returns (address) {
+		return { value: 0, bounce: false, flag: 64 } computeRootTokenAddress(rootPubKey,rootSoArg,rootName,rootSymbol,rootDecimals);
+	}
+\end{lstlisting}
+
+\paragraph{Function getRootsByPair}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt pairAddr &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & \tt root0 &\\\hline
+\tt address & \tt root1 &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt alwaysAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=322]
+	function getRootsByPair(address pairAddr) public view alwaysAccept returns (address root0, address root1) {
+		Pair cp = pairs[pairAddr];
+		root0 = cp.root0;
+		root1 = cp.root1;
+	}
+\end{lstlisting}
+
+\paragraph{Function sendTransfer}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt dest &\\\hline
+\tt uint128 & \tt value &\\\hline
+\tt bool & \tt bounce &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=71]
+	function sendTransfer(address dest, uint128 value, bool bounce) public pure checkOwnerAndAccept {
+		dest.transfer(value, bounce, 0);
+	}
+\end{lstlisting}
+
+\paragraph{Function setCreator}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt giverAddr &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkCreatorAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=100]
+	function setCreator(address giverAddr) public checkCreatorAndAccept {
+		uint256 pubkey = msg.pubkey();
+		creators[pubkey] = giverAddr;
+	}
+\end{lstlisting}
+
+\paragraph{Function setDEXclientCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmCell & \tt code &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=80]
+	function setDEXclientCode(TvmCell code) public checkOwnerAndAccept {
+		codeDEXclient = code;
+	}
+\end{lstlisting}
+
+\paragraph{Function setDEXconnectorCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmCell & \tt code &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=88]
+	function setDEXconnectorCode(TvmCell code) public checkOwnerAndAccept {
+		codeDEXconnector = code;
+	}
+\end{lstlisting}
+
+\paragraph{Function setDEXpairCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmCell & \tt code &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=84]
+	function setDEXpairCode(TvmCell code) public checkOwnerAndAccept {
+		codeDEXpair = code;
+	}
+\end{lstlisting}
+
+\paragraph{Function setRootTokenCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmCell & \tt code &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=92]
+	function setRootTokenCode(TvmCell code) public checkOwnerAndAccept {
+		codeRootToken = code;
+	}
+\end{lstlisting}
+
+\paragraph{Function setTONTokenWalletCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmCell & \tt code &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=96]
+	function setTONTokenWalletCode(TvmCell code) public checkOwnerAndAccept {
+		codeTONTokenWallet = code;
+	}
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Receive function}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=76]
+	receive() external {
+		balanceOf[msg.sender] += msg.value;
+	}
+\end{lstlisting}
+
+\paragraph{Function computeClientAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=108]
+	function computeClientAddress(uint256 pubkey, uint256 souint) private inline view returns (address) {
+		TvmCell stateInit = tvm.buildStateInit({
+			contr: DEXClient,
+			varInit: {rootDEX:address(this),soUINT:souint,codeDEXConnector:codeDEXconnector},
+			code: codeDEXclient,
+			pubkey: pubkey
+		});
+		return address(tvm.hash(stateInit));
+	}
+\end{lstlisting}
+
+\paragraph{Function computeConnectorAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\tt address & \tt commander &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=223]
+	function computeConnectorAddress(uint256 pubkey, uint256 souint, address commander) private inline view returns (address) {
+		TvmCell stateInit = tvm.buildStateInit({
+			contr: DEXConnector,
+			varInit: { soUINT: souint, dexclient: commander },
+			code: codeDEXconnector,
+			pubkey: pubkey
+		});
+		return address(tvm.hash(stateInit));
+	}
+\end{lstlisting}
+
+\paragraph{Function computePairAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\tt address & \tt creator &\\\hline
+\tt address & \tt rootA &\\\hline
+\tt address & \tt rootB &\\\hline
+\tt address & \tt rootAB &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=146]
+	function computePairAddress(
+		uint256 pubkey,
+		uint256 souint,
+		address creator,
+		address rootA,
+		address rootB,
+		address rootAB
+	) private inline view returns (address){
+		TvmCell stateInit = tvm.buildStateInit({
+			contr: DEXPair,
+			varInit: {
+				rootDEX:address(this),
+				soUINT:souint,
+				creator:creator,
+				codeDEXConnector:codeDEXconnector,
+				rootA:rootA,
+				rootB:rootB,
+				rootAB:rootAB
+			},
+			code: codeDEXpair,
+			pubkey : pubkey
+		});
+		return address(tvm.hash(stateInit));
+	}
+\end{lstlisting}
+
+\paragraph{Function computeRootTokenAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt pubkey &\\\hline
+\tt uint256 & \tt souint &\\\hline
+\tt bytes & \tt name &\\\hline
+\tt bytes & \tt symbol &\\\hline
+\tt uint8 & \tt decimals &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=182]
+	function computeRootTokenAddress(
+		uint256 pubkey,
+		uint256 souint,
+		bytes name,
+		bytes symbol,
+		uint8 decimals
+	) private inline view returns (address){
+		TvmCell stateInit = tvm.buildStateInit({
+			contr: RootTokenContract,
+			varInit: {
+				_randomNonce:souint,
+				name:name,
+				symbol:symbol,
+				decimals:decimals,
+				wallet_code:codeTONTokenWallet
+			},
+			code: codeRootToken,
+			pubkey : pubkey
+		});
+		return address(tvm.hash(stateInit));
+	}
+\end{lstlisting}

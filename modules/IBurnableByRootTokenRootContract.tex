@@ -1,0 +1,31 @@
+
+\section{Module "IBurnableByRootTokenRootContract.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IBurnableByRootTokenRootContract}
+
+
+In file {\tt IBurnableByRootTokenRootContract.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=5]
+    function proxyBurn(
+        uint128 tokens,
+        address sender_address,
+        address send_gas_to,
+        address callback_address,
+        TvmCell callback_payload
+    ) external;
+\end{lstlisting}

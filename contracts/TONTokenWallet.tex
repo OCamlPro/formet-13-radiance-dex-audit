@@ -1,0 +1,1139 @@
+
+\chapter{Contract TONTokenWallet}
+
+
+In file {\tt TONTokenWallet.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+ITONTokenWallet & \\\hline
+IDestroyable & \\\hline
+IBurnableByOwnerTokenWallet & \\\hline
+IBurnableByRootTokenWallet & \\\hline
+IVersioned & \\\hline
+\end{tabular}
+
+
+\section{Static Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & root\_{}address &  \\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getExpectedAddress\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & used in @18.TONTokenWallet.burnByRoot\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+TvmCell & code &  \\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.getWalletCode\\\hline
+ & & used in @18.TONTokenWallet.getExpectedAddress\\\hline
+ & & used in @18.TONTokenWallet.getExpectedAddress\\\hline
+uint256 & wallet\_{}public\_{}key &  \\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & used in @18.TONTokenWallet.burnByRoot\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+address & owner\_{}address &  \\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferFrom\\\hline
+ & & used in @18.TONTokenWallet.transferFrom\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & used in @18.TONTokenWallet.disapprove\\\hline
+ & & used in @18.TONTokenWallet.disapprove\\\hline
+ & & used in @18.TONTokenWallet.burnByRoot\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=24]
+    address static root_address;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=25]
+    TvmCell static code;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=27]
+    uint256 static wallet_public_key;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=29]
+    address static owner_address;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint128 & balance\_{} &  \\\hline
+ & & assigned in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & assigned in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & used in @18.TONTokenWallet.transferToRecipient\\\hline
+ & & assigned in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & assigned in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & used in @18.TONTokenWallet.transfer\\\hline
+ & & assigned in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & assigned in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & used in @18.TONTokenWallet.destroy\\\hline
+ & & assigned in @18.TONTokenWallet.burnByRoot\\\hline
+ & & used in @18.TONTokenWallet.burnByRoot\\\hline
+ & & used in @18.TONTokenWallet.burnByRoot\\\hline
+ & & assigned in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & assigned in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.burnByOwner\\\hline
+ & & used in @18.TONTokenWallet.balance\\\hline
+ & & assigned in @18.TONTokenWallet.accept\\\hline
+ & & used in @18.TONTokenWallet.accept\\\hline
+ & & assigned in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & assigned in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+optional (AllowanceInfo) & allowance\_{} &  \\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.internalTransferFrom\\\hline
+ & & used in @18.TONTokenWallet.disapprove\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.approve\\\hline
+ & & used in @18.TONTokenWallet.allowance\\\hline
+ & & used in @18.TONTokenWallet.allowance\\\hline
+address & receive\_{}callback &  \\\hline
+ & & assigned in @18.TONTokenWallet.setReceiveCallback\\\hline
+ & & used in @18.TONTokenWallet.setReceiveCallback\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+address & bounced\_{}callback &  \\\hline
+ & & assigned in @18.TONTokenWallet.setBouncedCallback\\\hline
+ & & used in @18.TONTokenWallet.setBouncedCallback\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+ & & used in @18.TONTokenWallet.:onBounce\\\hline
+bool & allow\_{}non\_{}notifiable &  \\\hline
+ & & assigned in @18.TONTokenWallet.setReceiveCallback\\\hline
+ & & used in @18.TONTokenWallet.setReceiveCallback\\\hline
+ & & used in @18.TONTokenWallet.internalTransfer\\\hline
+ & & used in @18.TONTokenWallet.getDetails\\\hline
+ & & assigned in @18.TONTokenWallet.:constructor\\\hline
+ & & used in @18.TONTokenWallet.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=31]
+    uint128 balance_;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=32]
+    optional(AllowanceInfo) allowance_;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=34]
+    address receive_callback;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=35]
+    address bounced_callback;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=36]
+    bool allow_non_notifiable;
+\end{lstlisting}
+
+\section{Modifier Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Calling tvm.accept() without checking pubkey should not be allowed
+\\\hline\end{tabular}
+\fi
+
+\subsection{Modifier onlyRoot}
+
+
+\begin{lstlisting}[firstnumber=598]
+    modifier onlyRoot() {
+        require(root_address == msg.sender, TONTokenWalletErrors.error_message_sender_is_not_my_root);
+        _;
+    }
+\end{lstlisting}
+
+\subsection{Modifier onlyOwner}
+
+
+\begin{lstlisting}[firstnumber=603]
+    modifier onlyOwner() {
+        require((owner_address.value != 0 && owner_address == msg.sender) ||
+                (wallet_public_key != 0 && wallet_public_key == msg.pubkey()),
+                TONTokenWalletErrors.error_message_sender_is_not_my_owner);
+        _;
+    }
+\end{lstlisting}
+
+\subsection{Modifier onlyInternalOwner}
+
+
+\begin{lstlisting}[firstnumber=610]
+    modifier onlyInternalOwner() {
+        require(owner_address.value != 0 && owner_address == msg.sender);
+        _;
+    }
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for TONTokenWallet}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
+\\\hline
+Check that every argument is protected by a require().
+\\\hline
+If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
+\\\hline\end{tabular}
+\fi
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=43]
+    constructor() public {
+        require(wallet_public_key == tvm.pubkey() && (owner_address.value == 0 || wallet_public_key == 0));
+        tvm.accept();
+
+        allow_non_notifiable = true;
+
+        if (owner_address.value != 0) {
+            ITokenWalletDeployedCallback(owner_address).notifyWalletDeployed{value: 0.00001 ton, flag: 1}(root_address);
+        }
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function destroy}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt gas\_{}dest &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=584]
+    function destroy(
+        address gas_dest
+    )
+        override
+        public
+        onlyOwner
+    {
+        require(balance_ == 0);
+        tvm.accept();
+        selfdestruct(gas_dest);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Fallback function}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=683]
+    fallback() external {
+    }
+\end{lstlisting}
+
+\subsection{OnBounce function}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt TvmSlice & \tt body &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=653]
+    onBounce(TvmSlice body) external {
+        tvm.accept();
+
+        uint32 functionId = body.decode(uint32);
+        if (functionId == tvm.functionId(ITONTokenWallet.internalTransfer)) {
+            uint128 tokens = body.decode(uint128);
+            balance_ += tokens;
+
+            if (bounced_callback.value != 0) {
+                tvm.rawReserve(address(this).balance - msg.value, 2);
+                ITokensBouncedCallback(bounced_callback).tokensBouncedCallback{ value: 0, flag: 128 }(
+                    address(this),
+                    root_address,
+                    tokens,
+                    msg.sender,
+                    balance_
+                );
+            } else if (owner_address.value != 0) {
+                tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+                owner_address.transfer({ value: 0, flag: 128 });
+            }
+        } else if (functionId == tvm.functionId(IBurnableTokenRootContract.tokensBurned)) {
+            balance_ += body.decode(uint128);
+            if (owner_address.value != 0) {
+                tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+                owner_address.transfer({ value: 0, flag: 128 });
+            }
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function accept}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyRoot & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=96]
+    function accept(
+        uint128 tokens
+    )
+        override
+        external
+        onlyRoot
+    {
+        tvm.accept();
+        balance_ += tokens;
+    }
+\end{lstlisting}
+
+\subsection{Function allowance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt AllowanceInfo & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=107]
+    function allowance() override external view responsible returns (AllowanceInfo) {
+        return { value: 0, bounce: false, flag: 64 } (allowance_.hasValue() ? allowance_.get() : AllowanceInfo(0, address.makeAddrStd(0, 0)));
+    }
+\end{lstlisting}
+
+\subsection{Function approve}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt spender &\\\hline
+\tt uint128 & \tt remaining\_{}tokens &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=119]
+    function approve(
+        address spender,
+        uint128 remaining_tokens,
+        uint128 tokens
+    )
+        override
+        external
+        onlyOwner
+    {
+        require(remaining_tokens == 0 || !allowance_.hasValue(), TONTokenWalletErrors.error_non_zero_remaining);
+        if (owner_address.value != 0 ) {
+            tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+        } else {
+            tvm.accept();
+        }
+
+        if (allowance_.hasValue()) {
+            if (allowance_.get().remaining_tokens == remaining_tokens) {
+                allowance_.set(AllowanceInfo(tokens, spender));
+            }
+        } else {
+            allowance_.set(AllowanceInfo(tokens, spender));
+        }
+
+        if (owner_address.value != 0 ) {
+            msg.sender.transfer({ value: 0, flag: 128 });
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function balance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=58]
+    function balance() override external view responsible returns (uint128) {
+        return { value: 0, bounce: false, flag: 64 } balance_;
+    }
+\end{lstlisting}
+
+\subsection{Function burnByOwner}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt uint128 & \tt grams &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt address & \tt callback\_{}address &\\\hline
+\tt TvmCell & \tt callback\_{}payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=473]
+    function burnByOwner(
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        address callback_address,
+        TvmCell callback_payload
+    ) override external onlyOwner {
+        require(tokens > 0);
+        require(tokens <= balance_, TONTokenWalletErrors.error_not_enough_balance);
+        require((owner_address.value != 0 && msg.value > 0) ||
+                (owner_address.value == 0 && grams <= address(this).balance && grams > 0), TONTokenWalletErrors.error_low_message_value);
+
+        if (owner_address.value != 0 ) {
+            tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+            balance_ -= tokens;
+            IBurnableTokenRootContract(root_address)
+                .tokensBurned{ value: 0, flag: 128, bounce: true }(
+                    tokens,
+                    wallet_public_key,
+                    owner_address,
+                    send_gas_to.value != 0 ? send_gas_to : owner_address,
+                    callback_address,
+                    callback_payload
+                );
+        } else {
+            tvm.accept();
+            balance_ -= tokens;
+            IBurnableTokenRootContract(root_address)
+                .tokensBurned{ value: grams, bounce: true }(
+                    tokens,
+                    wallet_public_key,
+                    owner_address,
+                    send_gas_to.value != 0 ? send_gas_to : address(this),
+                    callback_address,
+                    callback_payload
+                );
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function burnByRoot}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt address & \tt callback\_{}address &\\\hline
+\tt TvmCell & \tt callback\_{}payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyRoot & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=520]
+    function burnByRoot(
+        uint128 tokens,
+        address send_gas_to,
+        address callback_address,
+        TvmCell callback_payload
+    ) override external onlyRoot {
+        require(tokens > 0);
+        require(tokens <= balance_, TONTokenWalletErrors.error_not_enough_balance);
+
+        tvm.rawReserve(address(this).balance - msg.value, 2);
+
+        balance_ -= tokens;
+
+        IBurnableTokenRootContract(root_address)
+            .tokensBurned{ value: 0, flag: 128, bounce: true }(
+                tokens,
+                wallet_public_key,
+                owner_address,
+                send_gas_to,
+                callback_address,
+                callback_payload
+            );
+    }
+\end{lstlisting}
+
+\subsection{Function disapprove}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=148]
+    function disapprove() override external onlyOwner {
+        if (owner_address.value != 0 ) {
+            tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+        } else {
+            tvm.accept();
+        }
+
+        allowance_.reset();
+
+        if (owner_address.value != 0 ) {
+            msg.sender.transfer({ value: 0, flag: 128 });
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function getDetails}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt ITONTokenWalletDetails & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=72]
+    function getDetails() override external view responsible returns (ITONTokenWalletDetails) {
+        return { value: 0, bounce: false, flag: 64 } ITONTokenWalletDetails(
+            root_address,
+            wallet_public_key,
+            owner_address,
+            balance_,
+            receive_callback,
+            bounced_callback,
+            allow_non_notifiable
+        );
+    }
+\end{lstlisting}
+
+\subsection{Function getExpectedAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
+\tt address & \tt owner\_{}address\_{} &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=620]
+    function getExpectedAddress(
+        uint256 wallet_public_key_,
+        address owner_address_
+    )
+        private
+        inline
+        view
+    returns (
+        address
+    ) {
+        TvmCell stateInit = tvm.buildStateInit({
+            contr: TONTokenWallet,
+            varInit: {
+                root_address: root_address,
+                code: code,
+                wallet_public_key: wallet_public_key_,
+                owner_address: owner_address_
+            },
+            pubkey: wallet_public_key_,
+            code: code
+        });
+
+        return address(tvm.hash(stateInit));
+    }
+\end{lstlisting}
+
+\subsection{Function getVersion}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint32 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=54]
+    function getVersion() override external pure responsible returns (uint32) {
+        return 4;
+    }
+\end{lstlisting}
+
+\subsection{Function getWalletCode}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt TvmCell & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=87]
+    function getWalletCode() override external view responsible returns (TvmCell) {
+        return { value: 0, bounce: false, flag: 64 } code;
+    }
+\end{lstlisting}
+
+\subsection{Function internalTransfer}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
+\tt address & \tt sender\_{}address &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt bool & \tt notify\_{}receiver &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=370]
+    function internalTransfer(
+        uint128 tokens,
+        uint256 sender_public_key,
+        address sender_address,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    )
+        override
+        external
+    {
+        require(notify_receiver || allow_non_notifiable || receive_callback.value == 0,
+                TONTokenWalletErrors.error_recipient_has_disallow_non_notifiable);
+        address expectedSenderAddress = getExpectedAddress(sender_public_key, sender_address);
+        require(msg.sender == expectedSenderAddress, TONTokenWalletErrors.error_message_sender_is_not_good_wallet);
+        require(sender_address != owner_address || sender_public_key != wallet_public_key, TONTokenWalletErrors.error_wrong_recipient);
+
+        if (owner_address.value != 0 ) {
+            uint128 reserve = math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value);
+            require(address(this).balance > reserve, TONTokenWalletErrors.error_low_message_value);
+            tvm.rawReserve(reserve, 2);
+        } else {
+            tvm.rawReserve(address(this).balance - msg.value, 2);
+        }
+
+        balance_ += tokens;
+
+        if (notify_receiver && receive_callback.value != 0) {
+            ITokensReceivedCallback(receive_callback).tokensReceivedCallback{ value: 0, flag: 128 }(
+                address(this),
+                root_address,
+                tokens,
+                sender_public_key,
+                sender_address,
+                msg.sender,
+                send_gas_to,
+                balance_,
+                payload
+            );
+        } else {
+            send_gas_to.transfer({ value: 0, flag: 128 });
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function internalTransferFrom}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt to &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt bool & \tt notify\_{}receiver &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=423]
+    function internalTransferFrom(
+        address to,
+        uint128 tokens,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    )
+        override
+        external
+    {
+        require(allowance_.hasValue(), TONTokenWalletErrors.error_no_allowance_set);
+        require(msg.sender == allowance_.get().spender, TONTokenWalletErrors.error_wrong_spender);
+        require(tokens <= allowance_.get().remaining_tokens, TONTokenWalletErrors.error_not_enough_allowance);
+        require(tokens <= balance_, TONTokenWalletErrors.error_not_enough_balance);
+        require(tokens > 0);
+        require(to != address(this), TONTokenWalletErrors.error_wrong_recipient);
+
+        if (owner_address.value != 0 ) {
+            uint128 reserve = math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value);
+            require(address(this).balance > reserve + TONTokenWalletConstants.target_gas_balance, TONTokenWalletErrors.error_low_message_value);
+            tvm.rawReserve(reserve, 2);
+            tvm.rawReserve(math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value), 2);
+        } else {
+            require(msg.value > TONTokenWalletConstants.target_gas_balance, TONTokenWalletErrors.error_low_message_value);
+            tvm.rawReserve(address(this).balance - msg.value, 2);
+        }
+
+        balance_ -= tokens;
+
+        allowance_.set(AllowanceInfo(allowance_.get().remaining_tokens - tokens, allowance_.get().spender));
+
+        ITONTokenWallet(to).internalTransfer{ value: 0, bounce: true, flag: 129 }(
+            tokens,
+            wallet_public_key,
+            owner_address,
+            send_gas_to,
+            notify_receiver,
+            payload
+        );
+    }
+\end{lstlisting}
+
+\subsection{Function setBouncedCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt bounced\_{}callback\_{} &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=568]
+    function setBouncedCallback(
+        address bounced_callback_
+    )
+        override
+        external
+        onlyOwner
+    {
+        tvm.accept();
+        bounced_callback = bounced_callback_;
+    }
+\end{lstlisting}
+
+\subsection{Function setReceiveCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt receive\_{}callback\_{} &\\\hline
+\tt bool & \tt allow\_{}non\_{}notifiable\_{} &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=550]
+    function setReceiveCallback(
+        address receive_callback_,
+        bool allow_non_notifiable_
+    )
+        override
+        external
+        onlyOwner
+    {
+        tvm.accept();
+        receive_callback = receive_callback_;
+        allow_non_notifiable = allow_non_notifiable_;
+    }
+\end{lstlisting}
+
+\subsection{Function transfer}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt to &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt uint128 & \tt grams &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt bool & \tt notify\_{}receiver &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=262]
+    function transfer(
+        address to,
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) override external onlyOwner {
+        require(tokens > 0);
+        require(tokens <= balance_, TONTokenWalletErrors.error_not_enough_balance);
+        require(to.value != 0, TONTokenWalletErrors.error_wrong_recipient);
+        require(to != address(this), TONTokenWalletErrors.error_wrong_recipient);
+
+        if (owner_address.value != 0 ) {
+            uint128 reserve = math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value);
+            require(address(this).balance > reserve + TONTokenWalletConstants.target_gas_balance, TONTokenWalletErrors.error_low_message_value);
+            tvm.rawReserve(reserve, 2);
+            balance_ -= tokens;
+
+            ITONTokenWallet(to).internalTransfer{ value: 0, flag: 129, bounce: true }(
+                tokens,
+                wallet_public_key,
+                owner_address,
+                send_gas_to.value != 0 ? send_gas_to : owner_address,
+                notify_receiver,
+                payload
+            );
+        } else {
+            require(address(this).balance > grams, TONTokenWalletErrors.error_low_message_value);
+            require(grams > TONTokenWalletConstants.target_gas_balance, TONTokenWalletErrors.error_low_message_value);
+            tvm.accept();
+            balance_ -= tokens;
+
+            ITONTokenWallet(to).internalTransfer{ value: grams, bounce: true, flag: 1 }(
+                tokens,
+                wallet_public_key,
+                owner_address,
+                send_gas_to.value != 0 ? send_gas_to : address(this),
+                notify_receiver,
+                payload
+            );
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function transferFrom}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt from &\\\hline
+\tt address & \tt to &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt uint128 & \tt grams &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt bool & \tt notify\_{}receiver &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=317]
+    function transferFrom(
+        address from,
+        address to,
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    )
+        override
+        external
+        onlyOwner
+    {
+        require(to.value != 0, TONTokenWalletErrors.error_wrong_recipient);
+        require(tokens > 0);
+        require(from != to, TONTokenWalletErrors.error_wrong_recipient);
+
+        if (owner_address.value != 0 ) {
+            uint128 reserve = math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value);
+            require(address(this).balance > reserve + (TONTokenWalletConstants.target_gas_balance * 2), TONTokenWalletErrors.error_low_message_value);
+            tvm.rawReserve(reserve, 2);
+
+            ITONTokenWallet(from).internalTransferFrom{ value: 0, flag: 129 }(
+                to,
+                tokens,
+                send_gas_to.value != 0 ? send_gas_to : owner_address,
+                notify_receiver,
+                payload
+            );
+        } else {
+            require(address(this).balance > grams, TONTokenWalletErrors.error_low_message_value);
+            require(grams > TONTokenWalletConstants.target_gas_balance * 2, TONTokenWalletErrors.error_low_message_value);
+            tvm.accept();
+            ITONTokenWallet(from).internalTransferFrom{ value: grams, flag: 1 }(
+                to,
+                tokens,
+                send_gas_to.value != 0 ? send_gas_to : address(this),
+                notify_receiver,
+                payload
+            );
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function transferToRecipient}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt recipient\_{}public\_{}key &\\\hline
+\tt address & \tt recipient\_{}address &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt uint128 & \tt deploy\_{}grams &\\\hline
+\tt uint128 & \tt transfer\_{}grams &\\\hline
+\tt address & \tt send\_{}gas\_{}to &\\\hline
+\tt bool & \tt notify\_{}receiver &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=177]
+    function transferToRecipient(
+        uint256 recipient_public_key,
+        address recipient_address,
+        uint128 tokens,
+        uint128 deploy_grams,
+        uint128 transfer_grams,
+        address send_gas_to,
+        bool notify_receiver,
+        TvmCell payload
+    ) override external onlyOwner {
+        require(tokens > 0);
+        require(tokens <= balance_, TONTokenWalletErrors.error_not_enough_balance);
+        require(recipient_address.value == 0 || recipient_public_key == 0, TONTokenWalletErrors.error_wrong_recipient);
+
+        if (owner_address.value != 0 ) {
+            uint128 reserve = math.max(TONTokenWalletConstants.target_gas_balance, address(this).balance - msg.value);
+            require(address(this).balance > reserve + TONTokenWalletConstants.target_gas_balance + deploy_grams, TONTokenWalletErrors.error_low_message_value);
+            require(recipient_address != owner_address, TONTokenWalletErrors.error_wrong_recipient);
+            tvm.rawReserve(reserve, 2);
+        } else {
+            require(address(this).balance > deploy_grams + transfer_grams, TONTokenWalletErrors.error_low_message_value);
+            require(transfer_grams > TONTokenWalletConstants.target_gas_balance, TONTokenWalletErrors.error_low_message_value);
+            require(recipient_public_key != wallet_public_key);
+            tvm.accept();
+        }
+
+        TvmCell stateInit = tvm.buildStateInit({
+            contr: TONTokenWallet,
+            varInit: {
+                root_address: root_address,
+                code: code,
+                wallet_public_key: recipient_public_key,
+                owner_address: recipient_address
+            },
+            pubkey: recipient_public_key,
+            code: code
+        });
+
+        address to;
+
+        if(deploy_grams > 0) {
+            to = new TONTokenWallet{
+                stateInit: stateInit,
+                value: deploy_grams,
+                wid: address(this).wid,
+                flag: 1
+            }();
+        } else {
+            to = address(tvm.hash(stateInit));
+        }
+
+        if (owner_address.value != 0 ) {
+            balance_ -= tokens;
+            ITONTokenWallet(to).internalTransfer{ value: 0, flag: 129, bounce: true }(
+                tokens,
+                wallet_public_key,
+                owner_address,
+                send_gas_to.value != 0 ? send_gas_to : owner_address,
+                notify_receiver,
+                payload
+            );
+        } else {
+            balance_ -= tokens;
+            ITONTokenWallet(to).internalTransfer{ value: transfer_grams, flag: 1, bounce: true }(
+                tokens,
+                wallet_public_key,
+                owner_address,
+                send_gas_to.value != 0 ? send_gas_to : address(this),
+                notify_receiver,
+                payload
+            );
+        }
+    }
+\end{lstlisting}

@@ -1,0 +1,60 @@
+
+\section{Module "RootTokenContractErrors.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Library RootTokenContractErrors}
+
+
+In file {\tt RootTokenContractErrors.sol}
+
+\subsubsection{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint8 & error\_{}message\_{}sender\_{}is\_{}not\_{}my\_{}owner & Initialized to 100  \\\hline
+uint8 & error\_{}not\_{}enough\_{}balance & Initialized to 101  \\\hline
+uint8 & error\_{}message\_{}sender\_{}is\_{}not\_{}good\_{}wallet & Initialized to 102  \\\hline
+uint8 & error\_{}define\_{}public\_{}key\_{}or\_{}owner\_{}address & Initialized to 103  \\\hline
+uint8 & error\_{}paused & Initialized to 104  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=4]
+    uint8 constant error_message_sender_is_not_my_owner = 100;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=5]
+    uint8 constant error_not_enough_balance = 101;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=6]
+    uint8 constant error_message_sender_is_not_good_wallet = 102;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=7]
+    uint8 constant error_define_public_key_or_owner_address = 103;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=8]
+    uint8 constant error_paused = 104;
+\end{lstlisting}

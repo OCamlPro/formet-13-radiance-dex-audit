@@ -1,0 +1,107 @@
+
+\section{Module "IRootTokenContract.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IRootTokenContract}
+
+
+In file {\tt IRootTokenContract.sol}
+
+\subsubsection{Type Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Struct IRootTokenContractDetails}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+name & bytes & \\\hline
+symbol & bytes & \\\hline
+decimals & uint8 & \\\hline
+root\_{}public\_{}key & uint256 & \\\hline
+root\_{}owner\_{}address & address & \\\hline
+total\_{}supply & uint128 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=5]
+    struct IRootTokenContractDetails {
+        bytes name;
+        bytes symbol;
+        uint8 decimals;
+        uint256 root_public_key;
+        address root_owner_address;
+        uint128 total_supply;
+    }
+\end{lstlisting}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=30]
+    function deployEmptyWallet(
+        uint128 deploy_grams,
+        uint256 wallet_public_key,
+        address owner_address,
+        address gas_back_address
+    ) external returns(address);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=22]
+    function deployWallet(
+        uint128 tokens,
+        uint128 deploy_grams,
+        uint256 wallet_public_key,
+        address owner_address,
+        address gas_back_address
+    ) external returns(address);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=14]
+    function getDetails() external view responsible returns (IRootTokenContractDetails);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=16]
+    function getTotalSupply() external view responsible returns (uint128);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=20]
+    function getWalletAddress(uint256 wallet_public_key, address owner_address) external view responsible returns(address);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=18]
+    function getWalletCode() external view responsible returns (TvmCell);
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=37]
+    function mint(uint128 tokens, address to) external;
+\end{lstlisting}
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=39]
+    function sendExpectedWalletAddress(uint256 wallet_public_key_, address owner_address_, address to) external;
+\end{lstlisting}

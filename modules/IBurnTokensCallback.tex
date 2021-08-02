@@ -1,0 +1,32 @@
+
+\section{Module "IBurnTokensCallback.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IBurnTokensCallback}
+
+
+In file {\tt IBurnTokensCallback.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=6]
+    function burnCallback(
+        uint128 tokens,
+        TvmCell payload,
+        uint256 sender_public_key,
+        address sender_address,
+        address wallet_address,
+        address send_gas_to
+    ) external;
+\end{lstlisting}

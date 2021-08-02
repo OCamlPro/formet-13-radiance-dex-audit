@@ -1,0 +1,100 @@
+
+\section{Module "TONTokenWalletErrors.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Library TONTokenWalletErrors}
+
+
+In file {\tt TONTokenWalletErrors.sol}
+
+\subsubsection{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint8 & error\_{}message\_{}sender\_{}is\_{}not\_{}my\_{}owner & Initialized to 100  \\\hline
+uint8 & error\_{}not\_{}enough\_{}balance & Initialized to 101  \\\hline
+uint8 & error\_{}message\_{}sender\_{}is\_{}not\_{}my\_{}root & Initialized to 102  \\\hline
+uint8 & error\_{}message\_{}sender\_{}is\_{}not\_{}good\_{}wallet & Initialized to 103  \\\hline
+uint8 & error\_{}wrong\_{}bounced\_{}header & Initialized to 104  \\\hline
+uint8 & error\_{}wrong\_{}bounced\_{}args & Initialized to 105  \\\hline
+uint8 & error\_{}non\_{}zero\_{}remaining & Initialized to 106  \\\hline
+uint8 & error\_{}no\_{}allowance\_{}set & Initialized to 107  \\\hline
+uint8 & error\_{}wrong\_{}spender & Initialized to 108  \\\hline
+uint8 & error\_{}not\_{}enough\_{}allowance & Initialized to 109  \\\hline
+uint8 & error\_{}low\_{}message\_{}value & Initialized to 110  \\\hline
+uint8 & error\_{}wrong\_{}recipient & Initialized to 111  \\\hline
+uint8 & error\_{}recipient\_{}has\_{}disallow\_{}non\_{}notifiable & Initialized to 112  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=4]
+    uint8 constant error_message_sender_is_not_my_owner            = 100;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=5]
+    uint8 constant error_not_enough_balance                        = 101;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=6]
+    uint8 constant error_message_sender_is_not_my_root             = 102;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=7]
+    uint8 constant error_message_sender_is_not_good_wallet         = 103;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=8]
+    uint8 constant error_wrong_bounced_header                      = 104;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=9]
+    uint8 constant error_wrong_bounced_args                        = 105;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=10]
+    uint8 constant error_non_zero_remaining                        = 106;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=11]
+    uint8 constant error_no_allowance_set                          = 107;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=12]
+    uint8 constant error_wrong_spender                             = 108;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=13]
+    uint8 constant error_not_enough_allowance                      = 109;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=14]
+    uint8 constant error_low_message_value                         = 110;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=15]
+    uint8 constant error_wrong_recipient                           = 111;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=16]
+    uint8 constant error_recipient_has_disallow_non_notifiable     = 112;
+\end{lstlisting}

@@ -1,0 +1,439 @@
+
+\section{Module "DEXConnector.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  pubkey &\\\hline
+AbiHeader &  time &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./interfaces/IRootTokenContract.sol &\\\hline
+./interfaces/ITONTokenWallet.sol &\\\hline
+./interfaces/IExpectedWalletAddressCallback.sol &\\\hline
+./interfaces/IBurnableByOwnerTokenWallet.sol &\\\hline
+./interfaces/IDEXConnector.sol &\\\hline
+./interfaces/IDEXConnect.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Contract DEXConnector}
+
+
+In file {\tt DEXConnector.sol}
+
+\subsubsection{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+IExpectedWalletAddressCallback & \\\hline
+IDEXConnector & \\\hline
+\end{tabular}
+
+
+\subsubsection{Constant Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish constants from other, such as all uppercase names.
+\\\hline
+Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint128 & GRAMS\_{}TO\_{}ROOT & Initialized to 500000000  \\\hline
+uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=19]
+  uint128 constant GRAMS_TO_ROOT = 500000000;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=20]
+  uint128 constant GRAMS_TO_NEW_WALLET = 250000000;
+\end{lstlisting}
+
+\subsubsection{Static Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint256 & soUINT &  \\\hline
+address & dexclient &  \\\hline
+ & & used in @2.DEXConnector.transfer\\\hline
+ & & used in @2.DEXConnector.transfer\\\hline
+ & & used in @2.DEXConnector.setTransferCallback\\\hline
+ & & used in @2.DEXConnector.setTransferCallback\\\hline
+ & & used in @2.DEXConnector.setBouncedCallback\\\hline
+ & & used in @2.DEXConnector.setBouncedCallback\\\hline
+ & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & used in @2.DEXConnector.burn\\\hline
+ & & used in @2.DEXConnector.burn\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=15]
+  uint256 static public soUINT;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=16]
+  address static public dexclient;
+\end{lstlisting}
+
+\subsubsection{Variable Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & drivenRoot &  \\\hline
+ & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & assigned in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+address & driven &  \\\hline
+ & & used in @2.DEXConnector.transfer\\\hline
+ & & used in @2.DEXConnector.transfer\\\hline
+ & & used in @2.DEXConnector.setTransferCallback\\\hline
+ & & used in @2.DEXConnector.setTransferCallback\\\hline
+ & & used in @2.DEXConnector.setBouncedCallback\\\hline
+ & & used in @2.DEXConnector.setBouncedCallback\\\hline
+ & & assigned in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.burn\\\hline
+ & & used in @2.DEXConnector.burn\\\hline
+bool & statusConnected &  \\\hline
+ & & assigned in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.expectedWalletAddressCallback\\\hline
+ & & used in @2.DEXConnector.deployEmptyWallet\\\hline
+ & & assigned in @2.DEXConnector.:constructor\\\hline
+ & & used in @2.DEXConnector.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=22]
+  address public drivenRoot;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=23]
+  address public driven;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=24]
+  bool public statusConnected;
+\end{lstlisting}
+
+\subsubsection{Modifier Definitions}
+
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Calling tvm.accept() without checking pubkey should not be allowed
+\\\hline\end{tabular}
+\fi
+
+\paragraph{Modifier alwaysAccept}
+
+
+\begin{lstlisting}[firstnumber=27]
+	modifier alwaysAccept {
+		tvm.accept();
+		_;
+	}
+\end{lstlisting}
+
+\paragraph{Modifier checkOwnerAndAccept}
+
+
+\begin{lstlisting}[firstnumber=32]
+  modifier checkOwnerAndAccept {
+    // Check that message from contract owner.
+    require(msg.sender == dexclient, 101);
+    tvm.accept();
+    _;
+  }
+\end{lstlisting}
+
+\subsubsection{Constructor Definitions}
+
+
+\paragraph{Constructor}
+
+\issueCritical{Constructor for DEXConnector}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+
+\ifsoldraft
+\noindent\begin{tabular}{|p{12cm}|}\hline
+\rowcolor{green}Advises
+\\\hline
+Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
+\\\hline
+Check that every argument is protected by a require().
+\\\hline
+If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
+\\\hline\end{tabular}
+\fi
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=39]
+  constructor() public checkOwnerAndAccept {
+      statusConnected = false;
+  }
+\end{lstlisting}
+
+\subsubsection{Public Method Definitions}
+
+
+\paragraph{Function burn}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt address & \tt callback\_{}address &\\\hline
+\tt TvmCell & \tt callback\_{}payload &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=116]
+  function burn(uint128 tokens, address callback_address, TvmCell callback_payload) public override {
+    require(msg.sender == dexclient, 101);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmCell body = tvm.encodeBody(IBurnableByOwnerTokenWallet(driven).burnByOwner, tokens, 0, dexclient, callback_address, callback_payload);
+    driven.transfer({value: 0, bounce:true, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\paragraph{Function deployEmptyWallet}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt root &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=60]
+  function deployEmptyWallet(address root) public override {
+    require(msg.sender == dexclient, 101);
+    require(!(msg.value < GRAMS_TO_ROOT * 2), 103);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    if (!statusConnected) {
+      drivenRoot = root;
+      TvmCell bodyD = tvm.encodeBody(IRootTokenContract(root).deployEmptyWallet, GRAMS_TO_NEW_WALLET, 0, address(this), dexclient);
+      root.transfer({value:GRAMS_TO_ROOT, bounce:true, body:bodyD});
+      TvmCell bodyA = tvm.encodeBody(IRootTokenContract(root).sendExpectedWalletAddress, 0, address(this), address(this));
+      root.transfer({value:GRAMS_TO_ROOT, bounce:true, body:bodyA});
+      dexclient.transfer({value: 0, bounce:true, flag: 128});
+    } else {
+      dexclient.transfer({value: 0, bounce:true, flag: 128});
+    }
+  }
+\end{lstlisting}
+
+\paragraph{Function expectedWalletAddressCallback}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt wallet &\\\hline
+\tt uint256 & \tt wallet\_{}public\_{}key &\\\hline
+\tt address & \tt owner\_{}address &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=77]
+  function expectedWalletAddressCallback(address wallet, uint256 wallet_public_key, address owner_address) public override {
+    require(msg.sender == drivenRoot && wallet_public_key == 0 && owner_address == address(this), 102);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    statusConnected = true;
+    driven = wallet;
+    TvmCell body = tvm.encodeBody(IDEXConnect(dexclient).connectCallback, wallet);
+    dexclient.transfer({value: 0, bounce:true, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\paragraph{Function getBalance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & \tt balance &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt checkOwnerAndAccept & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=124]
+  function getBalance() public pure checkOwnerAndAccept returns (uint128 balance){
+    balance = address(this).balance;
+  }
+\end{lstlisting}
+
+\paragraph{Function setBouncedCallback}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=95]
+  function setBouncedCallback() public override {
+    require(msg.sender == dexclient, 101);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmCell body = tvm.encodeBody(ITONTokenWallet(driven).setBouncedCallback, dexclient);
+    driven.transfer({value: 0, bounce:true, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\paragraph{Function setTransferCallback}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=87]
+  function setTransferCallback() public override {
+    require(msg.sender == dexclient, 101);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmCell body = tvm.encodeBody(ITONTokenWallet(driven).setReceiveCallback, dexclient, true);
+    driven.transfer({value: 0, bounce:true, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\paragraph{Function transfer}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt to &\\\hline
+\tt uint128 & \tt tokens &\\\hline
+\tt TvmCell & \tt payload &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=108]
+  function transfer(address to, uint128 tokens, TvmCell payload) public override {
+    require(msg.sender == dexclient, 101);
+    tvm.rawReserve(address(this).balance - msg.value, 2);
+    TvmCell body = tvm.encodeBody(ITONTokenWallet(driven).transfer, to, tokens, 0, dexclient, true, payload);
+    driven.transfer({value: 0, bounce:true, flag: 128, body:body});
+  }
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Receive function}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=129]
+  receive() external {
+  }
+\end{lstlisting}
+
+\paragraph{Function getQuotient}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg0 &\\\hline
+\tt uint128 & \tt arg1 &\\\hline
+\tt uint128 & \tt arg2 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=48]
+  function getQuotient(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
+    (uint128 quotient, ) = math.muldivmod(arg0, arg1, arg2);
+    return quotient;
+  }
+\end{lstlisting}
+
+\paragraph{Function getRemainder}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint128 & \tt arg0 &\\\hline
+\tt uint128 & \tt arg1 &\\\hline
+\tt uint128 & \tt arg2 &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt uint128 & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=54]
+  function getRemainder(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
+    (, uint128 remainder) = math.muldivmod(arg0, arg1, arg2);
+    return remainder;
+  }
+\end{lstlisting}

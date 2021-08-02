@@ -1,0 +1,31 @@
+
+\section{Module "IBurnableByOwnerTokenWallet.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity \^{}0.45.0 &\\\hline
+AbiHeader &  expire &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IBurnableByOwnerTokenWallet}
+
+
+In file {\tt IBurnableByOwnerTokenWallet.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=5]
+    function burnByOwner(
+        uint128 tokens,
+        uint128 grams,
+        address send_gas_to,
+        address callback_address,
+        TvmCell callback_payload
+    ) external;
+\end{lstlisting}
