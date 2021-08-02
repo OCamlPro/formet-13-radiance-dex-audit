@@ -54,6 +54,15 @@ This issue was found in all constant definitions for gas cost.
 Numbers like {\tt 500000000} are difficult to read, whereas the
 equivalent {\tt 0.5 ton} is much easier.
 
+\subsection{Use Method Calls instead of {\tt tvm.encodeBody}}
+\label{readability:call}
+
+\issueMinor{Use Method Call instead of {\tt tvm.encodeBody}}{Using
+  {\tt tvm.encodeBody} makes code harder to read. Method calls are
+  easier to read and interpret. The issue is minor as checks are still
+  correctly performed on argument types.}
+
+This issue was found in all DEX contracts except DEXRoot.
 
 \section{Security}
 

@@ -19,24 +19,6 @@ IDEXConnector & \\\hline
 \item Minor issue: see Better Units for Big Numbers (\ref{readability:numbers})
 \end{itemize}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish constants from other, such as all uppercase names.
-\\\hline
-Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & GRAMS\_{}TO\_{}ROOT & Initialized to 500000000  \\\hline
-uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=19]
   uint128 constant GRAMS_TO_ROOT = 500000000;
 \end{lstlisting}
@@ -116,8 +98,11 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
+
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=39]
   constructor() public checkOwnerAndAccept {
@@ -127,8 +112,11 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \section{Public Method Definitions}
 
-
 \subsection{Receive function}
+
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=129]
   receive() external {
@@ -136,6 +124,12 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 \end{lstlisting}
 
 \subsection{Function burn}
+
+\begin{itemize}
+\item Minor Issue: this method should check {\tt require(statusConnected,..)}
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=116]
   function burn(uint128 tokens, address callback_address, TvmCell callback_payload) public override {
@@ -148,14 +142,22 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function deployEmptyWallet}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root &\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor Issue: if this method is called twice with different
+  roots, the second one may still be executed before {\tt
+    statusConnected} is set in {\tt
+    expectedWalletAddressCallback}. It's a minor issue, as only the
+  second call will finally set {\tt driven} with the value associated
+  with the second {\tt drivenRoot}, as {\tt drivenRoot} is correctly
+  checked in {\tt expectedWalletAddressCallback}. The only drawback is
+  a potential small loss in gas. Anyway, this would not be possible if
+  {\tt drivenRoot} was a static global variable of the contract.
+\item Minor Issue: It would probably be better to use {\tt
+  require(!statusConnected,..)} instead of {\tt
+  if(!statusConnected){..}} to fail in case of called twice.
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 
 \begin{lstlisting}[firstnumber=60]
@@ -178,17 +180,11 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function expectedWalletAddressCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt wallet &\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key &\\\hline
-\tt address & \tt owner\_{}address &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: this method should check {\tt require(!statusConnected,..)}
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=77]
   function expectedWalletAddressCallback(address wallet, uint256 wallet_public_key, address owner_address) public override {
@@ -203,17 +199,13 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function getBalance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & \tt balance &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor issue: is there a good reason to use {\tt
+  checkOwnerAndAccept} to allow the user to spend gas to get the
+  balance when this action can be performed without spending gas
+  (through the GraphQL interface or through get-methods executed
+  locally).
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=124]
   function getBalance() public pure checkOwnerAndAccept returns (uint128 balance){
@@ -223,7 +215,15 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function setBouncedCallback}
 
-
+\begin{itemize}
+\item Minor Issue: there is no real need for {\tt setBouncedCallback}
+  and {\tt setTransferCallback} to be in two different methods instead
+  of having a single method performing both actions, as they are
+  always called together.
+\item Minor Issue: this method should check {\tt require(statusConnected,..)}
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=95]
   function setBouncedCallback() public override {
@@ -235,6 +235,12 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 \end{lstlisting}
 
 \subsection{Function setTransferCallback}
+
+\begin{itemize}
+\item Minor Issue: this method should check {\tt require(statusConnected,..)}
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 
 
@@ -250,14 +256,11 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 \subsection{Function transfer}
 
 
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt to &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\end{tabular}
-\fi
+\begin{itemize}
+\item Minor Issue: this method should check {\tt require(statusConnected,..)}
+\item \issueError{}
+\item \issueEncodeBody{}
+\end{itemize}
 
 
 
@@ -275,19 +278,9 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function getQuotient}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\tt uint128 & \tt arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=48]
   function getQuotient(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -298,18 +291,9 @@ uint128 & GRAMS\_{}TO\_{}NEW\_{}WALLET & Initialized to 250000000  \\\hline
 
 \subsection{Function getRemainder}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\tt uint128 & \tt arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=54]
   function getRemainder(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
