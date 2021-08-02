@@ -11,24 +11,52 @@ found in the project in several locations.
   is to use typography to visually discriminate static variables from
   other variables, for example using a prefix such as {\tt s\_}. }
 
-(this issue was found everywhere in the code of DEX and token contracts)\\
+This issue was found everywhere in the code of DEX and token
+contracts.\\
 
 \issueMinor{Typography of global variables}{A good coding convention
-  is to use typography to visually discriminate global variables from local variables, for example using a prefix such as {\tt m\_} or {\tt g\_}. }
+  is to use typography to visually discriminate global variables from
+  local variables, for example using a prefix such as {\tt m\_} or
+  {\tt g\_}. }
 
-(this issue was found everywhere in the code of DEX and token contracts)\\
+This issue was found everywhere in the code of DEX and token contracts.\\
 
 \issueMinor{Typography of internal function}{A good coding convention
-  is to use typography to visually discriminate public functions and internal functions, for example using a prefix such as {\tt \_}. }
+  is to use typography to visually discriminate public functions and
+  internal functions, for example using a prefix such as {\tt \_}. }
 
-(this issue was found everywhere in the code of DEX and token contracts)\\
-
+This issue was found everywhere in the code of DEX and token contracts.\\
 
 \subsection{Naming of Errors}
 
-\issueMinor{Naming of Errors}{A good coding convention is to define constants instead of using direct numbers for errors in {\tt require()}.}
+\issueMinor{Naming of Errors}{A good coding convention is to define
+  constants instead of using direct numbers for errors in {\tt
+    require()}.}
 
-(this issue was found everywhere in the code of DEX contracts, but not
-for token contracts)
+This issue was found everywhere in the code of DEX contracts, but not
+for token contracts.
 
 \section{Security}
+
+\issueCritical{No Accept All Methods}{Public methods using
+  {\tt tvm.accept()} without any prior check should not exist. Indeed,
+  such methods could be used by attackers to drain the balance of the
+  contracts, even with minor amounts but unlimited number of
+  messages.}
+
+This issue was found in the code the DEX contracts, especially with
+the {\tt alwaysAccept()} modifier. Methods using this modifier should
+check the origin of the message and limit {\tt tvm.accept()} to either
+the user or known contracts.
+
+\issueCritical{No Require after Accept}{Methods using {\tt
+    tvm.accept()} should never use {\tt require()} after the accept.
+  Indeed, a {\tt require()} failing after {\tt tvm.accept()} will cost
+  a huge amount of gas, as all shards will execute the failing
+  method. }
+
+This issue was found in the code of the DEX contracts. Methods should
+always keep calls to {\tt require()} before {\tt tvm.accept()}, and if
+it is not possible, should not fail but should {\em return} an error
+code instead.
+
