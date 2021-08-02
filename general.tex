@@ -1,0 +1,34 @@
+
+In this chapter, we introduce some general remarks about the code,
+that are not specific to this project, but whose occurrences have been
+found in the project in several locations.
+
+\section{Readability}
+
+\subsection{Typography}
+
+\issueMinor{Typography of static variables}{A good coding convention
+  is to use typography to visually discriminate static variables from
+  other variables, for example using a prefix such as {\tt s\_}. }
+
+(this issue was found everywhere in the code of DEX and token contracts)\\
+
+\issueMinor{Typography of global variables}{A good coding convention
+  is to use typography to visually discriminate global variables from local variables, for example using a prefix such as {\tt m\_} or {\tt g\_}. }
+
+(this issue was found everywhere in the code of DEX and token contracts)\\
+
+\issueMinor{Typography of internal function}{A good coding convention
+  is to use typography to visually discriminate public functions and internal functions, for example using a prefix such as {\tt \_}. }
+
+(this issue was found everywhere in the code of DEX and token contracts)\\
+
+
+\subsection{Naming of Errors}
+
+\issueMinor{Naming of Errors}{A good coding convention is to define constants instead of using direct numbers for errors in {\tt require()}.}
+
+(this issue was found everywhere in the code of DEX contracts, but not
+for token contracts)
+
+\section{Security}

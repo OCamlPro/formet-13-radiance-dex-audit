@@ -44,7 +44,7 @@
 
 \newcommand\issueCritical[2]{\addcomment{\bf Critical issue: #1}{red}{#2}}
 \newcommand\issueMedium[2]{\addcomment{\bf Medium issue: #1}{pink}{#2}}
-\newcommand\issueLow[2]{\addcomment{\bf Low issue: #1}{cyan}{#2}}
+\newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
 
 \ifsoldraft
 \usepackage[firstpage]{draftwatermark}
@@ -80,6 +80,19 @@ Issues can be entered with:
 \item{\bf \textbackslash{}issueLow\{title\}\{text\}}
 \end{itemize}
 \fi
+
+\chapter{Introduction}
+\label{chapter:introduction}
+\input{introduction.tex}
+
+\chapter{Overview}
+\label{chapter:overview}
+\input{overview.tex}
+
+\chapter{General Remarks}
+\label{chapter:general}
+\input{general.tex}
+
 
 
 \ifsolmodules

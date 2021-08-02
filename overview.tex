@@ -1,0 +1,36 @@
+
+The infrastructure is composed of a set of DEX specific contracts,
+associated with tokens contracts (developed by Broxus, to the best of
+our knownledge).
+
+The DEX contracts are :
+
+\begin{description}
+\item[DEXRoot:] The ``root'' contract, used to perform global
+  operations, such as creating ``client'' contracts;
+\item[DEXClient:] The contract with which a user may interact with the
+  system.
+\item[DEXPair:] The contract associated with a given pair of tokens
+  (root token contracts)
+\item[DEXConnector:] A simplified interface to interact with token
+  contracts. The goal is probably to be able to interact with
+  different implementations/interfaces of token contracts.
+\end{description}
+
+The token contracts are :
+
+\begin{description}
+\item[RootTokenContract:] The root token contract, shared by all the
+  wallet contracts for a given token;
+\item[TONTokenWallet:] The wallet contract, containing the balance
+  associated either with a public key or (exclusive) a contract
+  address;
+\end{description}
+
+Compared to
+\url{https://github.com/broxus/broxus/ton-eth-bridge-token-contracts/},
+the two token contracts have only been modified to change the {\tt
+  ton-solidity} pragma version.
+
+All the DEX contracts use a static {\tt soUINT} field to be able to
+instanciate several ones for a given public key or other static field.

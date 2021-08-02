@@ -1,6 +1,10 @@
 
 all: report.pdf
-report.pdf: *.tex
+
+force: 
+	pdflatex report.tex
+
+report.pdf: *.tex */*.tex
 	pdflatex report.tex
 
 clean:

@@ -264,7 +264,7 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
     }
 \end{lstlisting}
 
-\subsubsection{Internal Method Definitions}
+\subsubsection{Public Method Definitions}
 
 
 \paragraph{Fallback function}
@@ -468,48 +468,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
     }
 \end{lstlisting}
 
-\paragraph{Function getExpectedWalletAddress}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=485]
-    function getExpectedWalletAddress(
-        uint256 wallet_public_key_,
-        address owner_address_
-    )
-        private
-        inline
-        view
-    returns (
-        address
-    ) {
-        TvmCell stateInit = tvm.buildStateInit({
-            contr: TONTokenWallet,
-            varInit: {
-                root_address: address(this),
-                code: wallet_code,
-                wallet_public_key: wallet_public_key_,
-                owner_address: owner_address_
-            },
-            pubkey: wallet_public_key_,
-            code: wallet_code
-        });
-
-        return address(tvm.hash(stateInit));
-    }
-\end{lstlisting}
-
 \paragraph{Function getTotalSupply}
 
 
@@ -595,60 +553,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \begin{lstlisting}[firstnumber=100]
     function getWalletCode() override external view responsible returns (TvmCell) {
         return { value: 0, bounce: false, flag: 64 } wallet_code;
-    }
-\end{lstlisting}
-
-\paragraph{Function isExternalOwner}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=476]
-    function isExternalOwner() private inline view returns (bool) {
-        return root_public_key != 0 && root_public_key == msg.pubkey();
-    }
-\end{lstlisting}
-
-\paragraph{Function isInternalOwner}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=472]
-    function isInternalOwner() private inline view returns (bool) {
-        return root_owner_address.value != 0 && root_owner_address == msg.sender;
-    }
-\end{lstlisting}
-
-\paragraph{Function isOwner}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=468]
-    function isOwner() private inline view returns (bool) {
-        return isInternalOwner() || isExternalOwner();
     }
 \end{lstlisting}
 
@@ -929,5 +833,104 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
         tvm.accept();
         root_public_key = root_public_key_;
         root_owner_address = root_owner_address_;
+    }
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Function getExpectedWalletAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
+\tt address & \tt owner\_{}address\_{} &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=485]
+    function getExpectedWalletAddress(
+        uint256 wallet_public_key_,
+        address owner_address_
+    )
+        private
+        inline
+        view
+    returns (
+        address
+    ) {
+        TvmCell stateInit = tvm.buildStateInit({
+            contr: TONTokenWallet,
+            varInit: {
+                root_address: address(this),
+                code: wallet_code,
+                wallet_public_key: wallet_public_key_,
+                owner_address: owner_address_
+            },
+            pubkey: wallet_public_key_,
+            code: wallet_code
+        });
+
+        return address(tvm.hash(stateInit));
+    }
+\end{lstlisting}
+
+\paragraph{Function isExternalOwner}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt bool & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=476]
+    function isExternalOwner() private inline view returns (bool) {
+        return root_public_key != 0 && root_public_key == msg.pubkey();
+    }
+\end{lstlisting}
+
+\paragraph{Function isInternalOwner}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt bool & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=472]
+    function isInternalOwner() private inline view returns (bool) {
+        return root_owner_address.value != 0 && root_owner_address == msg.sender;
+    }
+\end{lstlisting}
+
+\paragraph{Function isOwner}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt bool & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=468]
+    function isOwner() private inline view returns (bool) {
+        return isInternalOwner() || isExternalOwner();
     }
 \end{lstlisting}

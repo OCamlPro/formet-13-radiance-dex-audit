@@ -3,3 +3,4 @@
 *.lo?
 *.out
 *.toc
+core

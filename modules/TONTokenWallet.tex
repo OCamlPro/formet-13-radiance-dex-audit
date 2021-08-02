@@ -335,37 +335,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \subsubsection{Public Method Definitions}
 
 
-\paragraph{Function destroy}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt gas\_{}dest &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=584]
-    function destroy(
-        address gas_dest
-    )
-        override
-        public
-        onlyOwner
-    {
-        require(balance_ == 0);
-        tvm.accept();
-        selfdestruct(gas_dest);
-    }
-\end{lstlisting}
-
-\subsubsection{Internal Method Definitions}
-
-
 \paragraph{Fallback function}
 
 \vspace{2cm}
@@ -631,6 +600,34 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
     }
 \end{lstlisting}
 
+\paragraph{Function destroy}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt address & \tt gas\_{}dest &\\\hline
+\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
+\tt onlyOwner & {\em no args} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=584]
+    function destroy(
+        address gas_dest
+    )
+        override
+        public
+        onlyOwner
+    {
+        require(balance_ == 0);
+        tvm.accept();
+        selfdestruct(gas_dest);
+    }
+\end{lstlisting}
+
 \paragraph{Function disapprove}
 
 
@@ -682,48 +679,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
             bounced_callback,
             allow_non_notifiable
         );
-    }
-\end{lstlisting}
-
-\paragraph{Function getExpectedAddress}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=620]
-    function getExpectedAddress(
-        uint256 wallet_public_key_,
-        address owner_address_
-    )
-        private
-        inline
-        view
-    returns (
-        address
-    ) {
-        TvmCell stateInit = tvm.buildStateInit({
-            contr: TONTokenWallet,
-            varInit: {
-                root_address: root_address,
-                code: code,
-                wallet_public_key: wallet_public_key_,
-                owner_address: owner_address_
-            },
-            pubkey: wallet_public_key_,
-            code: code
-        });
-
-        return address(tvm.hash(stateInit));
     }
 \end{lstlisting}
 
@@ -1166,5 +1121,50 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
                 payload
             );
         }
+    }
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Function getExpectedAddress}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+\multicolumn{3}{|l|}{\bf Parameters}\\\hline
+\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
+\tt address & \tt owner\_{}address\_{} &\\\hline
+\multicolumn{3}{|l|}{\bf Returns}\\\hline
+\tt address & {\em no name} &\\\hline
+\end{tabular}
+\fi
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=620]
+    function getExpectedAddress(
+        uint256 wallet_public_key_,
+        address owner_address_
+    )
+        private
+        inline
+        view
+    returns (
+        address
+    ) {
+        TvmCell stateInit = tvm.buildStateInit({
+            contr: TONTokenWallet,
+            varInit: {
+                root_address: root_address,
+                code: code,
+                wallet_public_key: wallet_public_key_,
+                owner_address: owner_address_
+            },
+            pubkey: wallet_public_key_,
+            code: code
+        });
+
+        return address(tvm.hash(stateInit));
     }
 \end{lstlisting}

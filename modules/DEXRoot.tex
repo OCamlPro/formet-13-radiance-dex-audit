@@ -328,6 +328,16 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \subsubsection{Public Method Definitions}
 
 
+\paragraph{Receive function}
+
+\vspace{2cm}
+
+\begin{lstlisting}[firstnumber=76]
+	receive() external {
+		balanceOf[msg.sender] += msg.value;
+	}
+\end{lstlisting}
+
 \paragraph{Function checkPubKey}
 
 
@@ -836,16 +846,6 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsubsection{Internal Method Definitions}
 
-
-\paragraph{Receive function}
-
-\vspace{2cm}
-
-\begin{lstlisting}[firstnumber=76]
-	receive() external {
-		balanceOf[msg.sender] += msg.value;
-	}
-\end{lstlisting}
 
 \paragraph{Function computeClientAddress}
 
