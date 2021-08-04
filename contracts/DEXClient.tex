@@ -16,26 +16,14 @@ IDEXConnect & \\\hline
 
 \section{Type Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
-\\\hline\end{tabular}
-\fi
-
 \subsection{Struct Connector}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-root\_{}address & address & \\\hline
-souint & uint256 & \\\hline
-status & bool & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+  \item OK
+%\item Minor Issue: this method should check {\tt require(statusConnected,..)}
+%\item \issueError{}
+%\item \issueEncodeBody{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=29]
   struct Connector {
@@ -48,22 +36,10 @@ status & bool & \\\hline
 \subsection{Struct Callback}
 
 
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-token\_{}wallet & address & \\\hline
-token\_{}root & address & \\\hline
-amount & uint128 & \\\hline
-sender\_{}public\_{}key & uint256 & \\\hline
-sender\_{}address & address & \\\hline
-sender\_{}wallet & address & \\\hline
-original\_{}gas\_{}to & address & \\\hline
-updated\_{}balance & uint128 & \\\hline
-payload\_{}arg0 & uint8 & \\\hline
-payload\_{}arg1 & address & \\\hline
-payload\_{}arg2 & address & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor Issue (readability): {\tt payload\_arg0}, {\tt payload\_arg1},
+  {\tt payload\_arg2} should be renamed to more explicit names
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=43]
   struct Callback {
@@ -83,18 +59,9 @@ payload\_{}arg2 & address & \\\hline
 
 \subsection{Struct Pair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-status & bool & \\\hline
-rootA & address & \\\hline
-walletA & address & \\\hline
-rootB & address & \\\hline
-walletB & address & \\\hline
-rootAB & address & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+  \item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=60]
   struct Pair {
@@ -109,27 +76,9 @@ rootAB & address & \\\hline
 
 \section{Constant Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish constants from other, such as all uppercase names.
-\\\hline
-Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & GRAMS\_{}CONNECT\_{}PAIR & Initialized to 500000000  \\\hline
-uint128 & GRAMS\_{}SET\_{}CALLBACK\_{}ADDR & Initialized to 100000000  \\\hline
-uint128 & GRAMS\_{}SWAP & Initialized to 500000000  \\\hline
-uint128 & GRAMS\_{}PROCESS\_{}LIQUIDITY & Initialized to 500000000  \\\hline
-uint128 & GRAMS\_{}RETURN\_{}LIQUIDITY & Initialized to 500000000  \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+  \item \issueUnits{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=23]
   uint128 constant GRAMS_CONNECT_PAIR = 500000000;
@@ -153,28 +102,18 @@ uint128 & GRAMS\_{}RETURN\_{}LIQUIDITY & Initialized to 500000000  \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & rootDEX &  \\\hline
- & & used in @1.DEXClient.createNewPair\\\hline
- & & used in @1.DEXClient.createNewPair\\\hline
- & & used in @1.DEXClient.:constructor\\\hline
-uint256 & soUINT &  \\\hline
-TvmCell & codeDEXConnector &  \\\hline
- & & used in @1.DEXClient.connectRoot\\\hline
- & & used in @1.DEXClient.computeConnectorAddress\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueStatic{}
+\item Minor Issue: Deployment messages are limited to 16 kB, and
+  contain the code of the contract, the static variables and the
+  constructor arguments. As {\tt codeDEXConnector} is a static
+  variable, the deployment message will contain the code of DEXClient
+  and DEXConnector at the same time. It could become an issue in the
+  future if their codes increase in size. If it is important to use
+  DEXConnector code static to distinguish clients, it might be worth
+  replacing it by a hash and use another message to initialize the
+  variable instead.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=18]
   address static public rootDEX;
@@ -190,105 +129,9 @@ TvmCell & codeDEXConnector &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address [] & rootKeys &  \\\hline
- & & used in @1.DEXClient.getAllDataPreparation\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
-mapping (address =$>$ address) & rootWallet &  \\\hline
- & & used in @1.DEXClient.sendTokens\\\hline
- & & used in @1.DEXClient.returnLiquidity\\\hline
- & & used in @1.DEXClient.returnLiquidity\\\hline
- & & used in @1.DEXClient.processSwapB\\\hline
- & & used in @1.DEXClient.processSwapA\\\hline
- & & used in @1.DEXClient.processLiquidity\\\hline
- & & used in @1.DEXClient.processLiquidity\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.connectRoot\\\hline
- & & assigned in @1.DEXClient.connectCallback\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
-mapping (address =$>$ address) & rootConnector &  \\\hline
- & & used in @1.DEXClient.sendTokens\\\hline
- & & used in @1.DEXClient.sendTokens\\\hline
- & & used in @1.DEXClient.returnLiquidity\\\hline
- & & used in @1.DEXClient.returnLiquidity\\\hline
- & & used in @1.DEXClient.processSwapB\\\hline
- & & used in @1.DEXClient.processSwapA\\\hline
- & & used in @1.DEXClient.processLiquidity\\\hline
- & & used in @1.DEXClient.processLiquidity\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & assigned in @1.DEXClient.connectCallback\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
-mapping (address =$>$ Connector) & connectors &  \\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & assigned in @1.DEXClient.connectRoot\\\hline
- & & used in @1.DEXClient.connectRoot\\\hline
- & & used in @1.DEXClient.connectRoot\\\hline
- & & assigned in @1.DEXClient.connectCallback\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
- & & used in @1.DEXClient.connectCallback\\\hline
-uint256 & counterCallback &  \\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & assigned in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & assigned in @1.DEXClient.:constructor\\\hline
- & & used in @1.DEXClient.:constructor\\\hline
-mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
- & & assigned in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & assigned in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.tokensReceivedCallback\\\hline
- & & used in @1.DEXClient.getFirstCallback\\\hline
- & & used in @1.DEXClient.getCallback\\\hline
-mapping (address =$>$ Pair) & pairs &  \\\hline
- & & assigned in @1.DEXClient.setPair\\\hline
- & & used in @1.DEXClient.setPair\\\hline
- & & used in @1.DEXClient.setPair\\\hline
- & & used in @1.DEXClient.setPair\\\hline
- & & used in @1.DEXClient.returnLiquidity\\\hline
- & & used in @1.DEXClient.processSwapB\\\hline
- & & used in @1.DEXClient.processSwapA\\\hline
- & & used in @1.DEXClient.processLiquidity\\\hline
- & & used in @1.DEXClient.isReadyToProvide\\\hline
- & & used in @1.DEXClient.isReady\\\hline
- & & used in @1.DEXClient.getPairData\\\hline
- & & assigned in @1.DEXClient.connectPair\\\hline
- & & used in @1.DEXClient.connectPair\\\hline
- & & used in @1.DEXClient.connectPair\\\hline
- & & used in @1.DEXClient.connectPair\\\hline
-address [] & pairKeys &  \\\hline
- & & used in @1.DEXClient.getAllDataPreparation\\\hline
- & & used in @1.DEXClient.connectPair\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueGlobal{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=35]
   address[] public rootKeys;
@@ -324,17 +167,11 @@ address [] & pairKeys &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier alwaysAccept}
 
+\begin{itemize}
+\item \issueAlwaysAccept{DEXClient}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=73]
   modifier alwaysAccept {
@@ -345,6 +182,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkOwnerAndAccept}
 
+\begin{itemize}
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=79]
   modifier checkOwnerAndAccept {
@@ -356,21 +196,14 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueError{}
+\item Minor Issue: {\tt counterCallback} should probably be
+  initialized to 1 instead of 0, and keep 0 as the specific value of
+  {\tt getFirstCallback} when no callback is available.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=85]
   constructor() public {
@@ -382,10 +215,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \section{Public Method Definitions}
 
-
 \subsection{Receive function}
 
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=413]
   receive() external {
@@ -394,17 +228,13 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function connectCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt wallet &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueEncodeBody
+\item \issueAccept{DEXClient.connectCallback}{The balance of the
+  contract could be drained, by sending many {\tt connectCallback}
+  messages. Replace the {\tt if} by a {\tt require()} and perform the
+  {\tt tvm.accept} only afterwards.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=181]
   function connectCallback(address wallet) public override alwaysAccept {
@@ -426,19 +256,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function connectPair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt statusConnection &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueEncodeBody
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=92]
   function connectPair(address pairAddr) public checkOwnerAndAccept  returns (bool statusConnection) {
@@ -457,22 +277,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function connectRoot}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\tt uint128 & \tt gramsToConnector &\\\hline
-\tt uint128 & \tt gramsToRoot &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt statusConnected &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issuePartial{}. The method should check for a minimal balance
+  in a {\tt require()} before {\tt tvm.accept}
+\item \issueEncodeBody{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=158]
   function connectRoot(address root, uint256 souint, uint128 gramsToConnector, uint128 gramsToRoot) public checkOwnerAndAccept returns (bool statusConnected){
@@ -500,30 +309,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function createNewPair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root0 &\\\hline
-\tt address & \tt root1 &\\\hline
-\tt uint256 & \tt pairSoArg &\\\hline
-\tt uint256 & \tt connectorSoArg0 &\\\hline
-\tt uint256 & \tt connectorSoArg1 &\\\hline
-\tt uint256 & \tt rootSoArg &\\\hline
-\tt bytes & \tt rootName &\\\hline
-\tt bytes & \tt rootSymbol &\\\hline
-\tt uint8 & \tt rootDecimals &\\\hline
-\tt uint128 & \tt grammsForPair &\\\hline
-\tt uint128 & \tt grammsForRoot &\\\hline
-\tt uint128 & \tt grammsForConnector &\\\hline
-\tt uint128 & \tt grammsForWallet &\\\hline
-\tt uint128 & \tt grammsTotal &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: a {\tt require} is executed after {\tt tvm.accept},
+  which may cause replication of failure and heavy gas cost. In
+  general, we recommend to remove {\tt tvm.accept} from modifiers, so
+  that it can be explicitely performed after all {\tt requires}.
+\item \issueEncodeBody{}
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=356]
   function createNewPair(
@@ -551,18 +344,13 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getAllDataPreparation}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address [] & \tt pairKeysR &\\\hline
-\tt address [] & \tt rootKeysR &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueAccept{DEXClient.getAllDataPreparation}{The balance of the
+  contract could be drained, by sending many {\tt
+    getAllDataPreparation} messages, especially as the return values
+  may be expensive to serialize. Accept only for owner or use it as a
+  get-method (executed locally, without gas).}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=215]
   function getAllDataPreparation() public view alwaysAccept returns(address[] pairKeysR, address[] rootKeysR){
@@ -573,15 +361,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getBalance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=351]
   function getBalance() public pure responsible returns (uint128) {
@@ -591,29 +373,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt id &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt token\_{}wallet &\\\hline
-\tt address & \tt token\_{}root &\\\hline
-\tt uint128 & \tt amount &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt sender\_{}wallet &\\\hline
-\tt address & \tt original\_{}gas\_{}to &\\\hline
-\tt uint128 & \tt updated\_{}balance &\\\hline
-\tt uint8 & \tt payload\_{}arg0 &\\\hline
-\tt address & \tt payload\_{}arg1 &\\\hline
-\tt address & \tt payload\_{}arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: there is probably no need to spend gas with {\tt
+  tvm.accept} since the method can be executed locally (get-method).
+\item Minor Issue: the method should probably fail with {\tt require}
+  if the callback id does not exist.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=318]
   function getCallback(uint id) public view checkOwnerAndAccept returns (
@@ -646,17 +411,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt connectorSoArg &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=153]
   function getConnectorAddress(uint256 connectorSoArg) public view responsible returns (address) {
@@ -666,25 +423,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getPairData}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt pairStatus &\\\hline
-\tt address & \tt pairRootA &\\\hline
-\tt address & \tt pairWalletA &\\\hline
-\tt address & \tt pairRootB &\\\hline
-\tt address & \tt pairWalletB &\\\hline
-\tt address & \tt pairRootAB &\\\hline
-\tt address & \tt curPair &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueAccept{DEXClient.getPairData}{The balance of the contract
+  could be drained, by sending many {\tt getPairData} messages. Accept
+  only for owner or use it as a get-method (executed locally, without
+  gas).
+\item Minor Issue: the method should probably fail if the associated
+  pair does not exist in {\tt pairs}}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=379]
   function getPairData(address pairAddr) public view alwaysAccept returns (
@@ -709,21 +455,15 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function processLiquidity}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\tt uint128 & \tt qtyA &\\\hline
-\tt uint128 & \tt qtyB &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt processLiquidityStatus &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueEncodeBody
+\item \issueNumber{}. The payload opcode should be a constant.
+\item \issuePartial{}. The method should check the balance with {\tt
+  require} before performing {\tt tvm.accept}
+\item Minor Issue: Repeated Code. The code could be simplified by
+  using an internal function to perform the same computation for {\tt
+    rootA} and {\tt rootB}.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=251]
   function processLiquidity(address pairAddr, uint128 qtyA, uint128 qtyB) public view checkOwnerAndAccept returns (bool processLiquidityStatus) {
@@ -749,20 +489,15 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function processSwapA}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\tt uint128 & \tt qtyA &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt processSwapStatus &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueEncodeBody{}
+\item \issueNumber{}. The payload opcode should be a constant.
+\item \issuePartial{}. The method should check the balance with {\tt
+  require} before performing {\tt tvm.accept}
+\item Minor Issue: Repeated Code. Methods {\tt processSwapA} and {\tt
+  processSwapB} could be simplified by using an internal function for
+  shared code.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=221]
   function processSwapA(address pairAddr, uint128 qtyA) public view checkOwnerAndAccept returns (bool processSwapStatus) {
@@ -782,20 +517,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function processSwapB}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\tt uint128 & \tt qtyB &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt processSwapStatus &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueNumber{}. The payload opcode should be a constant.
+\item \issueEncodeBody
+\item \issuePartial{}. The method should check the balance with {\tt
+  require} before performing {\tt tvm.accept}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=236]
   function processSwapB(address pairAddr, uint128 qtyB) public view checkOwnerAndAccept returns (bool processSwapStatus) {
@@ -815,20 +542,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function returnLiquidity}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt returnLiquidityStatus &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueEncodeBody
+\item \issueNumber{}. The payload opcode should be a constant.
+\item \issuePartial{}. The method should check the balance with {\tt
+  require} before performing {\tt tvm.accept}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=272]
   function returnLiquidity(address pairAddr, uint128 tokens) public view checkOwnerAndAccept returns (bool returnLiquidityStatus) {
@@ -847,22 +566,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function sendTokens}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt tokenRoot &\\\hline
-\tt address & \tt to &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt grams &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt sendTokenStatus &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: the method should use {\tt require} instead of {\tt
+  if} (before doing the {\tt tvm.accept}).
+\item \issueEncodeBody
+\item \issueNumber{}. The payload opcode should be a constant.
+\item \issuePartial{}. The method should check the balance with {\tt
+  require} before performing {\tt tvm.accept}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=399]
   function sendTokens(address tokenRoot, address to, uint128 tokens, uint128 grams) public checkOwnerAndAccept view returns (bool sendTokenStatus){
@@ -881,21 +592,13 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setPair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt arg0 &\\\hline
-\tt address & \tt arg1 &\\\hline
-\tt address & \tt arg2 &\\\hline
-\tt address & \tt arg3 &\\\hline
-\tt address & \tt arg4 &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueAccept{DEXClient.setPair}{The balance of the
+  contract could be drained, by sending many {\tt setPair}
+  messages. You should replace the {\tt if} by a {\tt require()}
+  followed by {\tt tvm.accept()}.}
+\item \issuePartial{}.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=127]
   function setPair(address arg0, address arg1, address arg2, address arg3, address arg4) public alwaysAccept override {
@@ -915,25 +618,21 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function tokensReceivedCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt token\_{}wallet &\\\hline
-\tt address & \tt token\_{}root &\\\hline
-\tt uint128 & \tt amount &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt sender\_{}wallet &\\\hline
-\tt address & \tt original\_{}gas\_{}to &\\\hline
-\tt uint128 & \tt updated\_{}balance &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueAccept{DEXClient.tokensReceivedCallback}{
+  \begin{itemize}
+  \item The balance of the contract could be drained, by sending many
+    unexpected {\tt tokensReceivedCallback} messages by an
+    attacker. The attack could be improved by sending wrong payloads,
+    causing {\tt slice.decode} to fail after {\tt tvm.accept}, causing
+    replication of failure on all shards.
+  \item An attacker could send many such messages also to include
+    incorrect receipts in the {\tt callbacks} mapping, and remove
+    correct ones by sending more than 10 such messages.
+  \item Fix:Accept only when sender is one of the wallets of this
+    dexclient or use the {\tt msg.value} gas.
+  \end{itemize}}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=286]
   function tokensReceivedCallback(
@@ -972,17 +671,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function computeConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt souint &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=142]
   function computeConnectorAddress(uint256 souint) private inline view returns (address) {
@@ -998,15 +690,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getFirstCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint256 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: if no callback is present, the function returns
+  0. This value could be reserved for this usage by setting
+  {\tt counterCallback} to 1 in the constructor.
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=121]
   function getFirstCallback() private view returns (uint) {
@@ -1017,19 +706,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getQuotient}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\tt uint128 & \tt arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: This internal function is unused.
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=109]
   function getQuotient(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -1040,19 +720,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getRemainder}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\tt uint128 & \tt arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item Minor Issue: This internal function is unused.
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=115]
   function getRemainder(uint128 arg0, uint128 arg1, uint128 arg2) private inline pure returns (uint128) {
@@ -1063,17 +734,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function isReady}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pair &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=198]
   function isReady(address pair) private inline view returns (bool) {
@@ -1086,17 +749,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function isReadyToProvide}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pair &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueInternal
+\item Minor Issue: Repeated Code. This function could easily be
+  derived from {\tt isReady} with the additional check of {\tt
+    rootWallet.exists(cp.rootAB)}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=206]
   function isReadyToProvide(address pair) private inline view returns (bool) {
@@ -1109,15 +767,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function thisBalance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=346]
   function thisBalance() private inline  pure returns (uint128) {

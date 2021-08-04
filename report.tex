@@ -47,7 +47,16 @@
 \newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
 
 \newcommand\issueEncodeBody[0]{Minor Issue: see Method Calls instead of {\tt tvm.encodeBody} (\ref{readability:call})}
-\newcommand\issueError[0]{Minor Issue: see Naming of Errors (\ref{readability:errors})}
+\newcommand\issueError[0]{Minor Issue: see Naming of Constants (\ref{readability:constants}). A number is directly used in {\tt require()}.}
+\newcommand\issueNumber[0]{Minor Issue: see Naming of Constants (\ref{readability:constants}). A number should be named through a constant.}
+\newcommand\issueInternal[0]{Minor Issue: see Typography of Internal Functions (\ref{readability:internal}). The function name should start with {\tt \_}.}
+\newcommand\issueUnits[0]{Minor Issue: see Better Units for Big Numbers (\ref{readability:numbers})}
+\newcommand\issueStatic[0]{Minor Issue: see Typography of Static Variables (\ref{readability:static})}
+\newcommand\issueGlobal[0]{Minor Issue: see Typography of Global Variables (\ref{readability:global})}
+\newcommand\issueAccept[2]{\issueCritical{Accept-All Method in {\tt #1}}{See No Accept-All Methods (\ref{accept:all}) #2}}
+\newcommand\issuePartial[0]{Minor Issue: see Not Enough Gas for Action (\ref{gas:partial})}
+
+\newcommand\issueAlwaysAccept[1]{\issueCritical{Accept-All Modifier in {\tt #1}}{See Accept Methods withtout Checks (\ref{accept:all}). This modifier should be removed.}}
 
 \ifsoldraft
 \usepackage[firstpage]{draftwatermark}

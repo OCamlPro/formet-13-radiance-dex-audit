@@ -17,26 +17,11 @@ IBurnTokensCallback & \\\hline
 
 \section{Type Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
-\\\hline\end{tabular}
-\fi
-
 \subsection{Struct Connector}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-root\_{}address & address & \\\hline
-souint & uint256 & \\\hline
-status & bool & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=37]
   struct Connector {
@@ -48,23 +33,9 @@ status & bool & \\\hline
 
 \subsection{Struct Callback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-token\_{}wallet & address & \\\hline
-token\_{}root & address & \\\hline
-amount & uint128 & \\\hline
-sender\_{}public\_{}key & uint256 & \\\hline
-sender\_{}address & address & \\\hline
-sender\_{}wallet & address & \\\hline
-original\_{}gas\_{}to & address & \\\hline
-updated\_{}balance & uint128 & \\\hline
-payload\_{}arg0 & uint8 & \\\hline
-payload\_{}arg1 & address & \\\hline
-payload\_{}arg2 & address & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=48]
   struct Callback {
@@ -84,26 +55,9 @@ payload\_{}arg2 & address & \\\hline
 
 \section{Constant Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish constants from other, such as all uppercase names.
-\\\hline
-Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & GRAMS\_{}SET\_{}CALLBACK\_{}ADDR & Initialized to 500000000  \\\hline
-uint128 & GRAMS\_{}SEND\_{}UNUSED\_{}RETURN & Initialized to 100000000  \\\hline
-uint128 & GRAMS\_{}MINT & Initialized to 50000000  \\\hline
-uint128 & GRAMS\_{}RETURN & Initialized to 200000000  \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=65]
   uint128 constant GRAMS_SET_CALLBACK_ADDR = 500000000;
@@ -123,14 +77,9 @@ uint128 & GRAMS\_{}RETURN & Initialized to 200000000  \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \ifsoltables
 \noindent\begin{tabular}{|l|l|p{5cm}|}\hline
@@ -285,14 +234,9 @@ address & rootAB &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \ifsoltables
 \noindent\begin{tabular}{|l|l|p{5cm}|}\hline
@@ -573,17 +517,11 @@ mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier alwaysAccept}
 
+\begin{itemize}
+\item \issueAlwaysAccept{DEXPair}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=71]
   modifier alwaysAccept {
@@ -594,6 +532,10 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkOwnerAndAccept}
 
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=76]
   modifier checkOwnerAndAccept {
@@ -605,6 +547,10 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkPubKeyAndAccept}
 
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=82]
   modifier checkPubKeyAndAccept {
@@ -619,31 +565,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt souintA &\\\hline
-\tt uint256 & \tt souintB &\\\hline
-\tt uint128 & \tt gramsDeployConnector &\\\hline
-\tt uint128 & \tt gramsDeployWallet &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=88]
   constructor(uint256 souintA, uint256 souintB, uint128 gramsDeployConnector, uint128 gramsDeployWallet) public checkOwnerAndAccept {
@@ -658,7 +582,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Receive function}
 
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=609]
 receive() external {
@@ -667,22 +593,10 @@ receive() external {
 
 \subsection{Function burnCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt wallet\_{}address &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueEncodeBody
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=522]
 function burnCallback(
@@ -737,7 +651,10 @@ function burnCallback(
 
 \subsection{Function connect}
 
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueEncodeBody
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=149]
   function connect() public override {
@@ -750,17 +667,10 @@ function burnCallback(
 
 \subsection{Function connectCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt wallet &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueEncodeBody
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=132]
   function connectCallback(address wallet) public override alwaysAccept {
@@ -782,15 +692,9 @@ function burnCallback(
 
 \subsection{Function getBalance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=604]
 function getBalance() public pure responsible returns (uint128) {
@@ -800,29 +704,9 @@ function getBalance() public pure responsible returns (uint128) {
 
 \subsection{Function getCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt id &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt token\_{}wallet &\\\hline
-\tt address & \tt token\_{}root &\\\hline
-\tt uint128 & \tt amount &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt sender\_{}wallet &\\\hline
-\tt address & \tt original\_{}gas\_{}to &\\\hline
-\tt uint128 & \tt updated\_{}balance &\\\hline
-\tt uint8 & \tt payload\_{}arg0 &\\\hline
-\tt address & \tt payload\_{}arg1 &\\\hline
-\tt address & \tt payload\_{}arg2 &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkPubKeyAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=571]
 function getCallback(uint id) public view checkPubKeyAndAccept returns (
@@ -855,17 +739,9 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function getConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt connectorSoArg &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=108]
   function getConnectorAddress(uint256 connectorSoArg) public view responsible returns (address) {
@@ -875,25 +751,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function tokensReceivedCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt token\_{}wallet &\\\hline
-\tt address & \tt token\_{}root &\\\hline
-\tt uint128 & \tt amount &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt sender\_{}wallet &\\\hline
-\tt address & \tt original\_{}gas\_{}to &\\\hline
-\tt uint128 & \tt updated\_{}balance &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueEncodeBody
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=248]
   function tokensReceivedCallback(
@@ -1021,117 +882,8 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
           }
         }
       } else {
-        Callback cc = callbacks[counterCallback];
-        cc.token_wallet = token_wallet;
-        cc.token_root = token_root;
-        cc.amount = amount;
-        cc.sender_public_key = sender_public_key;
-        cc.sender_address = sender_address;
-        cc.sender_wallet = sender_wallet;
-        cc.original_gas_to = original_gas_to;
-        cc.updated_balance = updated_balance;
-        TvmSlice slice = payload.toSlice();
-        (uint8 arg0, address arg1, address arg2) = slice.decode(uint8, address, address);
-        cc.payload_arg0 = arg0;
-        cc.payload_arg1 = arg1;
-        cc.payload_arg2 = arg2;
-        callbacks[counterCallback] = cc;
-        counterCallback++;
-        if (arg0 == 1) {
-          tvm.rawReserve(address(this).balance - msg.value, 2);
-          uint128 amountOut = getAmountOut(amount, token_root, arg1);
-          if (!(amountOut > balanceReserve[arg1])){
-            balanceReserve[token_root] += amount;
-            balanceReserve[arg1] -= amountOut;
-            syncStatus[token_root] = balanceReserve[token_root] == updated_balance ? true : false;
-            TvmBuilder builder;
-            builder.store(uint8(0), address(0), address(0));
-            TvmCell new_payload = builder.toCell();
-            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[arg1]).transfer, arg2, amountOut, new_payload);
-            rootConnector[arg1].transfer({value: 0, bounce:true, flag: 128, body:body});
-          } else {
-            TvmBuilder builder;
-            builder.store(uint8(8), address(0), address(0));
-            TvmCell new_payload = builder.toCell();
-            TvmCell body = tvm.encodeBody(IDEXConnector(rootConnector[token_root]).transfer, token_wallet, amount, new_payload);
-            rootConnector[token_root].transfer({value: 0, bounce:true, flag: 128, body:body});
-          }
-        }
-        if (arg0 == 2) {
-          tvm.rawReserve(address(this).balance - msg.value, 2);
-          processingStatus[token_root][arg1] = true;
-          processingData[token_root][arg1] += amount;
-          processingDest[token_root][arg1] = sender_wallet;
-          if (processingStatus[rootA][arg1] == true && processingStatus[rootB][arg1] == true) {
-            uint128 amountA = processingData[rootA][arg1];
-            uint128 amountB = processingData[rootB][arg1];
-            if (totalSupply == 0 && balanceReserve[rootA] == 0 && balanceReserve[rootB] == 0) {
-              uint128 liquidity = math.min(amountA,amountB);
-              balanceReserve[rootA] += amountA;
-              balanceReserve[rootB] += amountB;
-              totalSupply += liquidity;
-              TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
-              rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
-              cleanProcessing(arg1);
-              arg1.transfer({ value: 0, flag: 128});
-            } else {
-              (uint128 provideA, uint128 provideB) = acceptForProvide(amountA, amountB);
-              if (provideA > 0 && provideB > 0) {
-                uint128 liquidity = math.min(liquidityA(provideA),liquidityB(provideB));
-                uint128 unusedReturnA = amountA - provideA;
-                uint128 unusedReturnB = amountB - provideB;
-                balanceReserve[rootA] += provideA;
-                balanceReserve[rootB] += provideB;
-                totalSupply += liquidity;
-                TvmCell body = tvm.encodeBody(IRootTokenContract(rootAB).mint, liquidity, arg2);
-                rootAB.transfer({value: GRAMS_MINT, bounce:true, body:body});
-                if (unusedReturnA > 0 && unusedReturnB > 0) {
-                  TvmBuilder builder;
-                  builder.store(uint8(7), address(0), address(0));
-                  TvmCell new_payload = builder.toCell();
-                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
-                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
-                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
-                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
-                  cleanProcessing(arg1);
-                  arg1.transfer({ value: 0, flag: 128});
-                } else if (unusedReturnA > 0) {
-                  TvmBuilder builder;
-                  builder.store(uint8(7), address(0), address(0));
-                  TvmCell new_payload = builder.toCell();
-                  TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], unusedReturnA, new_payload);
-                  rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
-                  cleanProcessing(arg1);
-                  arg1.transfer({ value: 0, flag: 128});
-                } else if (unusedReturnB > 0) {
-                  TvmBuilder builder;
-                  builder.store(uint8(7), address(0), address(0));
-                  TvmCell new_payload = builder.toCell();
-                  TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], unusedReturnB, new_payload);
-                  rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
-                  cleanProcessing(arg1);
-                  arg1.transfer({ value: 0, flag: 128});
-                } else {
-                  cleanProcessing(arg1);
-                  arg1.transfer({ value: 0, flag: 128});
-                }
-              } else {
-                TvmBuilder builder;
-                builder.store(uint8(9), address(0), address(0));
-                TvmCell new_payload = builder.toCell();
-                TvmCell bodyA = tvm.encodeBody(IDEXConnector(rootConnector[rootA]).transfer, processingDest[rootA][arg1], amountA, new_payload);
-                TvmCell bodyB = tvm.encodeBody(IDEXConnector(rootConnector[rootB]).transfer, processingDest[rootB][arg1], amountB, new_payload);
-                rootConnector[rootA].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyA});
-                rootConnector[rootB].transfer({value: GRAMS_SEND_UNUSED_RETURN, bounce:true, body:bodyB});
-                cleanProcessing(arg1);
-                arg1.transfer({ value: 0, flag: 128});
-              }
-            }
-          } else {
-            arg1.transfer({ value: 0, flag: 128});
-          }
-        }
-
+        [same as lines 260...276]
+        [same as lines 278...371]
       }
     }
   }
@@ -1142,19 +894,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function acceptForProvide}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=214]
   function acceptForProvide(uint128 arg0, uint128 arg1) private inline view returns (uint128, uint128) {
@@ -1177,15 +921,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function cleanProcessing}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt dexclient &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=232]
   function cleanProcessing(address dexclient) private inline {
@@ -1200,17 +939,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function computeConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt souint &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=95]
   function computeConnectorAddress(uint256 souint) private inline view returns (address) {
@@ -1226,18 +958,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function connectRoot}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\tt uint128 & \tt gramsToConnector &\\\hline
-\tt uint128 & \tt gramsToRoot &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueEncodeBody
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=113]
   function connectRoot(address root, uint256 souint, uint128 gramsToConnector, uint128 gramsToRoot) private inline {
@@ -1261,19 +986,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function getAmountOut}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt amountIn &\\\hline
-\tt address & \tt rootIn &\\\hline
-\tt address & \tt rootOut &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=157]
   function getAmountOut(uint128 amountIn, address rootIn, address rootOut) private inline view returns (uint128){
@@ -1286,15 +1003,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function getFirstCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint256 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=242]
   function getFirstCallback() private view returns (uint) {
@@ -1305,18 +1017,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function getQuotient}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt min &\\\hline
-\tt uint128 & \tt max &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=165]
   function getQuotient(uint128 min, uint128 max) private inline pure returns (uint128) {
@@ -1327,18 +1031,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function getRemainder}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt min &\\\hline
-\tt uint128 & \tt max &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=171]
   function getRemainder(uint128 min, uint128 max) private inline pure returns (uint128) {
@@ -1349,17 +1045,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function liquidityA}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=191]
   function liquidityA(uint128 arg0) private inline view returns (uint128) {
@@ -1372,17 +1062,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function liquidityB}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=199]
   function liquidityB(uint128 arg1) private inline view returns (uint128) {
@@ -1395,17 +1079,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function qtyAforB}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg1 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=184]
   function qtyAforB(uint128 arg1) private inline view returns (uint128) {
@@ -1417,17 +1095,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function qtyBforA}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt arg0 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueError{}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=177]
   function qtyBforA(uint128 arg0) private inline view returns (uint128) {
@@ -1439,15 +1111,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \subsection{Function thisBalance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=599]
 function thisBalance() private inline  pure returns (uint128) {

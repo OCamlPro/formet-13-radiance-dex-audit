@@ -8,4 +8,4 @@ report.pdf: *.tex */*.tex
 	pdflatex report.tex
 
 clean:
-	rm -f *.log *~
+	rm -f *.lo? *~ *.to? core *.aux *.out

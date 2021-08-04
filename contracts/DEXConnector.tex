@@ -16,7 +16,7 @@ IDEXConnector & \\\hline
 \section{Constant Definitions}
 
 \begin{itemize}
-\item Minor issue: see Better Units for Big Numbers (\ref{readability:numbers})
+\item \issueUnits{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=19]
@@ -29,12 +29,19 @@ IDEXConnector & \\\hline
 
 \section{Static Variable Definitions}
 
-
 \begin{itemize}
-\item Minor issue: see Typography of Static Variables (\ref{readability:static})
+\item \issueStatic{}
 \item Minor issue: why is {\tt drivenRoot} not a static variable ? it
   looks like there is only one possible {\tt DEXConnector} for a given
-  pair of {\tt DEXClient} and {\tt RootTokenContract}.
+  pair of {\tt DEXClient} and {\tt RootTokenContract}. Using {\tt
+    drivenRoot} as a static would also make the need to pass {\tt
+    souint} around useless, since the same {\tt souint} could be used
+  everywhere, from the {\tt DEXRoot} to all the clients, pairs and
+  connectors created from it.
+\item Minor issue: the name {\tt dexclient} is misleading. In {\tt
+  DEXPair.connectRoot}, connectors are created for DEXPair passing
+  {\tt this} as {\tt dexclient}, i.e. an address of type {\tt
+    DEXPair}. Maybe use {\tt owner\_address} ?
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=15]
@@ -48,7 +55,7 @@ IDEXConnector & \\\hline
 \section{Variable Definitions}
 
 \begin{itemize}
-\item Minor issue: see Typography of Global Variables (\ref{readability:global})
+\item \issueGlobal{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=22]
@@ -68,8 +75,7 @@ IDEXConnector & \\\hline
 \subsection{Modifier alwaysAccept}
 
 \begin{itemize}
-\item Critical issue: see Accept Methods withtout Checks (\ref{accept:all}).
-  This modifier should be removed.
+\item \issueAlwaysAccept{DEXConnector}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=27]
@@ -82,9 +88,7 @@ IDEXConnector & \\\hline
 \subsection{Modifier checkOwnerAndAccept}
 
 \begin{itemize}
-\item Minor issue: see Naming of Errors
-  (\ref{readability:errors}). Constants should be used instead of
-  direct numbers.
+\item \issueNumber{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=32]
@@ -279,7 +283,8 @@ IDEXConnector & \\\hline
 \subsection{Function getQuotient}
 
 \begin{itemize}
-\item OK
+\item Minor Issue: This function is unused.
+\item \issueInternal
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=48]
@@ -292,7 +297,8 @@ IDEXConnector & \\\hline
 \subsection{Function getRemainder}
 
 \begin{itemize}
-\item OK
+\item Minor Issue: This function is unused.
+\item \issueInternal
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=54]

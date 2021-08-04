@@ -6,34 +6,19 @@ In file {\tt DEXRoot.sol}
 
 \section{Contract Inheritance}
 
-
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 IDEXRoot & \\\hline
 \end{tabular}
 
-
 \section{Type Definitions}
-
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check that types have the correct integer types (Pubkey : uint256, Amount: uint128, Time: uint64 ).
-\\\hline\end{tabular}
-\fi
 
 \subsection{Struct Pair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
-root0 & address & \\\hline
-root1 & address & \\\hline
-rootLP & address & \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor Issue: keep naming should be consistent, {\tt root0} and
+  {\tt root1}, or {\tt rootA} and {\tt rootB}, but not both. Idem for
+  {\tt rootLP} vs {\tt rootAB}.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=24]
 	struct Pair {
@@ -45,45 +30,18 @@ rootLP & address & \\\hline
 
 \section{Constant Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish constants from other, such as all uppercase names.
-\\\hline
-Use \verb+ton+ unit instead of nanotons for cost constants to avoid numbers with too many zeroes.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & GRAMS\_{}CREATE\_{}DEX\_{}CLIENT & Initialized to 1 ton \\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=42]
 	uint128 constant public GRAMS_CREATE_DEX_CLIENT = 1 ton;
 \end{lstlisting}
 
 \section{Static Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint256 & soUINT &  \\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor Issue: {\tt soUINT} is never used, as in other
+  contracts. It would be worth using the same number for all contracts
+  derived from this root.
+\item \issueStatic{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=13]
 	uint256 static public soUINT;
@@ -91,14 +49,13 @@ uint256 & soUINT &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
+\begin{itemize}
+\item \issueGlobal{}
+\item Minor Issue: naming should be more explicit. For example, {\tt
+  roots} could be renamed {\tt pair\_by\_roots}, {\tt pubkeys} amd
+  {\tt clients} could be renamed {\tt dexclient\_by\_pubkey} and {\tt
+    pubkey\_by\_dexclient}.
+\end{itemize}
 
 \ifsoltables
 \noindent\begin{tabular}{|l|l|p{5cm}|}\hline
@@ -229,17 +186,11 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier alwaysAccept}
 
+\begin{itemize}
+\item \issueAlwaysAccept{DEXroot}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=45]
 	modifier alwaysAccept {
@@ -250,6 +201,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkOwnerAndAccept}
 
+\begin{itemize}
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=51]
 	modifier checkOwnerAndAccept {
@@ -261,6 +215,12 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier checkCreatorAndAccept}
 
+\begin{itemize}
+\item \issueCritical{Accept-All Modifier in {\tt DEXroot}}{See Accept
+  Methods withtout Checks (\ref{accept:all}). The check on pubkey
+  performed by this modifier is too weak to limit {\tt tvm.accept}.}
+\item \issueError{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=58]
 	modifier checkCreatorAndAccept {
@@ -272,21 +232,11 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-\vspace{2cm}
+\begin{itemize}
+\item \issueNumber{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=65]
 	constructor() public {
@@ -297,10 +247,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \section{Public Method Definitions}
 
-
 \subsection{Receive function}
 
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=76]
 	receive() external {
@@ -310,20 +261,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function checkPubKey}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & \tt status &\\\hline
-\tt address & \tt dexclient &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueAccept{DEXroot.checkPubKey}{The balance of the contract
+  could be drained by sending many {\tt checkPubKey} messages. This
+  method could be a get-method without {\tt tvm.accept}, to be
+  executed locally.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=328]
 	function checkPubKey(uint256 pubkey) public view alwaysAccept returns (bool status, address dexclient) {
@@ -334,21 +277,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function createDEXclient}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt deployedAddress &\\\hline
-\tt bool & \tt statusCreate &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=122]
 	function createDEXclient(uint256 pubkey, uint256 souint) public alwaysAccept returns (address deployedAddress, bool statusCreate){
@@ -378,27 +309,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function createDEXpair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root0 &\\\hline
-\tt address & \tt root1 &\\\hline
-\tt uint256 & \tt pairSoArg &\\\hline
-\tt uint256 & \tt connectorSoArg0 &\\\hline
-\tt uint256 & \tt connectorSoArg1 &\\\hline
-\tt uint256 & \tt rootSoArg &\\\hline
-\tt bytes & \tt rootName &\\\hline
-\tt bytes & \tt rootSymbol &\\\hline
-\tt uint8 & \tt rootDecimals &\\\hline
-\tt uint128 & \tt grammsForPair &\\\hline
-\tt uint128 & \tt grammsForRoot &\\\hline
-\tt uint128 & \tt grammsForConnector &\\\hline
-\tt uint128 & \tt grammsForWallet &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=237]
 	function createDEXpair(
@@ -477,17 +390,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getBalanceTONgrams}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & \tt balanceTONgrams &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=334]
 	function getBalanceTONgrams() public pure alwaysAccept returns (uint128 balanceTONgrams){
@@ -497,18 +402,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getClientAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt clientPubKey &\\\hline
-\tt uint256 & \tt clientSoArg &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=118]
 	function getClientAddress(uint256 clientPubKey, uint256 clientSoArg) public view responsible returns (address) {
@@ -518,19 +414,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt connectorPubKey &\\\hline
-\tt uint256 & \tt connectorSoArg &\\\hline
-\tt address & \tt connectorCommander &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=233]
 	function getConnectorAddress(uint256 connectorPubKey, uint256 connectorSoArg, address connectorCommander) public view responsible returns (address) {
@@ -540,22 +426,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getPairAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pairPubKey &\\\hline
-\tt uint256 & \tt pairSoArg &\\\hline
-\tt address & \tt pairCreator &\\\hline
-\tt address & \tt pairRootA &\\\hline
-\tt address & \tt pairRootB &\\\hline
-\tt address & \tt pairRootAB &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=171]
 	function getPairAddress(
@@ -572,20 +445,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getPairByRoots01}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root0 &\\\hline
-\tt address & \tt root1 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=314]
 	function getPairByRoots01(address root0, address root1) public view alwaysAccept returns (address pairAddr) {
@@ -595,20 +457,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getPairByRoots10}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt root1 &\\\hline
-\tt address & \tt root0 &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=318]
 	function getPairByRoots10(address root1, address root0) public view alwaysAccept returns (address pairAddr) {
@@ -618,21 +469,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getRootTokenAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt rootPubKey &\\\hline
-\tt uint256 & \tt rootSoArg &\\\hline
-\tt bytes & \tt rootName &\\\hline
-\tt bytes & \tt rootSymbol &\\\hline
-\tt uint8 & \tt rootDecimals &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=213]
 	function getRootTokenAddress(
@@ -648,20 +487,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getRootsByPair}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt pairAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & \tt root0 &\\\hline
-\tt address & \tt root1 &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt alwaysAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=322]
 	function getRootsByPair(address pairAddr) public view alwaysAccept returns (address root0, address root1) {
@@ -673,19 +501,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function sendTransfer}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt dest &\\\hline
-\tt uint128 & \tt value &\\\hline
-\tt bool & \tt bounce &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=71]
 	function sendTransfer(address dest, uint128 value, bool bounce) public pure checkOwnerAndAccept {
@@ -695,17 +513,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setCreator}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt giverAddr &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkCreatorAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=100]
 	function setCreator(address giverAddr) public checkCreatorAndAccept {
@@ -716,17 +526,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setDEXclientCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmCell & \tt code &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor Issue: the code should be checked against a code hash,
+  hardcoded in the code, or set either in the constructor or in the
+  static variables.
+\item Minor Issue: a bitmap should be used to verify that the contract
+  has been properly initialized, i.e. all the codes of the
+  sub-contracts have been correctly set.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=80]
 	function setDEXclientCode(TvmCell code) public checkOwnerAndAccept {
@@ -737,16 +544,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 \subsection{Function setDEXconnectorCode}
 
 
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmCell & \tt code &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor Issue: the code should be checked against a code hash,
+  hardcoded in the code, or set either in the constructor or in the
+  static variables.
+\item Minor Issue: a bitmap should be used to verify that the contract
+  has been properly initialized, i.e. all the codes of the
+  sub-contracts have been correctly set.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=88]
 	function setDEXconnectorCode(TvmCell code) public checkOwnerAndAccept {
@@ -756,17 +561,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setDEXpairCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmCell & \tt code &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor Issue: the code should be checked against a code hash,
+  hardcoded in the code, or set either in the constructor or in the
+  static variables.
+\item Minor Issue: a bitmap should be used to verify that the contract
+  has been properly initialized, i.e. all the codes of the
+  sub-contracts have been correctly set.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=84]
 	function setDEXpairCode(TvmCell code) public checkOwnerAndAccept {
@@ -776,17 +578,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setRootTokenCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmCell & \tt code &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor Issue: the code should be checked against a code hash,
+  hardcoded in the code, or set either in the constructor or in the
+  static variables.
+\item Minor Issue: a bitmap should be used to verify that the contract
+  has been properly initialized, i.e. all the codes of the
+  sub-contracts have been correctly set.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=92]
 	function setRootTokenCode(TvmCell code) public checkOwnerAndAccept {
@@ -796,17 +595,14 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setTONTokenWalletCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmCell & \tt code &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt checkOwnerAndAccept & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor Issue: the code should be checked against a code hash,
+  hardcoded in the code, or set either in the constructor or in the
+  static variables.
+\item Minor Issue: a bitmap should be used to verify that the contract
+  has been properly initialized, i.e. all the codes of the
+  sub-contracts have been correctly set.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=96]
 	function setTONTokenWalletCode(TvmCell code) public checkOwnerAndAccept {
@@ -819,18 +615,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function computeClientAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=108]
 	function computeClientAddress(uint256 pubkey, uint256 souint) private inline view returns (address) {
@@ -846,19 +634,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function computeConnectorAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\tt address & \tt commander &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=223]
 	function computeConnectorAddress(uint256 pubkey, uint256 souint, address commander) private inline view returns (address) {
@@ -874,22 +653,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function computePairAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\tt address & \tt creator &\\\hline
-\tt address & \tt rootA &\\\hline
-\tt address & \tt rootB &\\\hline
-\tt address & \tt rootAB &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=146]
 	function computePairAddress(
@@ -920,21 +687,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function computeRootTokenAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt pubkey &\\\hline
-\tt uint256 & \tt souint &\\\hline
-\tt bytes & \tt name &\\\hline
-\tt bytes & \tt symbol &\\\hline
-\tt uint8 & \tt decimals &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item TODO
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=182]
 	function computeRootTokenAddress(

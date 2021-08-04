@@ -1,16 +1,16 @@
 
 In this chapter, we introduce some general remarks about the code,
-that are not specific to this project, but whose occurrences have been
-found in the project in several locations.
+that are not specific to a specific piece of code, but whose
+occurrences have been found in the project in several locations.
 
 \section{Readability}
 
 \subsection{Typography of Static Variables}
 \label{readability:static}
 
-\issueMinor{Typography of static variables}{A good coding convention
-  is to use typography to visually discriminate static variables from
-  other variables, for example using a prefix such as {\tt s\_}. }
+A good coding convention is to use typography to visually discriminate
+static variables from other variables, for example using a prefix such
+as {\tt s\_}.
 
 This issue was found everywhere in the code of DEX and token
 contracts.\\
@@ -18,37 +18,36 @@ contracts.\\
 \subsection{Typography of Global Variables}
 \label{readability:global}
 
-\issueMinor{Typography of global variables}{A good coding convention
-  is to use typography to visually discriminate global variables from
-  local variables, for example using a prefix such as {\tt m\_} or
-  {\tt g\_}. }
+A good coding convention is to use typography to visually discriminate
+global variables from local variables, for example using a prefix such
+as {\tt m\_} or {\tt g\_}.
 
 This issue was found everywhere in the code of DEX and token contracts.\\
 
 \subsection{Typography of Internal Functions}
 \label{readability:internal}
 
-\issueMinor{Typography of internal function}{A good coding convention
-  is to use typography to visually discriminate public functions and
-  internal functions, for example using a prefix such as {\tt \_}. }
+A good coding convention is to use typography to visually discriminate
+public functions and internal functions, for example using a prefix
+such as {\tt \_}.
 
 This issue was found everywhere in the code of DEX and token contracts.\\
 
-\subsection{Naming of Errors}
-\label{readability:errors}
+\subsection{Naming of Numbers}
+\label{readability:constants}
 
-\issueMinor{Naming of Errors}{A good coding convention is to define
-  constants instead of using direct numbers for errors in {\tt
-    require()}.}
+A good coding convention is to define constants instead of using
+direct numbers for errors and other meaningful numbers.
 
-This issue was found everywhere in the code of DEX contracts, but not
-for token contracts.
+This issue was found everywhere in the code of DEX contracts (for
+errors in {\tt require()} and payload opcodes), but not for token
+contracts.
 
 \subsection{Better Units for Big Numbers}
 \label{readability:numbers}
 
-\issueMinor{Use Better Units}{Use decimals of {\tt ton} instead of
-  default nanotons to decrease the size of integer constants.}
+A good coding convention is to use decimals of {\tt ton} instead of
+default nanotons to decrease the size of integer constants.
 
 This issue was found in all constant definitions for gas cost.
 Numbers like {\tt 500000000} are difficult to read, whereas the
@@ -57,23 +56,21 @@ equivalent {\tt 0.5 ton} is much easier.
 \subsection{Use Method Calls instead of {\tt tvm.encodeBody}}
 \label{readability:call}
 
-\issueMinor{Use Method Call instead of {\tt tvm.encodeBody}}{Using
-  {\tt tvm.encodeBody} makes code harder to read. Method calls are
-  easier to read and interpret. The issue is minor as checks are still
-  correctly performed on argument types.}
+Using {\tt tvm.encodeBody} makes code harder to read. Method calls are
+easier to read and interpret. The issue is minor as checks are still
+correctly performed on argument types.
 
 This issue was found in all DEX contracts except DEXRoot.
 
-\section{Security}
+\section{Gas Consumption}
 
 \subsection{Accept Methods without Checks}
 \label{accept:all}
 
-\issueCritical{No Accept All Methods}{Public methods using
-  {\tt tvm.accept()} without any prior check should not exist. Indeed,
-  such methods could be used by attackers to drain the balance of the
-  contracts, even with minor amounts but unlimited number of
-  messages.}
+Public methods using {\tt tvm.accept()} without any prior check should
+not exist. Indeed, such methods could be used by attackers to drain
+the balance of the contracts, even with minor amounts but unlimited
+number of messages.
 
 This issue was found in the code the DEX contracts, especially with
 the {\tt alwaysAccept()} modifier. Methods using this modifier should
@@ -83,14 +80,36 @@ the user or known contracts.
 \subsection{{\tt require} after {\tt tvm.accept}}
 \label{accept:require}
 
-\issueCritical{No Require after Accept}{Methods using {\tt
-    tvm.accept()} should never use {\tt require()} after the accept.
-  Indeed, a {\tt require()} failing after {\tt tvm.accept()} will cost
-  a huge amount of gas, as all shards will execute the failing
-  method. }
+Methods using {\tt tvm.accept()} should never use {\tt require()}
+after the accept.  Indeed, a {\tt require()} failing after {\tt
+  tvm.accept()} will cost a huge amount of gas, as all shards will
+execute the failing method.
 
 This issue was found in the code of the DEX contracts. Methods should
 always keep calls to {\tt require()} before {\tt tvm.accept()}, and if
 it is not possible, should not fail but should {\em return} an error
 code instead.
+
+\subsection{Not Enough Gas for Action}
+\label{gas:partial}
+
+If there is not enough gas (message value or balance), the compute
+phase may execute, but the action phase may fail. In such a case,
+modifications done during the compute phase are committed to the
+blockchain, but no message emitted.
+
+This issue was found in the code, for example in {\tt
+  DEXClient.connectRoot}.
+
+\section{Architecture}
+
+
+\subsection{No need for passing {\tt souint} Arguments around}
+
+It looks like there is little need for passing around the {\tt souint}
+arguments as the same {\tt soUINT} static value could be used for the
+{\tt DEXroot} and all other contracts derived from it. The only
+required modification would be to make the {\tt drivenRoot} field of
+{\tt DEXConnector} a static variable. Such a change would probably
+simplify the interface of many functions.
 
