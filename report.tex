@@ -1,4 +1,8 @@
-\documentclass{report}
+\documentclass[twoside]{report}
+
+\usepackage{fancyhdr}
+
+\usepackage{minitoc}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage{array}
@@ -46,15 +50,15 @@
 \newcommand\issueMajor[2]{\addcomment{\bf Major issue: #1}{pink}{#2}}
 \newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
 
-\newcommand\issueEncodeBody[0]{Minor Issue: see Method Calls instead of {\tt tvm.encodeBody} (\ref{readability:call})}
-\newcommand\issueError[0]{Minor Issue: see Naming of Constants (\ref{readability:constants}). A number is directly used in {\tt require()}.}
-\newcommand\issueNumber[0]{Minor Issue: see Naming of Constants (\ref{readability:constants}). A number should be named through a constant.}
-\newcommand\issueInternal[0]{Minor Issue: see Typography of Internal Functions (\ref{readability:internal}). The function name should start with {\tt \_}.}
-\newcommand\issueUnits[0]{Minor Issue: see Better Units for Big Numbers (\ref{readability:numbers})}
-\newcommand\issueStatic[0]{Minor Issue: see Typography of Static Variables (\ref{readability:static})}
-\newcommand\issueGlobal[0]{Minor Issue: see Typography of Global Variables (\ref{readability:global})}
+\newcommand\issueEncodeBody[0]{Minor Issue (readability): use Method Calls instead of {\tt tvm.encodeBody} (\ref{readability:call}).}
+\newcommand\issueError[0]{Minor Issue (readability): see Naming of Constants (\ref{readability:constants}). A number is directly used in {\tt require()}. It should be replaced by a constant.}
+\newcommand\issueNumber[0]{Minor Issue (readability): see Naming of Constants (\ref{readability:constants}). A number should be named through a constant.}
+\newcommand\issueInternal[0]{Minor Issue (readability): see Typography of Internal Functions (\ref{readability:internal}). The function name should start with {\tt \_}.}
+\newcommand\issueUnits[0]{Minor Issue (readability): see Better Units for Big Numbers (\ref{readability:numbers}). Use {\tt ton} unit to make big numbers easier to understand.}
+\newcommand\issueStatic[0]{Minor Issue (readability): see Typography of Static Variables (\ref{readability:static}). Static variables should start with {\tt s\_} for example.}
+\newcommand\issueGlobal[0]{Minor Issue (readability): see Typography of Global Variables (\ref{readability:global}). Global variables should start with {\tt m\_} or {\tt g\_} for example.}
 \newcommand\issueAccept[2]{\issueCritical{Accept-All Method in {\tt #1}}{See No Accept-All Methods (\ref{accept:all}) #2}}
-\newcommand\issuePartial[0]{Minor Issue: see Not Enough Gas for Action (\ref{gas:partial})}
+\newcommand\issuePartial[0]{Minor Issue (gas loss): see Not Enough Gas for Action (\ref{gas:partial})}
 
 \newcommand\issueAlwaysAccept[1]{\issueCritical{Accept-All Modifier in {\tt #1}}{See Accept Methods withtout Checks (\ref{accept:all}). This modifier should be removed.}}
 
@@ -64,15 +68,25 @@
 \SetWatermarkScale{5}
 \fi
 
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[RO,RE]{\leftmark}
+\fancyhead[LO,LE]{\thepage}
+\fancyfoot{}
+\fancyfoot[RO,RE]{\thepage}
+\fancyfoot[LO,LE]{\leftmark}
+
 \begin{document}
 
-\title{Audit}
-\author{By OCamlPro}
+\title{Audit of the Radiance DEX Contracts}
+\author{Contact: Fabrice LE FESSANT\\Telegram: {\tt @fabrice\_dune}\\ OCamlPro}
 \maketitle
+\dominitoc
 \tableofcontents
 \ifsolissues
 \listoffigures
 \fi
+
 
 \ifsoldraft
 \chapter*{To edit this document}

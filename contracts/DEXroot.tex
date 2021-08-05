@@ -1,6 +1,7 @@
 
 \chapter{Contract DEXroot}
 
+\minitoc
 
 In file {\tt DEXRoot.sol}
 
@@ -278,7 +279,19 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function createDEXclient}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXroot.createDEXclient}{
+  \begin{itemize}
+  \item The balance of the contract could be drained, by sending many
+    unexpected {\tt createDEXclient} messages by an attacker.
+  \item The balance could be further drained by the {\tt require()}
+    failing after {\tt tvm.accept}, causing replication on all shards.
+  \end{itemize}
+}
+\item Minor Issue: the method should check for correct initialization
+  of the {\tt codeDEXclient}, for example by using a bitmap set by all
+  {\tt setDEX*code} methods.
+\item \issueUnits{}. Use {\tt 0.0031 ton} instead of {\tt 3100000}.
+\item \issueError{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=122]
@@ -310,7 +323,24 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function createDEXpair}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Ownership of Liquidity Root Contract}{This method
+  allows ANY {\tt DEXClient} to generate any non-existent {\tt
+    DEXPair}, including its liquidity root contract, passing all the
+  static attributes, such as {\tt name}, {\tt symbol}, {\tt decimals}
+  and the {\tt \_randomNonce}, as arguments of the call. An attacker
+  could use this possibility to take ownership of the liquidity root
+  contract: the attacker would deploy that contract before the call to
+  {\tt createDEXpair}, but with constructor arguments giving him
+  ownership of the contract; then, during the call to {\tt
+    createDEXpair}, the deployment would fail, but the contract would
+  not notice it, and the pair would be created with the attacker-owned
+  liquidity root contract. The fix would be to define the owner of the
+  contract as a static variable in {\tt RootTokenContract}. }
+\item Minor Issue: the method should check for correct initialization
+  of the {\tt codeDEXpair} and {\tt codeRootToken}, for example by
+  using a bitmap set by all {\tt setDEX*code} methods.
+\item \issueError{}
+\item \issueUnits{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=237]
@@ -391,7 +421,10 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getBalanceTONgrams}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXroot.getBalanceTONgrams}{The balance of the contract
+  could be drained by sending many {\tt getBalanceTONgrams} messages. This
+  method could be a get-method without {\tt tvm.accept}, to be
+  executed locally.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=334]
@@ -403,7 +436,7 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getClientAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=118]
@@ -415,7 +448,7 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getConnectorAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=233]
@@ -427,7 +460,7 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getPairAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=171]
@@ -446,7 +479,10 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getPairByRoots01}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXroot.getPairByRoots01}{The balance of the contract
+  could be drained by sending many {\tt getPairByRoots01} messages. This
+  method could be a get-method without {\tt tvm.accept}, to be
+  executed locally.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=314]
@@ -458,7 +494,10 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getPairByRoots10}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXroot.getPairByRoots10}{The balance of the contract
+  could be drained by sending many {\tt getPairByRoots10} messages. This
+  method could be a get-method without {\tt tvm.accept}, to be
+  executed locally.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=318]
@@ -470,7 +509,7 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getRootTokenAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=213]
@@ -488,7 +527,10 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function getRootsByPair}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXroot.getRootsByPair}{The balance of the contract
+  could be drained by sending many {\tt getRootsByPair} messages. This
+  method could be a get-method without {\tt tvm.accept}, to be
+  executed locally.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=322]
@@ -502,7 +544,7 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function sendTransfer}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=71]
@@ -514,7 +556,12 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function setCreator}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Impersonate Accounts in {\tt
+    DEXroot.setCreator}}{Anybody can impersonate himself as the owner
+  of any {\tt giverAddr}. Later, in {\tt createDEXclient}, ownership
+  of {\tt giverAddr} can be used to spend the corresponding {\tt
+    balanceOf} to create a {\tt DEXClient} using somebody else's
+  funds.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=100]
@@ -616,7 +663,9 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function computeClientAddress}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue: Repeated Code. All the {\tt tvm.buildStateInit}
+  calls for various contracts could be put in internal functions, used
+  by both deployment methods and compute-address methods.
 \item \issueInternal
 \end{itemize}
 
@@ -635,7 +684,6 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function computeConnectorAddress}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
@@ -654,7 +702,6 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function computePairAddress}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
@@ -688,7 +735,6 @@ mapping (uint256 =$>$ address) & creators &  \\\hline
 \subsection{Function computeRootTokenAddress}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 

@@ -1,6 +1,7 @@
 
 \chapter{Contract DEXClient}
 
+\minitoc
 
 In file {\tt DEXClient.sol}
 
@@ -200,7 +201,7 @@ IDEXConnect & \\\hline
 
 \begin{itemize}
 \item \issueError{}
-\item Minor Issue: {\tt counterCallback} should probably be
+\item Minor Issue (Semantics): {\tt counterCallback} should probably be
   initialized to 1 instead of 0, and keep 0 as the specific value of
   {\tt getFirstCallback} when no callback is available.
 \end{itemize}
@@ -374,10 +375,11 @@ IDEXConnect & \\\hline
 \subsection{Function getCallback}
 
 \begin{itemize}
-\item Minor Issue: there is probably no need to spend gas with {\tt
-  tvm.accept} since the method can be executed locally (get-method).
-\item Minor Issue: the method should probably fail with {\tt require}
-  if the callback id does not exist.
+\item Minor Issue (Gas loss): there is probably no need to spend gas
+  with {\tt tvm.accept} since the method can be executed locally
+  (get-method).
+\item Minor Issue (Semantics): the method should probably fail with
+  {\tt require} if the callback id does not exist.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=318]
@@ -672,7 +674,6 @@ IDEXConnect & \\\hline
 \subsection{Function computeConnectorAddress}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 

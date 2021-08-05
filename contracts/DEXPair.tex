@@ -1,6 +1,7 @@
 
 \chapter{Contract DEXPair}
 
+\minitoc
 
 In file {\tt DEXPair.sol}
 
@@ -20,7 +21,7 @@ IBurnTokensCallback & \\\hline
 \subsection{Struct Connector}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=37]
@@ -34,7 +35,8 @@ IBurnTokensCallback & \\\hline
 \subsection{Struct Callback}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (readability): {\tt payload\_arg0}, {\tt payload\_arg1},
+  {\tt payload\_arg2} should be renamed to more explicit names
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=48]
@@ -56,7 +58,7 @@ IBurnTokensCallback & \\\hline
 \section{Constant Definitions}
 
 \begin{itemize}
-\item TODO
+  \item \issueUnits{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=65]
@@ -78,7 +80,16 @@ IBurnTokensCallback & \\\hline
 \section{Static Variable Definitions}
 
 \begin{itemize}
-\item TODO
+\item \issueStatic{}
+\item Minor Issue: Deployment messages are limited to 16 kB, and
+  contain the code of the contract, the static variables and the
+  constructor arguments. As {\tt codeDEXConnector} is a static
+  variable, the deployment message will contain the code of DEXClient
+  and DEXConnector at the same time. It could become an issue in the
+  future if their codes increase in size. If it is important to use
+  DEXConnector code static to distinguish clients, it might be worth
+  replacing it by a hash and use another message to initialize the
+  variable instead.
 \end{itemize}
 
 \ifsoltables
@@ -235,7 +246,16 @@ address & rootAB &  \\\hline
 \section{Variable Definitions}
 
 \begin{itemize}
-\item TODO
+\item \issueGlobal{}
+  \item Minor Issue (readability): variables could have better names
+    to understand their use, especially for mappings where it is
+    important to discriminate other the different possible
+    addresses. For example, {\tt walletReserve} could be {\tt
+      walletReserve\_of\_root}, idem for {\tt syncstatus} and {\tt
+      rootConnector}; {\tt connectors} could be {\tt
+      info\_of\_connector}.  {\tt processingStatus}, {\tt
+      processingData} and {\tt processingDest} could be renamed as
+    {\tt processingStatus\_of\_root\_x\_client} and so on.
 \end{itemize}
 
 \ifsoltables
@@ -533,7 +553,6 @@ mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
 \subsection{Modifier checkOwnerAndAccept}
 
 \begin{itemize}
-\item TODO
 \item \issueError{}
 \end{itemize}
 
@@ -548,7 +567,6 @@ mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
 \subsection{Modifier checkPubKeyAndAccept}
 
 \begin{itemize}
-\item TODO
 \item \issueError{}
 \end{itemize}
 
@@ -566,7 +584,9 @@ mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
 \subsection{Constructor}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Semantics): {\tt counterCallback} should probably be
+  initialized to 1 instead of 0, and keep 0 as the specific value of
+  {\tt getFirstCallback} when no callback is available.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=88]
@@ -583,7 +603,7 @@ mapping (uint256 =$>$ Callback) & callbacks &  \\\hline
 \subsection{Receive function}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=609]
@@ -652,7 +672,6 @@ function burnCallback(
 \subsection{Function connect}
 
 \begin{itemize}
-\item TODO
 \item \issueEncodeBody
 \end{itemize}
 
@@ -668,7 +687,14 @@ function burnCallback(
 \subsection{Function connectCallback}
 
 \begin{itemize}
-\item TODO
+\item \issueAccept{DEXPair.connectCallback}{The balance of the
+  contract could be drained, by sending many {\tt connectCallback}
+  messages. Replace the {\tt if} by a {\tt require()} and perform {\tt
+    tvm.accept} only afterwards.}
+\item Minor Issue (simplification): The calls to {\tt
+  setTransferCallback} and {\tt setBouncedCallback} are always
+  performed together. They could be replaced by just one call by
+  modifying the {\tt DEXConnector} contract.
 \item \issueEncodeBody
 \end{itemize}
 
@@ -693,7 +719,7 @@ function burnCallback(
 \subsection{Function getBalance}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=604]
@@ -705,7 +731,10 @@ function getBalance() public pure responsible returns (uint128) {
 \subsection{Function getCallback}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Gas loss): there is probably no need to spend gas with {\tt
+  tvm.accept} since the method can be executed locally (get-method).
+\item Minor Issue (Semantics): the method should probably fail with
+  {\tt require} if the callback id does not exist.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=571]
@@ -740,7 +769,7 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function getConnectorAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=108]
@@ -891,7 +920,6 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 
 \section{Internal Method Definitions}
 
-
 \subsection{Function acceptForProvide}
 
 \begin{itemize}
@@ -922,7 +950,6 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function cleanProcessing}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
@@ -940,7 +967,6 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function computeConnectorAddress}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
@@ -959,7 +985,11 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function connectRoot}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): the {\tt dexclient} static variable
+  of {\tt DEXConnector} is initialized with {\tt address(this)},
+  clearly not a {\tt DEXClient} but a {\tt DEXPair}. The field should
+  be renamed to match the possibility to use another contract than
+  {\tt DEXClient}, for example {\tt owner\_address}.
 \item \issueEncodeBody
 \item \issueInternal
 \end{itemize}
@@ -987,9 +1017,14 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function getAmountOut}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): {\tt math.muldiv(x,y,1)} is
+  equivalent to {\tt x * y} in TON Solidity, and less readable.
+\item Minor Issue (Precision): Given that {\tt numerator} is a factor,
+  you could increase precision by using {\tt math.muldivmod} that
+  keeps the intermediate factor in a 514 bit buffer before performing
+  the division.
 \item \issueError{}
-\item \issueInternal
+\item \issueInternal{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=157]
