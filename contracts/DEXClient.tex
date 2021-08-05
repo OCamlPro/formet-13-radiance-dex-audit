@@ -630,7 +630,9 @@ IDEXConnect & \\\hline
     replication of failure on all shards.
   \item An attacker could send many such messages also to include
     incorrect receipts in the {\tt callbacks} mapping, and remove
-    correct ones by sending more than 10 such messages.
+    correct ones by sending more than 10 such messages. Yet, this part
+    of the attack is probably not critical, as receipts are only used
+    by humans.
   \item Fix:Accept only when sender is one of the wallets of this
     dexclient or use the {\tt msg.value} gas.
   \end{itemize}}
@@ -708,7 +710,7 @@ IDEXConnect & \\\hline
 \subsection{Function getQuotient}
 
 \begin{itemize}
-\item Minor Issue: This internal function is unused.
+\item Minor Issue (Useless code): This internal function is unused.
 \item \issueInternal
 \end{itemize}
 
@@ -722,7 +724,7 @@ IDEXConnect & \\\hline
 \subsection{Function getRemainder}
 
 \begin{itemize}
-\item Minor Issue: This internal function is unused.
+\item Minor Issue (Useless code): This internal function is unused.
 \item \issueInternal
 \end{itemize}
 
@@ -752,7 +754,7 @@ IDEXConnect & \\\hline
 
 \begin{itemize}
 \item \issueInternal
-\item Minor Issue: Repeated Code. This function could easily be
+\item Minor Issue (Repeated Code): This function could easily be
   derived from {\tt isReady} with the additional check of {\tt
     rootWallet.exists(cp.rootAB)}
 \end{itemize}

@@ -24,9 +24,31 @@ Contestants shall submit a document in PDF format that covers:
 \begin{itemize}
   \item All the errors found
   \item All the warnings found
-  \item All the ``bad code'' (long functions, violation of abstraction levels, poor readability etc.)    
+  \item All the ``bad code'' (long functions, violation of abstraction levels, poor readability etc.)
 \end{itemize}
 
 Errors and warnings should be submitted to the developers as early as
 possible, during the contest, so that the code can be fixed
 immediately.  }
+
+During this audit, we classified our findings into three kinds of issues:
+\begin{description}
+\item[Critical Issues:] such issues can lead to taking ownership of resources,
+or total disabling of the service;
+\item[Major Issues:] such issues can lead to a decrease in the quality of the
+service, or temporary loss of availability;
+\item[Minor Issues:] Such issues do not impact the service itself. For example,
+code improvements to improve readability, to improve sharing, etc.
+\end{description}
+
+In these three kinds of issues, we found:
+\begin{description}
+\item[{\bf 3 Critical issues:}] one is a data structure with unlimited growth; one is an attacker taking ownership of the liquidity root contract; one is the possibility for an attacker to impersonate another user to create a client contract with its balance;
+\item[Many Major issues:] all of them are related to the use of {\tt tvm.accept}, allowing attackers to drain the balance of contracts. However, as the contracts are not expected to keep large amounts of TONs, we classified these attacks in the ``Major issues'' kind, as their impact will only be a loss of quality of service;
+\item[Minor issues:] most of them are readability improvements;
+\end{description}
+
+Critical issues and major issues are listed in the ``Table of Critical
+and Major Issues'' before this chapter. {\bf All critical issues and
+most major issues have been submitted to the Radiance team developers}
+on the Telegram channel above.

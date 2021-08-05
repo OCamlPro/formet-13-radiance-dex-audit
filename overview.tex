@@ -1,4 +1,6 @@
 
+\section{Code Architecture}
+
 The infrastructure is composed of a set of DEX specific contracts,
 associated with tokens contracts (developed by Broxus, to the best of
 our knownledge).
@@ -6,7 +8,7 @@ our knownledge).
 The DEX contracts are :
 
 \begin{description}
-\item[DEXRoot:] The ``root'' contract, used to perform global
+\item[DEXroot:] The ``root'' contract, used to perform global
   operations, such as creating ``client'' contracts;
 \item[DEXClient:] The contract with which a user may interact with the
   system.
@@ -34,3 +36,174 @@ the two token contracts have only been modified to change the {\tt
 
 All the DEX contracts use a static {\tt soUINT} field to be able to
 instanciate several ones for a given public key or other static field.
+
+\section{Contracts Architecture}
+
+The DEX is organized around the {\tt DEXroot} contract. The {\tt
+  DEXroot} contract performs mainly two operations, {\tt
+  createDEXclient} to create a new client contract for an external
+user, and {\tt createDEXpair} for a client to create a new pair
+contract.
+
+Once the some users have created some {\tt DEXPair} for some tokens
+using their {\tt DEXClient} contract, using the {\tt createNewPair}
+public method, users can use the {\tt connectPair} public method to
+register the pair in the client. Users should also use {\tt
+  connectRoot} public methods to associate {\tt DEXConnector}
+contracts to each token of the {\tt DEXPair}, i.e. a wallet associated
+to the two tokens of the pair, plus the liquidity token.
+
+Once a user has registered his client to the pair and created the
+corresponding connectors, he may swap tokens using the {\tt
+  processSwapA} and {\tt processSwapB} public methods, provide
+liquidities using the {\tt processLiquidity} public method, or refund
+his liquidities using the {\tt returnLiquidity} public method.
+
+\section{Sequences of Messages}
+
+\subsection{{\tt createDEXclient} sequence}
+
+\begin{itemize}
+\item The user transfers some TONs to the {\tt DEXroot} contract from
+  his multisig;
+\item The user sends a {\tt setCreator} message to the {\tt DEXroot}
+  contract to claim ownership for the former transferred tokens;
+\item The user sends a {\tt createDEXclient} message to the {\tt
+  DEXroot} contract;
+\item The {\tt DEXroot} contract deploys the {\tt DEXClient} contract;
+\end{itemize}
+
+\subsection{{\tt createDEXpair} sequence}
+
+\begin{itemize}
+\item The user sends a {\tt createNewPair} message to his {\tt
+  DEXClient} contract, providing the two root token contracts to be
+  swapped;
+\item The client contract sends a {\tt createDEXpair} message to the
+  {\tt DEXroot} contract.
+\item The root contract:
+  \begin{itemize}
+  \item Deploys a {\tt RootTokenContract} contract to create the
+    token later used for liquidity management;
+  \item Deploys a {\tt DEXPair} contract for the pair;
+  \end{itemize}
+\item The {\tt DEXPair} constructor deploys two {\tt DEXConnector}
+  contracts, one for each token of the pair (see the {\tt
+    DEXConnector} deployment sequence)
+\end{itemize}
+
+\subsection{{\tt DEXConnector} deployment sequence}
+
+\begin{itemize}
+\item A contract ({\tt DEXClient} or {\tt DEXPair}, the {\em
+  owner}) deploys a {\tt DEXConnector} contract;
+\item The contract immediately sends a {\tt deployEmptyWallet} message
+  to the {\tt DEXConnector} contract;
+\item The connector contract:
+  \begin{itemize}
+  \item Sends a {\tt deployEmptyWallet} message to the {\tt
+    RootTokenContract} contract;
+  \item Sends a {\tt sendExpectedWalletAddress} message to the {\tt
+    RootTokenContract} contract;
+  \end{itemize}
+\item The root token contract:
+  \begin{itemize}
+  \item Deploys the empty {\tt TONTokenWallet} contract;
+  \item Sends a {\tt expectedWalletAddressCallback} message to the
+    {\tt DEXConnector} contract
+  \end{itemize}
+\item The connector sends a {\tt connectCallback} message to the
+  initial {\em owner} contract ({\tt DEXClient} or {\tt DEXPair});
+\item The {\em owner} contract sends:
+  \begin{itemize}
+  \item A {\tt setTransferCallback} to the {\tt DEXConnector} contract;
+  \item A {\tt setBouncedCallback} to the {\tt DEXConnector} contract;
+  \end{itemize}
+\item The {\tt DEXConnector} contract forwards the {\tt
+  setReceiveCallback} and {\tt setBouncedCallback} messages to the
+  {\tt TONTokenWallet} contract;
+\end{itemize}
+
+\subsection{{\tt connectPair} sequence}
+
+\begin{itemize}
+\item The user sends a {\tt connectPair} message to his {\tt
+  DEXClient} contract;
+\item The client contract sends a {\tt connect} message to the {\tt
+  DEXPair} contract;
+\item The {\tt DEXPair} contract sends back its information through a
+  {\tt setPair} message;
+\end{itemize}
+
+\subsection{{\tt processSwapA} sequence}
+
+\begin{itemize}
+\item The user sends a {\tt processSwapA} message to his {\tt
+  DEXClient} contract;
+\item The client contract sends a {\tt transfer} message to the {\tt
+  DEXConnector} contract, with a payload {\tt (1,rootB,walletB)} ;
+\item The {\tt DEXConnector} contract forwards the {\tt transfer}
+  message to the associated {\tt TONTokenWallet} contract;
+\item The {\tt TONTokenWallet} contract sends a {\tt internalTransfer}
+  message to the destination {\tt TONTokenWallet} contract of the
+  pair;
+\item The destination {\tt TONTokenWallet} contract sends a {\tt
+  tokensReceivedCallback} message to his associated {\tt DEXPair}
+  contract;
+\item The {\tt DEXPair} checks whether the swap is possible or not:
+  \begin{itemize}
+  \item If the swap is not possible, it sends a {\tt transfer} message
+    to the {\tt DEXConnector} to refund the user, with a {\tt (8,0,0)}
+    payload;
+  \item If the swap is possible, it sends a {\tt transfer} message to
+    the other {\tt DEXConnector} to pay the user, with a {\tt (0,0,0)}
+    payload;
+  \end{itemize}
+\end{itemize}
+
+\subsection{{\tt processLiquidity} sequence}
+
+\begin{itemize}
+\item The user sends a {\tt processLiquidity} message to his {\tt
+  DEXClient} contract;
+\item The client contract sends a {\tt transfer} message to the two
+  associated {\tt DEXConnector} contracts, with a payload {\tt
+    (2,dexclient,walletLiquidity)} ;
+\item The {\tt DEXConnector} contracts forward the {\tt transfer}
+  messages to the associated {\tt TONTokenWallet} contracts;
+\item The {\tt TONTokenWallet} contracts send {\tt internalTransfer}
+  messages to the destination {\tt TONTokenWallet} contracts of the
+  pair;
+\item The destination {\tt TONTokenWallet} contracts send {\tt
+  tokensReceivedCallback} messages to their associated {\tt DEXPair}
+  contract;
+\item TODO
+\end{itemize}
+
+\subsection{{\tt returnLiquidity} sequence}
+
+\begin{itemize}
+\item The user sends a {\tt returnLiquidity} message to his {\tt
+  DEXClient} contract;
+\item The client contract sends a {\tt burn} message to the user's
+  {\tt DEXConnector} contract of the liquidity token, with a payload
+  {\tt (3,walletA,walletB)} ;
+\item The {\tt DEXConnector} contracts forwards a {\tt burnByOwner}
+  message to his associated {\tt TONTokenWallet} contract;
+\item The {\tt TONTokenWallet} contract burns the tokens and sends a
+  {\tt tokensBurned} message to the associated {\tt
+    RootTokenContract} contract;
+\item The {\tt RootTokenContract} contract sends a {\tt burnCallback}
+  message to the associated {\tt DEXPair} contract (provided in the
+  initial {\tt burn} message);
+\item The {\tt DEXPair} contract sends {\tt transfer} messages to the
+  two {\tt DEXConnector} contracts to transfer back the tokens
+  corresponding to the liquidity, with a payload of {\tt (6,0,0)};
+\item The {\tt DEXConnector} contracts send {\tt transfer} messages to
+  the corresponding {\tt TONTokenWallet} contracts;
+\item The {\tt TONTokenWallet} contracts send {\tt internalTransfer}
+  to the dexclient {\tt TONTokenWallet} contracts;
+\item The {\tt TONTokenWallet} contracts of the dexclient send {\tt
+  tokensReceivedCallback} messages to the dexclient, that records the
+  callbacks in the {\tt callbacks} mapping;
+\end{itemize}

@@ -8,7 +8,7 @@
 \usepackage{array}
 \usepackage{titletoc}
 \usepackage[table]{xcolor}
-\renewcommand{\listfigurename}{Table of Issues}
+\renewcommand{\listfigurename}{Table of Critical and Major Issues}
 \input{highlighter}
 
 \newif\ifsolmodules
@@ -57,10 +57,10 @@
 \newcommand\issueUnits[0]{Minor Issue (readability): see Better Units for Big Numbers (\ref{readability:numbers}). Use {\tt ton} unit to make big numbers easier to understand.}
 \newcommand\issueStatic[0]{Minor Issue (readability): see Typography of Static Variables (\ref{readability:static}). Static variables should start with {\tt s\_} for example.}
 \newcommand\issueGlobal[0]{Minor Issue (readability): see Typography of Global Variables (\ref{readability:global}). Global variables should start with {\tt m\_} or {\tt g\_} for example.}
-\newcommand\issueAccept[2]{\issueCritical{Accept-All Method in {\tt #1}}{See No Accept-All Methods (\ref{accept:all}) #2}}
+\newcommand\issueAccept[2]{\issueMajor{Accept-All Method in {\tt #1}}{See No Accept-All Methods (\ref{accept:all}) #2}}
 \newcommand\issuePartial[0]{Minor Issue (gas loss): see Not Enough Gas for Action (\ref{gas:partial})}
 
-\newcommand\issueAlwaysAccept[1]{\issueCritical{Accept-All Modifier in {\tt #1}}{See Accept Methods withtout Checks (\ref{accept:all}). This modifier should be removed.}}
+\newcommand\issueAlwaysAccept[1]{\issueMajor{Accept-All Modifier in {\tt #1}}{See Accept Methods withtout Checks (\ref{accept:all}). This modifier should be removed.}}
 
 \ifsoldraft
 \usepackage[firstpage]{draftwatermark}

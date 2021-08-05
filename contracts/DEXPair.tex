@@ -614,7 +614,21 @@ receive() external {
 \subsection{Function burnCallback}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Unlimited Growth of {\tt callbacks}}{while {\tt
+    burnCallback} adds a receipt in the same way as {\tt
+    tokensReceivedCallback}, it does not check for the presence of
+  more than 10 callbacks, leading to an unlimited growth of the {\tt
+    callbacks} mapping. This unlimited growth of the contract storage
+  will progressively increase the gas price of calling its methods,
+  until it becomes unaffordable for anybody. The issue can thus be
+  considered even critical on the long term.}
+\item \issueAccept{DEXPair.burnCallback}{The balance of the contract
+  could be drained, by sending many unexpected {\tt burnCallback}
+  messages by an attacker. To prevent the attack, use {\tt require}
+  instead of {\tt if} and perform {\tt tvm.accept} only afterwards.}
+\item Minor Issue (Readability): rename {\tt arg0}, {\tt arg1} and
+  {\tt arg2} with better name, for example {\tt opcode}, {\tt walletA}
+  and {\tt walletB} respectively.
 \item \issueEncodeBody
 \end{itemize}
 
@@ -781,8 +795,44 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function tokensReceivedCallback}
 
 \begin{itemize}
-\item TODO
-\item \issueEncodeBody
+\item \issueCritical{Swap Refund does not work in {\tt
+    DEXPair.tokensReceivedCallback}}{On line 294, in case of refund, a
+  transfer is performed to {\tt token\_wallet}, but this variable is
+  the first argument of the {\tt tokensReceivedCallback}, i.e. the
+  wallet of the pair that received the tokens. Thus, this transfer is
+  actually a transfer from the wallet to itself, and the user will
+  never received his refund. Fix: {\tt token\_wallet} should be
+  replaced by {\tt sender\_wallet},}
+\item \issueAccept{DEXPair.tokensReceivedCallback}{
+  \begin{itemize}
+  \item The balance of the contract could be drained, by sending many
+    unwanted {\tt tokensReceivedCallback} messages. Replace the {\tt
+      if} by a {\tt require()} and perform the {\tt tvm.accept} only
+    afterwards.
+  \item The balance could also be drained by sending small amounts of
+    tokens to ``swap'' directly to the {\tt TONTokenWallet} of the
+    pair (without using {\tt DEXCclient} for that), with an invalid
+    payload. Indeed, {\tt slice.decode} would fail after {\tt
+      tvm.accept}, and the error would be executed on all shards,
+    causing an heavy loss of gas.
+  \end{itemize}
+}
+\item Minor issue (Repeated Code): the code between lines 373 and 482
+  is a repetition of the code between lines 261 and 370. The only
+  difference is the {\tt delete callbacks[getFirstCallback()]} line in
+  the case {\tt counterCallback $>$ 10}. The duplication could be
+  avoided by just performing the test before this line.
+\item Minor issue (Repeated code): the code between lines 261 and 277
+  is expected to perform the same task as the code in the method {\tt
+    burnCallback} between lines 532 and 547. An internal method could
+  be used to avoid this code duplication, and would fix the issue
+  found in {\tt burnCallback} in these lines.
+\item Minor issue (Readability): the code of this function is too
+  long, the code would benefit from splitting the code in several
+  shorter internal functions.
+\item \issueNumber{} Here, opcodes in payload should be named by
+  constants.
+\item \issueEncodeBody{}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=248]
@@ -923,7 +973,12 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function acceptForProvide}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (Readability): choose more explicit names for {\tt
+  arg0} and {\tt arg1}.
+\item Minor issue (Readability): {\tt crquotient} and {\tt
+  crremainder} could be computed in just one command using {\tt
+  math.muldivmod} instead of calling {\tt getQuotient} and {\tt
+  getRemainder}.
 \item \issueError{}
 \item \issueInternal
 \end{itemize}
@@ -1020,9 +1075,10 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \item Minor Issue (Readability): {\tt math.muldiv(x,y,1)} is
   equivalent to {\tt x * y} in TON Solidity, and less readable.
 \item Minor Issue (Precision): Given that {\tt numerator} is a factor,
-  you could increase precision by using {\tt math.muldivmod} that
-  keeps the intermediate factor in a 514 bit buffer before performing
-  the division.
+  you could increase precision by using {\tt math.muldivmod} to
+  perform together the multiplication of {\tt numerator} and the
+  division in the last step, as it keeps the intermediate factor in a
+  514 bit buffer before performing the division.
 \item \issueError{}
 \item \issueInternal{}
 \end{itemize}
@@ -1039,7 +1095,9 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function getFirstCallback}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue: if no callback is present, the function returns
+  0. This value could be reserved for this usage by setting
+  {\tt counterCallback} to 1 in the constructor.
 \item \issueInternal
 \end{itemize}
 
@@ -1053,7 +1111,9 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function getQuotient}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): this function does not provide any
+  improvement over a simple division, as it does not benefit from the
+  increased temporary buffer for the multiplication.
 \item \issueInternal
 \end{itemize}
 
@@ -1067,7 +1127,6 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function getRemainder}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
@@ -1081,7 +1140,7 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function liquidityA}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): choose a better name than {\tt arg0}
 \item \issueError{}
 \item \issueInternal
 \end{itemize}
@@ -1098,7 +1157,7 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function liquidityB}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): choose a better name than {\tt arg0}
 \item \issueError{}
 \item \issueInternal
 \end{itemize}
@@ -1115,7 +1174,7 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function qtyAforB}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): choose a better name than {\tt arg1}
 \item \issueError{}
 \item \issueInternal
 \end{itemize}
@@ -1131,7 +1190,7 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function qtyBforA}
 
 \begin{itemize}
-\item TODO
+\item Minor Issue (Readability): choose a better name than {\tt arg0}
 \item \issueError{}
 \item \issueInternal
 \end{itemize}
@@ -1147,7 +1206,6 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
 \subsection{Function thisBalance}
 
 \begin{itemize}
-\item TODO
 \item \issueInternal
 \end{itemize}
 
