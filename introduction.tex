@@ -41,10 +41,13 @@ service, or temporary loss of availability;
 code improvements to improve readability, to improve sharing, etc.
 \end{description}
 
-In these three kinds of issues, we found:
+In these three kinds of issues, we found in the DEX contracts:
 \begin{description}
-\item[{\bf 3 Critical issues:}] one is a data structure with unlimited growth; one is an attacker taking ownership of the liquidity root contract; one is the possibility for an attacker to impersonate another user to create a client contract with its balance;
+
+\item[{\bf 4 Critical issues:}] one is a data structure with unlimited growth; one is an attacker taking ownership of the liquidity root contract; one is the possibility for an attacker to impersonate another user to create a client contract with its balance; one is the failure of refunds for unsuccessful swaps;
+
 \item[Many Major issues:] all of them are related to the use of {\tt tvm.accept}, allowing attackers to drain the balance of contracts. However, as the contracts are not expected to keep large amounts of TONs, we classified these attacks in the ``Major issues'' kind, as their impact will only be a loss of quality of service;
+
 \item[Minor issues:] most of them are readability improvements;
 \end{description}
 
@@ -52,3 +55,12 @@ Critical issues and major issues are listed in the ``Table of Critical
 and Major Issues'' before this chapter. {\bf All critical issues and
 most major issues have been submitted to the Radiance team developers}
 on the Telegram channel above.
+
+In the Broxus token contracts, we found one issue that we consider a
+Critical issue: the constructor allows anybody to deploy a {\tt
+RootTokenContract} with any static variables. It could be used by
+attackers to preventively take control over some root contracts before
+they are actually needed.  We also found many methods where a {\tt
+require} should check that there is enough gas to send further
+messages, leading to potential burns of tokens. We chose to define
+these issues as Major issues.

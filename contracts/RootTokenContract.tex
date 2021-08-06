@@ -7,7 +7,6 @@ In file {\tt RootTokenContract.sol}
 
 \section{Contract Inheritance}
 
-
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 IRootTokenContract & \\\hline
 IBurnableTokenRootContract & \\\hline
@@ -18,37 +17,15 @@ ISendSurplusGas & \\\hline
 IVersioned & \\\hline
 \end{tabular}
 
-
 \section{Static Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint256 & \_{}randomNonce &  \\\hline
-bytes & name &  \\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
-bytes & symbol &  \\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
-uint8 & decimals &  \\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
-TvmCell & wallet\_{}code &  \\\hline
- & & used in @5.RootTokenContract.getWalletCode\\\hline
- & & used in @5.RootTokenContract.getExpectedWalletAddress\\\hline
- & & used in @5.RootTokenContract.getExpectedWalletAddress\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & used in @5.RootTokenContract.deployEmptyWallet\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueStatic{}
+\item Minor issue: deployment messages are limited to 16 kB. Having
+  {\tt wallet\_code} a static variable will make the deployment
+  message contain the codes of both the {\tt RootTokenContract} and
+  {\tt TONTokenWallet}. It might become an issue in later versions.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=28]
     uint256 static _randomNonce;
@@ -72,63 +49,9 @@ TvmCell & wallet\_{}code &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & total\_{}supply &  \\\hline
- & & assigned in @5.RootTokenContract.tokensBurned\\\hline
- & & used in @5.RootTokenContract.tokensBurned\\\hline
- & & assigned in @5.RootTokenContract.mint\\\hline
- & & used in @5.RootTokenContract.mint\\\hline
- & & used in @5.RootTokenContract.getTotalSupply\\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
- & & assigned in @5.RootTokenContract.deployWallet\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & assigned in @5.RootTokenContract.:onBounce\\\hline
- & & used in @5.RootTokenContract.:onBounce\\\hline
- & & assigned in @5.RootTokenContract.:constructor\\\hline
- & & used in @5.RootTokenContract.:constructor\\\hline
-uint256 & root\_{}public\_{}key &  \\\hline
- & & assigned in @5.RootTokenContract.transferOwner\\\hline
- & & used in @5.RootTokenContract.transferOwner\\\hline
- & & used in @5.RootTokenContract.isExternalOwner\\\hline
- & & used in @5.RootTokenContract.isExternalOwner\\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
- & & assigned in @5.RootTokenContract.:constructor\\\hline
- & & used in @5.RootTokenContract.:constructor\\\hline
-address & root\_{}owner\_{}address &  \\\hline
- & & assigned in @5.RootTokenContract.transferOwner\\\hline
- & & used in @5.RootTokenContract.transferOwner\\\hline
- & & used in @5.RootTokenContract.isInternalOwner\\\hline
- & & used in @5.RootTokenContract.isInternalOwner\\\hline
- & & used in @5.RootTokenContract.getDetails\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & assigned in @5.RootTokenContract.:constructor\\\hline
- & & used in @5.RootTokenContract.:constructor\\\hline
-uint128 & start\_{}gas\_{}balance &  \\\hline
- & & used in @5.RootTokenContract.sendSurplusGas\\\hline
- & & used in @5.RootTokenContract.deployWallet\\\hline
- & & assigned in @5.RootTokenContract.:constructor\\\hline
- & & used in @5.RootTokenContract.:constructor\\\hline
-bool & paused &  \\\hline
- & & used in @5.RootTokenContract.tokensBurned\\\hline
- & & assigned in @5.RootTokenContract.setPaused\\\hline
- & & used in @5.RootTokenContract.setPaused\\\hline
- & & used in @5.RootTokenContract.sendPausedCallbackTo\\\hline
- & & assigned in @5.RootTokenContract.:constructor\\\hline
- & & used in @5.RootTokenContract.:constructor\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueGlobal{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=36]
     uint128 total_supply;
@@ -152,17 +75,11 @@ bool & paused &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier onlyOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=458]
     modifier onlyOwner() {
@@ -173,6 +90,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier onlyInternalOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=463]
     modifier onlyInternalOwner() {
@@ -183,30 +103,16 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt root\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt root\_{}owner\_{}address\_{} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueCritical{constructor not strict enough in {\tt
+    RootTokenContract}}{The constructor does not check the sender of
+  the message. Thus, an attacker that can predict the parameters used
+  as static variables by another user or contract can deploy the
+  contract and take ownership of it. Fix: {\tt root\_public\_key} and
+  {\tt root\_owner\_address} should be static variables.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=48]
     constructor(uint256 root_public_key_, address root_owner_address_) public {
@@ -230,7 +136,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Fallback function}
 
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=523]
     fallback() external {
@@ -239,15 +147,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{OnBounce function}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmSlice & \tt slice &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=514]
     onBounce(TvmSlice slice) external {
@@ -262,20 +164,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function deployEmptyWallet}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt deploy\_{}grams &\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\tt address & \tt gas\_{}back\_{}address &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: add {\tt require} to check that {\tt msg.value} is
+  enough for the deployment.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=237]
     function deployEmptyWallet(
@@ -320,23 +212,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function deployWallet}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt deploy\_{}grams &\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\tt address & \tt gas\_{}back\_{}address &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueMajor{Need gas check in {\tt
+    RootTokenContract.deployWallet}}{add {\tt require} to check that
+  {\tt msg.value} is enough for the deployment in the case of internal
+  owner.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=164]
     function deployWallet(
@@ -406,15 +287,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getDetails}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt IRootTokenContractDetails & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=77]
     function getDetails() override external view responsible returns (IRootTokenContractDetails) {
@@ -431,15 +306,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getTotalSupply}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=92]
     function getTotalSupply() override external view responsible returns (uint128) {
@@ -449,15 +318,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getVersion}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint32 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=63]
     function getVersion() override external pure responsible returns (uint32) {
@@ -467,18 +330,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getWalletAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=111]
     function getWalletAddress(
@@ -501,15 +355,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getWalletCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt TvmCell & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=100]
     function getWalletCode() override external view responsible returns (TvmCell) {
@@ -519,18 +367,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function mint}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt address & \tt to &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=282]
     function mint(
@@ -551,21 +390,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function proxyBurn}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt address & \tt callback\_{}address &\\\hline
-\tt TvmCell & \tt callback\_{}payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyInternalOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: add {\tt require} to check that {\tt msg.value} is
+  enough to send the message.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=307]
     function proxyBurn(
@@ -599,17 +427,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function sendExpectedWalletAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\tt address & \tt to &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: add {\tt require} to check that {\tt msg.value} is
+  enough to send the message.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=134]
     function sendExpectedWalletAddress(
@@ -633,16 +454,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function sendPausedCallbackTo}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint64 & \tt callback\_{}id &\\\hline
-\tt address & \tt callback\_{}addr &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=423]
     function sendPausedCallbackTo(
@@ -659,17 +473,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function sendSurplusGas}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt to &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyInternalOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=386]
     function sendSurplusGas(
@@ -686,17 +492,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setPaused}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt bool & \tt value &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=407]
     function setPaused(
@@ -713,20 +511,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function tokensBurned}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt address & \tt callback\_{}address &\\\hline
-\tt TvmCell & \tt callback\_{}payload &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=347]
     function tokensBurned(
@@ -766,18 +553,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function transferOwner}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt root\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt root\_{}owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=440]
     function transferOwner(
@@ -802,18 +580,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getExpectedWalletAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=485]
     function getExpectedWalletAddress(
@@ -844,15 +613,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function isExternalOwner}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=476]
     function isExternalOwner() private inline view returns (bool) {
@@ -862,15 +625,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function isInternalOwner}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=472]
     function isInternalOwner() private inline view returns (bool) {
@@ -880,15 +637,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function isOwner}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt bool & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=468]
     function isOwner() private inline view returns (bool) {

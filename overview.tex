@@ -59,6 +59,24 @@ corresponding connectors, he may swap tokens using the {\tt
 liquidities using the {\tt processLiquidity} public method, or refund
 his liquidities using the {\tt returnLiquidity} public method.
 
+Payloads transmitted in transfer messages have the format {\tt (uint8,
+  address, address)} where the first field is an opcode, with the
+following meaning:
+\begin{description}
+\item[0:] Transfer for successful swap
+\item[1:] Swap these tokens, with args {\tt (other\_root, other\_wallet)}
+\item[2:] Provide liquidity, with args {\tt (dexclient, liquidity\_wallet)}
+\item[3:] Return liquidity, with args {\tt (walletA, walletB)}
+\item[4:] Send tokens, with args {\tt (dexclient, source\_wallet)}
+\item[6:] Reply to return of liquidity
+\item[7:] Refund of unused provide of liquidity
+\item[8:] Refund after failed swap
+\item[9:] Refund after failed provide of liquidity
+\end{description}
+
+Only opcodes 1 to 3 are used by the {\tt DEXPair} contract to process
+the orders, the other opcodes are to be read by humans or interfaces.
+
 \section{Sequences of Messages}
 
 \subsection{{\tt createDEXclient} sequence}

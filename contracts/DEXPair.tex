@@ -817,6 +817,16 @@ function getCallback(uint id) public view checkPubKeyAndAccept returns (
     causing an heavy loss of gas.
   \end{itemize}
 }
+\item \issueMajor{Partial Treatment of Parallel Liquidity Provides}{If
+  the user performs several liquidity provides in parallel, the
+  boolean {\tt processingStatus} could be set to {\tt true} to account
+  for several messages on one side, but the first message received on
+  the other side will trigger the treatment, while other messages for
+  the other side could still be in transit. These other messages will
+  not be treated until another provide is performed, that will itself
+  also be treated partially. Fix: {\tt processingStatus} should count
+  the number of received messages, and only start the treatment when
+  both sides have the same number of received messages.}
 \item Minor issue (Repeated Code): the code between lines 373 and 482
   is a repetition of the code between lines 261 and 370. The only
   difference is the {\tt delete callbacks[getFirstCallback()]} line in

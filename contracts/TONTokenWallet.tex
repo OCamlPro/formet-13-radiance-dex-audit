@@ -7,7 +7,6 @@ In file {\tt TONTokenWallet.sol}
 
 \section{Contract Inheritance}
 
-
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 ITONTokenWallet & \\\hline
 IDestroyable & \\\hline
@@ -16,89 +15,11 @@ IBurnableByRootTokenWallet & \\\hline
 IVersioned & \\\hline
 \end{tabular}
 
-
 \section{Static Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish static variables from global variables, such as \verb+s_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & root\_{}address &  \\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getExpectedAddress\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & used in @6.TONTokenWallet.burnByRoot\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
-TvmCell & code &  \\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.getWalletCode\\\hline
- & & used in @6.TONTokenWallet.getExpectedAddress\\\hline
- & & used in @6.TONTokenWallet.getExpectedAddress\\\hline
-uint256 & wallet\_{}public\_{}key &  \\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & used in @6.TONTokenWallet.burnByRoot\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
-address & owner\_{}address &  \\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferFrom\\\hline
- & & used in @6.TONTokenWallet.transferFrom\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & used in @6.TONTokenWallet.disapprove\\\hline
- & & used in @6.TONTokenWallet.disapprove\\\hline
- & & used in @6.TONTokenWallet.burnByRoot\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueStatic{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=24]
     address static root_address;
@@ -118,90 +39,9 @@ address & owner\_{}address &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Use a naming convention to distinguish global variables from local variables, such as \verb+g_+ or \verb+m_+ prefix.
-\\\hline\end{tabular}
-\fi
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint128 & balance\_{} &  \\\hline
- & & assigned in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & assigned in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & used in @6.TONTokenWallet.transferToRecipient\\\hline
- & & assigned in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & assigned in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & used in @6.TONTokenWallet.transfer\\\hline
- & & assigned in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & assigned in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & used in @6.TONTokenWallet.destroy\\\hline
- & & assigned in @6.TONTokenWallet.burnByRoot\\\hline
- & & used in @6.TONTokenWallet.burnByRoot\\\hline
- & & used in @6.TONTokenWallet.burnByRoot\\\hline
- & & assigned in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & assigned in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.burnByOwner\\\hline
- & & used in @6.TONTokenWallet.balance\\\hline
- & & assigned in @6.TONTokenWallet.accept\\\hline
- & & used in @6.TONTokenWallet.accept\\\hline
- & & assigned in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & assigned in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
-optional (AllowanceInfo) & allowance\_{} &  \\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.internalTransferFrom\\\hline
- & & used in @6.TONTokenWallet.disapprove\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.approve\\\hline
- & & used in @6.TONTokenWallet.allowance\\\hline
- & & used in @6.TONTokenWallet.allowance\\\hline
-address & receive\_{}callback &  \\\hline
- & & assigned in @6.TONTokenWallet.setReceiveCallback\\\hline
- & & used in @6.TONTokenWallet.setReceiveCallback\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
-address & bounced\_{}callback &  \\\hline
- & & assigned in @6.TONTokenWallet.setBouncedCallback\\\hline
- & & used in @6.TONTokenWallet.setBouncedCallback\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
- & & used in @6.TONTokenWallet.:onBounce\\\hline
-bool & allow\_{}non\_{}notifiable &  \\\hline
- & & assigned in @6.TONTokenWallet.setReceiveCallback\\\hline
- & & used in @6.TONTokenWallet.setReceiveCallback\\\hline
- & & used in @6.TONTokenWallet.internalTransfer\\\hline
- & & used in @6.TONTokenWallet.getDetails\\\hline
- & & assigned in @6.TONTokenWallet.:constructor\\\hline
- & & used in @6.TONTokenWallet.:constructor\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item \issueGlobal{}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=31]
     uint128 balance_;
@@ -225,17 +65,11 @@ bool & allow\_{}non\_{}notifiable &  \\\hline
 
 \section{Modifier Definitions}
 
-
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Calling tvm.accept() without checking pubkey should not be allowed
-\\\hline\end{tabular}
-\fi
-
 \subsection{Modifier onlyRoot}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=598]
     modifier onlyRoot() {
@@ -246,6 +80,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier onlyOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=603]
     modifier onlyOwner() {
@@ -258,6 +95,9 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \subsection{Modifier onlyInternalOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=610]
     modifier onlyInternalOwner() {
@@ -268,21 +108,11 @@ Calling tvm.accept() without checking pubkey should not be allowed
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
 
-\ifsoldraft
-\noindent\begin{tabular}{|p{12cm}|}\hline
-\rowcolor{green}Advises
-\\\hline
-Check who can call the constructor. If the constructor sets global values, only legitimate users should be allowed.
-\\\hline
-Check that every argument is protected by a require().
-\\\hline
-If external users are allowed, their pubkey should be verified (\verb+require(msg.pubkey() != 0 && msg.pubkey() == tvm.pubkey(),100)+ , and tvm.accept() should be called.
-\\\hline\end{tabular}
-\fi
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=43]
     constructor() public {
@@ -299,10 +129,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \section{Public Method Definitions}
 
-
 \subsection{Fallback function}
 
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=683]
     fallback() external {
@@ -311,15 +142,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{OnBounce function}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt TvmSlice & \tt body &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=653]
     onBounce(TvmSlice body) external {
@@ -355,17 +180,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function accept}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyRoot & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=96]
     function accept(
@@ -382,15 +199,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function allowance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt AllowanceInfo & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=107]
     function allowance() override external view responsible returns (AllowanceInfo) {
@@ -400,19 +211,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function approve}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt spender &\\\hline
-\tt uint128 & \tt remaining\_{}tokens &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=119]
     function approve(
@@ -447,15 +248,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function balance}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint128 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=58]
     function balance() override external view responsible returns (uint128) {
@@ -465,21 +260,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function burnByOwner}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt grams &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt address & \tt callback\_{}address &\\\hline
-\tt TvmCell & \tt callback\_{}payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: a {\tt require} should check that enough gas is
+  available to properly send the {\tt tokensBurned} message before
+  burning the tokens.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=473]
     function burnByOwner(
@@ -524,20 +309,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function burnByRoot}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt address & \tt callback\_{}address &\\\hline
-\tt TvmCell & \tt callback\_{}payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyRoot & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: a {\tt require} should check that enough gas is
+  available to properly send the {\tt tokensBurned} message before
+  burning the tokens.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=520]
     function burnByRoot(
@@ -567,17 +343,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function destroy}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt gas\_{}dest &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=584]
     function destroy(
@@ -595,15 +363,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function disapprove}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=148]
     function disapprove() override external onlyOwner {
@@ -623,15 +385,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getDetails}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt ITONTokenWalletDetails & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=72]
     function getDetails() override external view responsible returns (ITONTokenWalletDetails) {
@@ -649,15 +405,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getVersion}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt uint32 & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=54]
     function getVersion() override external pure responsible returns (uint32) {
@@ -667,15 +417,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function getWalletCode}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt TvmCell & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=87]
     function getWalletCode() override external view responsible returns (TvmCell) {
@@ -685,20 +429,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function internalTransfer}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint256 & \tt sender\_{}public\_{}key &\\\hline
-\tt address & \tt sender\_{}address &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt bool & \tt notify\_{}receiver &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: a {\tt require} should check that {\tt msg.value}
+  is enough to send the {\tt tokensReceivedCallback} message.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=370]
     function internalTransfer(
@@ -748,19 +482,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function internalTransferFrom}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt to &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt bool & \tt notify\_{}receiver &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=423]
     function internalTransferFrom(
@@ -807,17 +531,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setBouncedCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt bounced\_{}callback\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=568]
     function setBouncedCallback(
@@ -834,18 +550,9 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function setReceiveCallback}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt receive\_{}callback\_{} &\\\hline
-\tt bool & \tt allow\_{}non\_{}notifiable\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=550]
     function setReceiveCallback(
@@ -864,22 +571,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function transfer}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt to &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt grams &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt bool & \tt notify\_{}receiver &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueMajor{Need gas check in {\tt TONTokenWallet.transfer}}{a
+  {\tt require} should check that the gas is enough to send the {\tt
+    internalTransfer} message; Otherwise, tokens might be definitively
+  burnt.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=262]
     function transfer(
@@ -929,23 +626,10 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function transferFrom}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt address & \tt from &\\\hline
-\tt address & \tt to &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt grams &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt bool & \tt notify\_{}receiver &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item Minor issue: a {\tt require} should check that the gas is enough
+  to send the {\tt internalTransferFrom} message;
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=317]
     function transferFrom(
@@ -994,24 +678,12 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \subsection{Function transferToRecipient}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt recipient\_{}public\_{}key &\\\hline
-\tt address & \tt recipient\_{}address &\\\hline
-\tt uint128 & \tt tokens &\\\hline
-\tt uint128 & \tt deploy\_{}grams &\\\hline
-\tt uint128 & \tt transfer\_{}grams &\\\hline
-\tt address & \tt send\_{}gas\_{}to &\\\hline
-\tt bool & \tt notify\_{}receiver &\\\hline
-\tt TvmCell & \tt payload &\\\hline
-\multicolumn{3}{|l|}{\bf Modifiers}\\\hline
-\tt onlyOwner & {\em no args} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueMajor{Need gas check in {\tt
+    TONTokenWallet.transferToRecipient}}{a {\tt require} should check
+  that there is enough gas to send {\tt internalTransfer} messages;
+  Otherwise, tokens could be definitively burnt.}
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=177]
     function transferToRecipient(
@@ -1091,21 +763,11 @@ If external users are allowed, their pubkey should be verified (\verb+require(ms
 
 \section{Internal Method Definitions}
 
-
 \subsection{Function getExpectedAddress}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-\multicolumn{3}{|l|}{\bf Parameters}\\\hline
-\tt uint256 & \tt wallet\_{}public\_{}key\_{} &\\\hline
-\tt address & \tt owner\_{}address\_{} &\\\hline
-\multicolumn{3}{|l|}{\bf Returns}\\\hline
-\tt address & {\em no name} &\\\hline
-\end{tabular}
-\fi
-
-\vspace{2cm}
+\begin{itemize}
+\item \issueInternal
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=620]
     function getExpectedAddress(
